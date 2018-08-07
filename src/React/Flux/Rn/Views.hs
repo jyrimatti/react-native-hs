@@ -8,7 +8,8 @@ module React.Flux.Rn.Views (
     module React.Flux.Rn.Views,
     R.View,
     R.mkControllerView,
-    R.ReactElementM
+    R.ReactElementM,
+    R.StoreArg
 ) where
 
 import           Data.JSString       (JSString)

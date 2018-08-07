@@ -20,7 +20,8 @@ library
                        http-common,
                        network-uri,
                        semigroups
-  exposed-modules: React.Flux.Rn.APIs,
+  exposed-modules:  React.Flux.Rn.App,
+                    React.Flux.Rn.APIs,
                     React.Flux.Rn.Properties,
                     React.Flux.Rn.Events,
                     React.Flux.Rn.Types,
