@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TabBarIOS (
     module React.Flux.Rn.Components.TabBarIOS,
     BarStyle(..), Color(..),
@@ -13,73 +17,90 @@ module React.Flux.Rn.Components.TabBarIOS (
     ViewProps.Inset(Inset),
     ViewProps.OnLayout(OnLayout),
     ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
+    CommonProps.tintColor,
+    CommonProps.barStyle
 ) where
 
-import           Prelude                       (Bool)
-import           React.Flux                    (ReactElementM, foreign_)
-import           Prelude                       ((.))
-import           React.Flux.Rn.Properties      (Props, prop, props)
-import           Prelude                       (fmap)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (BarStyle (..), Color (..),
-                                                ItemPositioning (..))
+import           Prelude                         (Bool)
+import           Prelude                         ((.))
+import           Prelude                         (fmap)
+import           React.Flux                      (ReactElementM, foreign_)
+import           React.Flux.Rn.Properties        (Has, Props, prop, props)
+import qualified React.Flux.Rn.Props.CommonProps as CommonProps
+import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
+import           React.Flux.Rn.Types             (BarStyle (..), Color (..),
+                                                  ItemPositioning (..))
+
+
 
 data TabBarIOS
 tabBarIOS :: [Props TabBarIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 tabBarIOS = foreign_ "TabBarIOS" . fmap props
 
-barStyle :: BarStyle -> Props TabBarIOS handler
-barStyle = prop "barStyle"
 
-barTintColor :: Color -> Props TabBarIOS handler
+
+--barStyle :: Has c "barStyle" => BarStyle -> Props c handler
+--barStyle = prop "barStyle"
+
+barTintColor :: Has c "barTintColor" => Color -> Props c handler
 barTintColor = prop "barTintColor"
 
-itemPositioning :: ItemPositioning -> Props TabBarIOS handler
+itemPositioning :: Has c "itemPositioning" => ItemPositioning -> Props c handler
 itemPositioning = prop "itemPositioning"
 
-tintColor :: Color -> Props TabBarIOS handler
-tintColor = prop "tintColor"
+--tintColor :: Has c "tintColor" => Color -> Props c handler
+--tintColor = prop "tintColor"
 
-translucent :: Bool -> Props TabBarIOS handler
+translucent :: Has c "translucent" => Bool -> Props c handler
 translucent = prop "translucent"
 
-unselectedItemTintColor :: Color -> Props TabBarIOS handler
+unselectedItemTintColor :: Has c "unselectedItemTintColor" => Color -> Props c handler
 unselectedItemTintColor = prop "unselectedItemTintColor"
 
-unselectedTintColor :: Color -> Props TabBarIOS handler
+unselectedTintColor :: Has c "unselectedTintColor" => Color -> Props c handler
 unselectedTintColor = prop "unselectedTintColor"
+
+
+
+instance Has TabBarIOS "barStyle"
+instance Has TabBarIOS "barTintColor"
+instance Has TabBarIOS "itemPositioning"
+instance Has TabBarIOS "tintColor"
+instance Has TabBarIOS "translucent"
+instance Has TabBarIOS "unselectedItemTintColor"
+instance Has TabBarIOS "unselectedTintColor"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @TabBarIOS
-accessibilityLabel               = ViewProps.accessibilityLabel @TabBarIOS
-hitSlop                          = ViewProps.hitSlop @TabBarIOS
-nativeID                         = ViewProps.nativeID @TabBarIOS
-onAccessibilityTap               = ViewProps.onAccessibilityTap @TabBarIOS
-onLayout                         = ViewProps.onLayout @TabBarIOS
-onMagicTap                       = ViewProps.onMagicTap @TabBarIOS
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @TabBarIOS
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @TabBarIOS
-onResponderGrant                 = ViewProps.onResponderGrant @TabBarIOS
-onResponderMove                  = ViewProps.onResponderMove @TabBarIOS
-onResponderReject                = ViewProps.onResponderReject @TabBarIOS
-onResponderRelease               = ViewProps.onResponderRelease @TabBarIOS
-onResponderTerminate             = ViewProps.onResponderTerminate @TabBarIOS
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @TabBarIOS
-accessible                       = ViewProps.accessible @TabBarIOS
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @TabBarIOS
-pointerEvents                    = ViewProps.pointerEvents @TabBarIOS
-removeClippedSubviews            = ViewProps.removeClippedSubviews @TabBarIOS
-style                            = ViewProps.style @TabBarIOS
-testID                           = ViewProps.testID @TabBarIOS
-accessibilityComponentType       = ViewProps.accessibilityComponentType @TabBarIOS
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @TabBarIOS
-collapsable                      = ViewProps.collapsable @TabBarIOS
-importantForAccessibility        = ViewProps.importantForAccessibility @TabBarIOS
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @TabBarIOS
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @TabBarIOS
-accessibilityTraits              = ViewProps.accessibilityTraits @TabBarIOS
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @TabBarIOS
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @TabBarIOS
+instance Has TabBarIOS "onStartShouldSetResponder"
+instance Has TabBarIOS "accessibilityLabel"
+instance Has TabBarIOS "hitSlop"
+instance Has TabBarIOS "nativeID"
+instance Has TabBarIOS "onAccessibilityTap"
+instance Has TabBarIOS "onLayout"
+instance Has TabBarIOS "onMagicTap"
+instance Has TabBarIOS "onMoveShouldSetResponder"
+instance Has TabBarIOS "onMoveShouldSetResponderCapture"
+instance Has TabBarIOS "onResponderGrant"
+instance Has TabBarIOS "onResponderMove"
+instance Has TabBarIOS "onResponderReject"
+instance Has TabBarIOS "onResponderRelease"
+instance Has TabBarIOS "onResponderTerminate"
+instance Has TabBarIOS "onResponderTerminationRequest"
+instance Has TabBarIOS "accessible"
+instance Has TabBarIOS "onStartShouldSetResponderCapture"
+instance Has TabBarIOS "pointerEvents"
+instance Has TabBarIOS "removeClippedSubviews"
+instance Has TabBarIOS "style"
+instance Has TabBarIOS "testID"
+instance Has TabBarIOS "accessibilityComponentType"
+instance Has TabBarIOS "accessibilityLiveRegion"
+instance Has TabBarIOS "collapsable"
+instance Has TabBarIOS "importantForAccessibility"
+instance Has TabBarIOS "needsOffscreenAlphaCompositing"
+instance Has TabBarIOS "renderToHardwareTextureAndroid"
+instance Has TabBarIOS "accessibilityTraits"
+instance Has TabBarIOS "accessibilityViewIsModal"
+instance Has TabBarIOS "shouldRasterizeIOS"
 

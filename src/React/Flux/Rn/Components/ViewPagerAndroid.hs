@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ViewPagerAndroid (
     module React.Flux.Rn.Components.ViewPagerAndroid,
     KeyboardDismissMode(..), OnPageScroll(OnPageScroll), OnPageSelected(OnPageSelected), PageScrollingState(..),
@@ -17,75 +21,90 @@ module React.Flux.Rn.Components.ViewPagerAndroid (
 
 import           Numeric.Natural               (Natural)
 import           Prelude                       (Bool, Int)
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on1)
-import           React.Flux.Rn.Properties      (Props, prop, props)
 import           Prelude                       (fmap)
 import           Prelude                       ((.))
+import           React.Flux                    (ReactElementM, foreign_)
+import           React.Flux.Rn.Events          (EventHandlerType, on1)
+import           React.Flux.Rn.Properties      (Has, Props, prop, props)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
 import           React.Flux.Rn.Types           (KeyboardDismissMode (..),
                                                 OnPageScroll (OnPageScroll),
                                                 OnPageSelected (OnPageSelected),
                                                 PageScrollingState (..))
 
+
+
 data ViewPagerAndroid
 viewPagerAndroid :: [Props ViewPagerAndroid handler] -> ReactElementM handler a -> ReactElementM handler a
 viewPagerAndroid = foreign_ "ViewPagerAndroid" . fmap props
 
-initialPage :: Natural -> Props ViewPagerAndroid handler
+
+
+initialPage :: Has c "initialPage" => Natural -> Props c handler
 initialPage = prop "initialPage"
 
-keyboardDismissMode :: KeyboardDismissMode -> Props ViewPagerAndroid handler
+keyboardDismissMode :: Has c "keyboardDismissMode" => KeyboardDismissMode -> Props c handler
 keyboardDismissMode = prop "keyboardDismissMode"
 
-onPageScroll :: (OnPageScroll -> EventHandlerType handler) -> Props ViewPagerAndroid handler
+onPageScroll :: Has c "onPageScroll" => (OnPageScroll -> EventHandlerType handler) -> Props c handler
 onPageScroll = on1 "onPageScroll"
 
-onPageScrollStateChanged :: (PageScrollingState -> EventHandlerType handler) -> Props ViewPagerAndroid handler
+onPageScrollStateChanged :: Has c "onPageScrollStateChanged" => (PageScrollingState -> EventHandlerType handler) -> Props c handler
 onPageScrollStateChanged = on1 "onPageScrollStateChanged"
 
-onPageSelected :: (OnPageSelected -> EventHandlerType handler) -> Props ViewPagerAndroid handler
+onPageSelected :: Has c "onPageSelected" => (OnPageSelected -> EventHandlerType handler) -> Props c handler
 onPageSelected = on1 "onPageSelected"
 
-pageMargin :: Int -> Props ViewPagerAndroid handler
+pageMargin :: Has c "pageMargin" => Int -> Props c handler
 pageMargin = prop "pageMargin"
 
-peekEnabled :: Bool -> Props ViewPagerAndroid handler
+peekEnabled :: Has c "peekEnabled" => Bool -> Props c handler
 peekEnabled = prop "peekEnabled"
 
-scrollEnabled :: Bool -> Props ViewPagerAndroid handler
+scrollEnabled :: Has c "scrollEnabled" => Bool -> Props c handler
 scrollEnabled = prop "scrollEnabled"
+
+
+
+instance Has ViewPagerAndroid "initialPage"
+instance Has ViewPagerAndroid "keyboardDismissMode"
+instance Has ViewPagerAndroid "onPageScroll"
+instance Has ViewPagerAndroid "onPageScrollStateChanged"
+instance Has ViewPagerAndroid "onPageSelected"
+instance Has ViewPagerAndroid "pageMargin"
+instance Has ViewPagerAndroid "peekEnabled"
+instance Has ViewPagerAndroid "scrollEnabled"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @ViewPagerAndroid
-accessibilityLabel               = ViewProps.accessibilityLabel @ViewPagerAndroid
-hitSlop                          = ViewProps.hitSlop @ViewPagerAndroid
-nativeID                         = ViewProps.nativeID @ViewPagerAndroid
-onAccessibilityTap               = ViewProps.onAccessibilityTap @ViewPagerAndroid
-onLayout                         = ViewProps.onLayout @ViewPagerAndroid
-onMagicTap                       = ViewProps.onMagicTap @ViewPagerAndroid
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @ViewPagerAndroid
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @ViewPagerAndroid
-onResponderGrant                 = ViewProps.onResponderGrant @ViewPagerAndroid
-onResponderMove                  = ViewProps.onResponderMove @ViewPagerAndroid
-onResponderReject                = ViewProps.onResponderReject @ViewPagerAndroid
-onResponderRelease               = ViewProps.onResponderRelease @ViewPagerAndroid
-onResponderTerminate             = ViewProps.onResponderTerminate @ViewPagerAndroid
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @ViewPagerAndroid
-accessible                       = ViewProps.accessible @ViewPagerAndroid
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @ViewPagerAndroid
-pointerEvents                    = ViewProps.pointerEvents @ViewPagerAndroid
-removeClippedSubviews            = ViewProps.removeClippedSubviews @ViewPagerAndroid
-style                            = ViewProps.style @ViewPagerAndroid
-testID                           = ViewProps.testID @ViewPagerAndroid
-accessibilityComponentType       = ViewProps.accessibilityComponentType @ViewPagerAndroid
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @ViewPagerAndroid
-collapsable                      = ViewProps.collapsable @ViewPagerAndroid
-importantForAccessibility        = ViewProps.importantForAccessibility @ViewPagerAndroid
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @ViewPagerAndroid
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @ViewPagerAndroid
-accessibilityTraits              = ViewProps.accessibilityTraits @ViewPagerAndroid
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @ViewPagerAndroid
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @ViewPagerAndroid
+instance Has ViewPagerAndroid "onStartShouldSetResponder"
+instance Has ViewPagerAndroid "accessibilityLabel"
+instance Has ViewPagerAndroid "hitSlop"
+instance Has ViewPagerAndroid "nativeID"
+instance Has ViewPagerAndroid "onAccessibilityTap"
+instance Has ViewPagerAndroid "onLayout"
+instance Has ViewPagerAndroid "onMagicTap"
+instance Has ViewPagerAndroid "onMoveShouldSetResponder"
+instance Has ViewPagerAndroid "onMoveShouldSetResponderCapture"
+instance Has ViewPagerAndroid "onResponderGrant"
+instance Has ViewPagerAndroid "onResponderMove"
+instance Has ViewPagerAndroid "onResponderReject"
+instance Has ViewPagerAndroid "onResponderRelease"
+instance Has ViewPagerAndroid "onResponderTerminate"
+instance Has ViewPagerAndroid "onResponderTerminationRequest"
+instance Has ViewPagerAndroid "accessible"
+instance Has ViewPagerAndroid "onStartShouldSetResponderCapture"
+instance Has ViewPagerAndroid "pointerEvents"
+instance Has ViewPagerAndroid "removeClippedSubviews"
+instance Has ViewPagerAndroid "style"
+instance Has ViewPagerAndroid "testID"
+instance Has ViewPagerAndroid "accessibilityComponentType"
+instance Has ViewPagerAndroid "accessibilityLiveRegion"
+instance Has ViewPagerAndroid "collapsable"
+instance Has ViewPagerAndroid "importantForAccessibility"
+instance Has ViewPagerAndroid "needsOffscreenAlphaCompositing"
+instance Has ViewPagerAndroid "renderToHardwareTextureAndroid"
+instance Has ViewPagerAndroid "accessibilityTraits"
+instance Has ViewPagerAndroid "accessibilityViewIsModal"
+instance Has ViewPagerAndroid "shouldRasterizeIOS"
 

@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.View (
     module React.Flux.Rn.Components.View,
     ViewProps.View,
@@ -18,42 +22,46 @@ module React.Flux.Rn.Components.View (
 import           Prelude                       (fmap)
 import           Prelude                       ((.))
 import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties      (Props, props)
+import           React.Flux.Rn.Properties      (Has, Props, props)
 import           React.Flux.Rn.Props.ViewProps (View)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
+
+
 
 view :: [Props View handler] -> ReactElementM handler a -> ReactElementM handler a
 view = foreign_ "View" . fmap props
 
+
+
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @View
-accessibilityLabel               = ViewProps.accessibilityLabel @View
-hitSlop                          = ViewProps.hitSlop @View
-nativeID                         = ViewProps.nativeID @View
-onAccessibilityTap               = ViewProps.onAccessibilityTap @View
-onLayout                         = ViewProps.onLayout @View
-onMagicTap                       = ViewProps.onMagicTap @View
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @View
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @View
-onResponderGrant                 = ViewProps.onResponderGrant @View
-onResponderMove                  = ViewProps.onResponderMove @View
-onResponderReject                = ViewProps.onResponderReject @View
-onResponderRelease               = ViewProps.onResponderRelease @View
-onResponderTerminate             = ViewProps.onResponderTerminate @View
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @View
-accessible                       = ViewProps.accessible @View
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @View
-pointerEvents                    = ViewProps.pointerEvents @View
-removeClippedSubviews            = ViewProps.removeClippedSubviews @View
-style                            = ViewProps.style @View
-testID                           = ViewProps.testID @View
-accessibilityComponentType       = ViewProps.accessibilityComponentType @View
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @View
-collapsable                      = ViewProps.collapsable @View
-importantForAccessibility        = ViewProps.importantForAccessibility @View
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @View
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @View
-accessibilityTraits              = ViewProps.accessibilityTraits @View
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @View
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @View
+instance Has View "onStartShouldSetResponder"
+instance Has View "accessibilityLabel"
+instance Has View "hitSlop"
+instance Has View "nativeID"
+instance Has View "onAccessibilityTap"
+instance Has View "onLayout"
+instance Has View "onMagicTap"
+instance Has View "onMoveShouldSetResponder"
+instance Has View "onMoveShouldSetResponderCapture"
+instance Has View "onResponderGrant"
+instance Has View "onResponderMove"
+instance Has View "onResponderReject"
+instance Has View "onResponderRelease"
+instance Has View "onResponderTerminate"
+instance Has View "onResponderTerminationRequest"
+instance Has View "accessible"
+instance Has View "onStartShouldSetResponderCapture"
+instance Has View "pointerEvents"
+instance Has View "removeClippedSubviews"
+instance Has View "style"
+instance Has View "testID"
+instance Has View "accessibilityComponentType"
+instance Has View "accessibilityLiveRegion"
+instance Has View "collapsable"
+instance Has View "importantForAccessibility"
+instance Has View "needsOffscreenAlphaCompositing"
+instance Has View "renderToHardwareTextureAndroid"
+instance Has View "accessibilityTraits"
+instance Has View "accessibilityViewIsModal"
+instance Has View "shouldRasterizeIOS"

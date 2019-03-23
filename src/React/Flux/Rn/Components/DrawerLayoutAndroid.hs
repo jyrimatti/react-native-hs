@@ -1,6 +1,10 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleContexts      #-}
 module React.Flux.Rn.Components.DrawerLayoutAndroid (
     module React.Flux.Rn.Components.DrawerLayoutAndroid,
     Color(..), DrawerLockMode(..), DrawerPosition(..), KeyboardDismissMode(..),
@@ -20,84 +24,101 @@ import           Prelude                       ((.))
 import           Prelude                       (fmap)
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Events          (EventHandlerType, on0)
-import           React.Flux.Rn.Properties      (Props, prop, props)
+import           React.Flux.Rn.Properties      (Props, prop, props, Has)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
 import           React.Flux.Rn.Types           (Color (..), DrawerLockMode (..),
                                                 DrawerPosition (..),
                                                 KeyboardDismissMode (..),
                                                 ReactViewRef)
 
+
+
 data DrawerLayoutAndroid
 drawerLayoutAndroid :: [Props DrawerLayoutAndroid handler] -> ReactElementM handler a -> ReactElementM handler a
 drawerLayoutAndroid = foreign_ "DrawerLayoutAndroid" . fmap props
 
 
+
 -- Required
-renderNavigationView :: Typeable props => ReactViewRef props -> Props DrawerLayoutAndroid handler
+renderNavigationView :: Has c "renderNavigationView" => Typeable props => ReactViewRef props -> Props c handler
 renderNavigationView = prop "renderNavigationView"
 
-onDrawerClose :: EventHandlerType handler -> Props DrawerLayoutAndroid handler
+onDrawerClose :: Has c "onDrawerClose" => EventHandlerType handler -> Props c handler
 onDrawerClose = on0 "onDrawerClose"
 
-drawerPosition :: DrawerPosition -> Props DrawerLayoutAndroid handler
+drawerPosition :: Has c "drawerPosition" => DrawerPosition -> Props c handler
 drawerPosition = prop "drawerPosition"
 
-drawerWidth :: Natural -> Props DrawerLayoutAndroid handler
+drawerWidth :: Has c "drawerWidth" => Natural -> Props c handler
 drawerWidth = prop "drawerWidth"
 
-keyboardDismissMode :: KeyboardDismissMode -> Props DrawerLayoutAndroid handler
+keyboardDismissMode :: Has c "keyboardDismissMode" => KeyboardDismissMode -> Props c handler
 keyboardDismissMode = prop "keyboardDismissMode"
 
-drawerLockMode :: DrawerLockMode -> Props DrawerLayoutAndroid handler
+drawerLockMode :: Has c "drawerLockMode" => DrawerLockMode -> Props c handler
 drawerLockMode = prop "drawerLockMode"
 
-onDrawerOpen :: EventHandlerType handler -> Props DrawerLayoutAndroid handler
+onDrawerOpen :: Has c "onDrawerOpen" => EventHandlerType handler -> Props c handler
 onDrawerOpen = on0 "onDrawerOpen"
 
-onDrawerSlide :: EventHandlerType handler -> Props DrawerLayoutAndroid handler
+onDrawerSlide :: Has c "onDrawerSlide" => EventHandlerType handler -> Props c handler
 onDrawerSlide = on0 "onDrawerSlide"
 
-onDrawerStateChanged :: EventHandlerType handler -> Props DrawerLayoutAndroid handler
+onDrawerStateChanged :: Has c "onDrawerStateChanged" => EventHandlerType handler -> Props c handler
 onDrawerStateChanged = on0 "onDrawerStateChanged"
 
-drawerBackgroundColor :: Color -> Props DrawerLayoutAndroid handler
+drawerBackgroundColor :: Has c "drawerBackgroundColor" => Color -> Props c handler
 drawerBackgroundColor = prop "drawerBackgroundColor"
 
-statusBarBackgroundColor :: Color -> Props DrawerLayoutAndroid handler
+statusBarBackgroundColor :: Has c "statusBarBackgroundColor" => Color -> Props c handler
 statusBarBackgroundColor = prop "statusBarBackgroundColor"
+
+
+
+instance Has DrawerLayoutAndroid "renderNavigationView"
+instance Has DrawerLayoutAndroid "onDrawerClose"
+instance Has DrawerLayoutAndroid "drawerPosition"
+instance Has DrawerLayoutAndroid "drawerWidth"
+instance Has DrawerLayoutAndroid "keyboardDismissMode"
+instance Has DrawerLayoutAndroid "drawerLockMode"
+instance Has DrawerLayoutAndroid "onDrawerOpen"
+instance Has DrawerLayoutAndroid "onDrawerSlide"
+instance Has DrawerLayoutAndroid "onDrawerStateChanged"
+instance Has DrawerLayoutAndroid "drawerBackgroundColor"
+instance Has DrawerLayoutAndroid "statusBarBackgroundColor"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @DrawerLayoutAndroid
-accessibilityLabel               = ViewProps.accessibilityLabel @DrawerLayoutAndroid
-hitSlop                          = ViewProps.hitSlop @DrawerLayoutAndroid
-nativeID                         = ViewProps.nativeID @DrawerLayoutAndroid
-onAccessibilityTap               = ViewProps.onAccessibilityTap @DrawerLayoutAndroid
-onLayout                         = ViewProps.onLayout @DrawerLayoutAndroid
-onMagicTap                       = ViewProps.onMagicTap @DrawerLayoutAndroid
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @DrawerLayoutAndroid
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @DrawerLayoutAndroid
-onResponderGrant                 = ViewProps.onResponderGrant @DrawerLayoutAndroid
-onResponderMove                  = ViewProps.onResponderMove @DrawerLayoutAndroid
-onResponderReject                = ViewProps.onResponderReject @DrawerLayoutAndroid
-onResponderRelease               = ViewProps.onResponderRelease @DrawerLayoutAndroid
-onResponderTerminate             = ViewProps.onResponderTerminate @DrawerLayoutAndroid
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @DrawerLayoutAndroid
-accessible                       = ViewProps.accessible @DrawerLayoutAndroid
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @DrawerLayoutAndroid
-pointerEvents                    = ViewProps.pointerEvents @DrawerLayoutAndroid
-removeClippedSubviews            = ViewProps.removeClippedSubviews @DrawerLayoutAndroid
-style                            = ViewProps.style @DrawerLayoutAndroid
-testID                           = ViewProps.testID @DrawerLayoutAndroid
-accessibilityComponentType       = ViewProps.accessibilityComponentType @DrawerLayoutAndroid
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @DrawerLayoutAndroid
-collapsable                      = ViewProps.collapsable @DrawerLayoutAndroid
-importantForAccessibility        = ViewProps.importantForAccessibility @DrawerLayoutAndroid
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @DrawerLayoutAndroid
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @DrawerLayoutAndroid
-accessibilityTraits              = ViewProps.accessibilityTraits @DrawerLayoutAndroid
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @DrawerLayoutAndroid
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @DrawerLayoutAndroid
+instance Has DrawerLayoutAndroid "onStartShouldSetResponder"
+instance Has DrawerLayoutAndroid "accessibilityLabel"
+instance Has DrawerLayoutAndroid "hitSlop"
+instance Has DrawerLayoutAndroid "nativeID"
+instance Has DrawerLayoutAndroid "onAccessibilityTap"
+instance Has DrawerLayoutAndroid "onLayout"
+instance Has DrawerLayoutAndroid "onMagicTap"
+instance Has DrawerLayoutAndroid "onMoveShouldSetResponder"
+instance Has DrawerLayoutAndroid "onMoveShouldSetResponderCapture"
+instance Has DrawerLayoutAndroid "onResponderGrant"
+instance Has DrawerLayoutAndroid "onResponderMove"
+instance Has DrawerLayoutAndroid "onResponderReject"
+instance Has DrawerLayoutAndroid "onResponderRelease"
+instance Has DrawerLayoutAndroid "onResponderTerminate"
+instance Has DrawerLayoutAndroid "onResponderTerminationRequest"
+instance Has DrawerLayoutAndroid "accessible"
+instance Has DrawerLayoutAndroid "onStartShouldSetResponderCapture"
+instance Has DrawerLayoutAndroid "pointerEvents"
+instance Has DrawerLayoutAndroid "removeClippedSubviews"
+instance Has DrawerLayoutAndroid "style"
+instance Has DrawerLayoutAndroid "testID"
+instance Has DrawerLayoutAndroid "accessibilityComponentType"
+instance Has DrawerLayoutAndroid "accessibilityLiveRegion"
+instance Has DrawerLayoutAndroid "collapsable"
+instance Has DrawerLayoutAndroid "importantForAccessibility"
+instance Has DrawerLayoutAndroid "needsOffscreenAlphaCompositing"
+instance Has DrawerLayoutAndroid "renderToHardwareTextureAndroid"
+instance Has DrawerLayoutAndroid "accessibilityTraits"
+instance Has DrawerLayoutAndroid "accessibilityViewIsModal"
+instance Has DrawerLayoutAndroid "shouldRasterizeIOS"
 
 
 -- TODO: methods

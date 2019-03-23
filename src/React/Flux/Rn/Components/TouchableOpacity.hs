@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TouchableOpacity (
     module React.Flux.Rn.Components.TouchableOpacity,
     TvParallaxProperties(TvParallaxProperties),
@@ -17,42 +21,51 @@ import           Prelude                                           (fmap)
 import           Prelude                                           ((.))
 import           React.Flux                                        (ReactElementM,
                                                                     foreign_)
-import           React.Flux.Rn.Properties                          (Props, prop,
-                                                                    props)
+import           React.Flux.Rn.Properties                          (Has, Props,
+                                                                    prop, props)
 import qualified React.Flux.Rn.Props.TouchableWithoutFeedbackProps as TouchableWithoutFeedbackProps
 import           React.Flux.Rn.Types                               (TvParallaxProperties (TvParallaxProperties),
                                                                     UnitInterval)
+
+
 
 data TouchableOpacity
 touchableOpacity :: [Props TouchableOpacity handler] -> ReactElementM handler a -> ReactElementM handler a
 touchableOpacity = foreign_ "TouchableOpacity" . fmap props
 
-activeOpacity :: UnitInterval -> Props TouchableOpacity handler
+
+
+activeOpacity :: Has c "activeOpacity" => UnitInterval -> Props c handler
 activeOpacity = prop "activeOpacity"
 
-tvParallaxProperties :: TvParallaxProperties -> Props TouchableOpacity handler
+tvParallaxProperties :: Has c "tvParallaxProperties" => TvParallaxProperties -> Props c handler
 tvParallaxProperties = prop "tvParallaxProperties"
 
 -- Platform: IOS
-hasTVPreferredFocus :: Bool -> Props TouchableOpacity handler
+hasTVPreferredFocus :: Has c "hasTVPreferredFocus" => Bool -> Props c handler
 hasTVPreferredFocus = prop "hasTVPreferredFocus"
 
 
+
+instance Has TouchableOpacity "activeOpacity"
+instance Has TouchableOpacity "tvParallaxProperties"
+instance Has TouchableOpacity "hasTVPreferredFocus"
+
 -- TouchableWithoutFeedbackProps:
 
-hitSlop                    = TouchableWithoutFeedbackProps.hitSlop @TouchableOpacity
-accessibilityComponentType = TouchableWithoutFeedbackProps.accessibilityComponentType @TouchableOpacity
-accessible                 = TouchableWithoutFeedbackProps.accessible @TouchableOpacity
-delayLongPress             = TouchableWithoutFeedbackProps.delayLongPress @TouchableOpacity
-delayPressIn               = TouchableWithoutFeedbackProps.delayPressIn @TouchableOpacity
-delayPressOut              = TouchableWithoutFeedbackProps.delayPressOut @TouchableOpacity
-disabled                   = TouchableWithoutFeedbackProps.disabled @TouchableOpacity
-accessibilityTraits        = TouchableWithoutFeedbackProps.accessibilityTraits @TouchableOpacity
-onLayout                   = TouchableWithoutFeedbackProps.onLayout @TouchableOpacity
-onLongPress                = TouchableWithoutFeedbackProps.onLongPress @TouchableOpacity
-onPress                    = TouchableWithoutFeedbackProps.onPress @TouchableOpacity
-onPressIn                  = TouchableWithoutFeedbackProps.onPressIn @TouchableOpacity
-onPressOut                 = TouchableWithoutFeedbackProps.onPressOut @TouchableOpacity
-pressRetentionOffset       = TouchableWithoutFeedbackProps.pressRetentionOffset @TouchableOpacity
+instance Has TouchableOpacity "hitSlop"
+instance Has TouchableOpacity "accessibilityComponentType"
+instance Has TouchableOpacity "accessible"
+instance Has TouchableOpacity "delayLongPress"
+instance Has TouchableOpacity "delayPressIn"
+instance Has TouchableOpacity "delayPressOut"
+instance Has TouchableOpacity "disabled"
+instance Has TouchableOpacity "accessibilityTraits"
+instance Has TouchableOpacity "onLayout"
+instance Has TouchableOpacity "onLongPress"
+instance Has TouchableOpacity "onPress"
+instance Has TouchableOpacity "onPressIn"
+instance Has TouchableOpacity "onPressOut"
+instance Has TouchableOpacity "pressRetentionOffset"
 
 -- TODO: methods

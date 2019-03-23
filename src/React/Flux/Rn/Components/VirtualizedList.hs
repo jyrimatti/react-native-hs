@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
-{-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.VirtualizedList (
     module React.Flux.Rn.Components.VirtualizedList,
     Index
@@ -10,30 +14,33 @@ module React.Flux.Rn.Components.VirtualizedList (
 import           GHCJS.Marshal                            (FromJSVal)
 import           Prelude                                  (String)
 import           Prelude                                  (fmap)
+import           Prelude                                  ((.))
 import           React.Flux                               (ReactElementM,
                                                            foreign_)
-import           React.Flux.Rn.Properties                 (Props, props)
+import           React.Flux.Rn.Properties                 (Has, Props, props)
 import qualified React.Flux.Rn.Props.VirtualizedListProps as VirtualizedListProps
 import           React.Flux.Rn.Types                      (Index)
-import           Prelude                       ((.))
+
+
 
 data VirtualizedList
 virtualizedList :: [Props VirtualizedList handler] -> ReactElementM handler a -> ReactElementM handler a
 virtualizedList = foreign_ "VirtualizedList" . fmap props
 
+
+
 -- VirtualizedListProps:
 
-last                      = VirtualizedListProps.last @VirtualizedList
-first                     = VirtualizedListProps.first @VirtualizedList
-horizontal                = VirtualizedListProps.horizontal @VirtualizedList
-initialNumToRender        = VirtualizedListProps.initialNumToRender @VirtualizedList
-keyExtractor :: forall item handler. FromJSVal item => (item -> Index -> String) -> Props VirtualizedList handler
-keyExtractor              = VirtualizedListProps.keyExtractor @VirtualizedList
-disableVirtualization     = VirtualizedListProps.disableVirtualization @VirtualizedList
-maxToRenderPerBatch       = VirtualizedListProps.maxToRenderPerBatch @VirtualizedList
-onEndReachedThreshold     = VirtualizedListProps.onEndReachedThreshold @VirtualizedList
-scrollEventThrottle       = VirtualizedListProps.scrollEventThrottle @VirtualizedList
-updateCellsBatchingPeriod = VirtualizedListProps.updateCellsBatchingPeriod @VirtualizedList
-windowSize                = VirtualizedListProps.windowSize @VirtualizedList
+instance Has VirtualizedList "last"
+instance Has VirtualizedList "first"
+instance Has VirtualizedList "horizontal"
+instance Has VirtualizedList "initialNumToRender"
+instance Has VirtualizedList "keyExtractor"
+instance Has VirtualizedList "disableVirtualization"
+instance Has VirtualizedList "maxToRenderPerBatch"
+instance Has VirtualizedList "onEndReachedThreshold"
+instance Has VirtualizedList "scrollEventThrottle"
+instance Has VirtualizedList "updateCellsBatchingPeriod"
+instance Has VirtualizedList "windowSize"
 
 -- TODO: Methods

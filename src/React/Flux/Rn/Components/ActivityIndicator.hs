@@ -1,6 +1,9 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.Components.ActivityIndicator (
     module React.Flux.Rn.Components.ActivityIndicator,
     ActivityIndicatorSize(..), Color(..),
@@ -11,64 +14,76 @@ module React.Flux.Rn.Components.ActivityIndicator (
     ViewProps.Inset(Inset),
     ViewProps.OnLayout(OnLayout),
     ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
+    CommonProps.color
 ) where
 
-import           Prelude                       (Bool, fmap)
-import           Prelude                       ((.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties      (Props, prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (ActivityIndicatorSize (..),
-                                                Color (..))
+import           Prelude                         (Bool, fmap)
+import           Prelude                         ((.))
+import           React.Flux                      (ReactElementM, foreign_)
+import           React.Flux.Rn.Properties        (Has, Props, prop, props)
+import qualified React.Flux.Rn.Props.CommonProps as CommonProps
+import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
+import           React.Flux.Rn.Types             (ActivityIndicatorSize (..),
+                                                  Color (..))
+
+
 
 data ActivityIndicator
 activityIndicator :: [Props ActivityIndicator handler] -> ReactElementM handler a -> ReactElementM handler a
 activityIndicator = foreign_ "ActivityIndicator" . fmap props
 
 
-animating :: Bool -> Props ActivityIndicator handler
+
+animating :: Has c "animating" => Bool -> Props c handler
 animating = prop "animating"
 
-color :: Color -> Props ActivityIndicator handler
-color = prop "color"
+--color :: Has c "color" => Color -> Props c handler
+--color = prop "color"
 
-size :: ActivityIndicatorSize -> Props ActivityIndicator handler
+size :: Has c "size" => ActivityIndicatorSize -> Props c handler
 size = prop "size"
 
-hidesWhenStopped :: Bool -> Props ActivityIndicator handler
+hidesWhenStopped :: Has c "hidesWhenStopped" => Bool -> Props c handler
 hidesWhenStopped = prop "hidesWhenStopped"
+
+
+
+instance Has ActivityIndicator "animating"
+instance Has ActivityIndicator "color"
+instance Has ActivityIndicator "size"
+instance Has ActivityIndicator "hidesWhenStopped"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @ActivityIndicator
-accessibilityLabel               = ViewProps.accessibilityLabel @ActivityIndicator
-hitSlop                          = ViewProps.hitSlop @ActivityIndicator
-nativeID                         = ViewProps.nativeID @ActivityIndicator
-onAccessibilityTap               = ViewProps.onAccessibilityTap @ActivityIndicator
-onLayout                         = ViewProps.onLayout @ActivityIndicator
-onMagicTap                       = ViewProps.onMagicTap @ActivityIndicator
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @ActivityIndicator
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @ActivityIndicator
-onResponderGrant                 = ViewProps.onResponderGrant @ActivityIndicator
-onResponderMove                  = ViewProps.onResponderMove @ActivityIndicator
-onResponderReject                = ViewProps.onResponderReject @ActivityIndicator
-onResponderRelease               = ViewProps.onResponderRelease @ActivityIndicator
-onResponderTerminate             = ViewProps.onResponderTerminate @ActivityIndicator
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @ActivityIndicator
-accessible                       = ViewProps.accessible @ActivityIndicator
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @ActivityIndicator
-pointerEvents                    = ViewProps.pointerEvents @ActivityIndicator
-removeClippedSubviews            = ViewProps.removeClippedSubviews @ActivityIndicator
-style                            = ViewProps.style @ActivityIndicator
-testID                           = ViewProps.testID @ActivityIndicator
-accessibilityComponentType       = ViewProps.accessibilityComponentType @ActivityIndicator
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @ActivityIndicator
-collapsable                      = ViewProps.collapsable @ActivityIndicator
-importantForAccessibility        = ViewProps.importantForAccessibility @ActivityIndicator
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @ActivityIndicator
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @ActivityIndicator
-accessibilityTraits              = ViewProps.accessibilityTraits @ActivityIndicator
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @ActivityIndicator
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @ActivityIndicator
+instance Has ActivityIndicator "onStartShouldSetResponder"
+instance Has ActivityIndicator "accessibilityLabel"
+instance Has ActivityIndicator "hitSlop"
+instance Has ActivityIndicator "nativeID"
+instance Has ActivityIndicator "onAccessibilityTap"
+instance Has ActivityIndicator "onLayout"
+instance Has ActivityIndicator "onMagicTap"
+instance Has ActivityIndicator "onMoveShouldSetResponder"
+instance Has ActivityIndicator "onMoveShouldSetResponderCapture"
+instance Has ActivityIndicator "onResponderGrant"
+instance Has ActivityIndicator "onResponderMove"
+instance Has ActivityIndicator "onResponderReject"
+instance Has ActivityIndicator "onResponderRelease"
+instance Has ActivityIndicator "onResponderTerminate"
+instance Has ActivityIndicator "onResponderTerminationRequest"
+instance Has ActivityIndicator "accessible"
+instance Has ActivityIndicator "onStartShouldSetResponderCapture"
+instance Has ActivityIndicator "pointerEvents"
+instance Has ActivityIndicator "removeClippedSubviews"
+instance Has ActivityIndicator "style"
+instance Has ActivityIndicator "testID"
+instance Has ActivityIndicator "accessibilityComponentType"
+instance Has ActivityIndicator "accessibilityLiveRegion"
+instance Has ActivityIndicator "collapsable"
+instance Has ActivityIndicator "importantForAccessibility"
+instance Has ActivityIndicator "needsOffscreenAlphaCompositing"
+instance Has ActivityIndicator "renderToHardwareTextureAndroid"
+instance Has ActivityIndicator "accessibilityTraits"
+instance Has ActivityIndicator "accessibilityViewIsModal"
+instance Has ActivityIndicator "shouldRasterizeIOS"
 

@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.PickerIOS (
     module React.Flux.Rn.Components.PickerIOS,
     ViewProps.AccessibilityComponentTypes(..),
@@ -20,52 +24,62 @@ import           Prelude                       ((.))
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Components.Text (Text)
 import           React.Flux.Rn.Events          (EventHandlerType, on0)
-import           React.Flux.Rn.Properties      (Props, Styles, nestedProp, prop,
-                                                props)
+import           React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp,
+                                                prop, props)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
+
+
 
 data PickerIOS
 pickerIOS :: [Props PickerIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 pickerIOS = foreign_ "PickerIOS" . fmap props
 
-itemStyle :: [Styles Text handler] -> Props PickerIOS handler
+
+
+itemStyle :: Has c "itemStyle" => [Styles Text handler] -> Props c handler
 itemStyle = nestedProp "itemStyle"
 
-onValueChange :: EventHandlerType handler -> Props PickerIOS handler
+onValueChange :: Has c "onValueChange" => EventHandlerType handler -> Props c handler
 onValueChange = on0 "onValueChange"
 
-selectedValue :: ToJSVal value => value -> Props PickerIOS handler
+selectedValue :: Has c "selectedValue" => ToJSVal value => value -> Props c handler
 selectedValue = prop "selectedValue"
+
+
+
+instance Has PickerIOS "itemStyle"
+instance Has PickerIOS "onValueChange"
+instance Has PickerIOS "selectedValue"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @PickerIOS
-accessibilityLabel               = ViewProps.accessibilityLabel @PickerIOS
-hitSlop                          = ViewProps.hitSlop @PickerIOS
-nativeID                         = ViewProps.nativeID @PickerIOS
-onAccessibilityTap               = ViewProps.onAccessibilityTap @PickerIOS
-onLayout                         = ViewProps.onLayout @PickerIOS
-onMagicTap                       = ViewProps.onMagicTap @PickerIOS
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @PickerIOS
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @PickerIOS
-onResponderGrant                 = ViewProps.onResponderGrant @PickerIOS
-onResponderMove                  = ViewProps.onResponderMove @PickerIOS
-onResponderReject                = ViewProps.onResponderReject @PickerIOS
-onResponderRelease               = ViewProps.onResponderRelease @PickerIOS
-onResponderTerminate             = ViewProps.onResponderTerminate @PickerIOS
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @PickerIOS
-accessible                       = ViewProps.accessible @PickerIOS
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @PickerIOS
-pointerEvents                    = ViewProps.pointerEvents @PickerIOS
-removeClippedSubviews            = ViewProps.removeClippedSubviews @PickerIOS
-style                            = ViewProps.style @PickerIOS
-testID                           = ViewProps.testID @PickerIOS
-accessibilityComponentType       = ViewProps.accessibilityComponentType @PickerIOS
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @PickerIOS
-collapsable                      = ViewProps.collapsable @PickerIOS
-importantForAccessibility        = ViewProps.importantForAccessibility @PickerIOS
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @PickerIOS
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @PickerIOS
-accessibilityTraits              = ViewProps.accessibilityTraits @PickerIOS
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @PickerIOS
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @PickerIOS
+instance Has PickerIOS "onStartShouldSetResponder"
+instance Has PickerIOS "accessibilityLabel"
+instance Has PickerIOS "hitSlop"
+instance Has PickerIOS "nativeID"
+instance Has PickerIOS "onAccessibilityTap"
+instance Has PickerIOS "onLayout"
+instance Has PickerIOS "onMagicTap"
+instance Has PickerIOS "onMoveShouldSetResponder"
+instance Has PickerIOS "onMoveShouldSetResponderCapture"
+instance Has PickerIOS "onResponderGrant"
+instance Has PickerIOS "onResponderMove"
+instance Has PickerIOS "onResponderReject"
+instance Has PickerIOS "onResponderRelease"
+instance Has PickerIOS "onResponderTerminate"
+instance Has PickerIOS "onResponderTerminationRequest"
+instance Has PickerIOS "accessible"
+instance Has PickerIOS "onStartShouldSetResponderCapture"
+instance Has PickerIOS "pointerEvents"
+instance Has PickerIOS "removeClippedSubviews"
+instance Has PickerIOS "style"
+instance Has PickerIOS "testID"
+instance Has PickerIOS "accessibilityComponentType"
+instance Has PickerIOS "accessibilityLiveRegion"
+instance Has PickerIOS "collapsable"
+instance Has PickerIOS "importantForAccessibility"
+instance Has PickerIOS "needsOffscreenAlphaCompositing"
+instance Has PickerIOS "renderToHardwareTextureAndroid"
+instance Has PickerIOS "accessibilityTraits"
+instance Has PickerIOS "accessibilityViewIsModal"
+instance Has PickerIOS "shouldRasterizeIOS"

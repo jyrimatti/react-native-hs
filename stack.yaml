@@ -38,11 +38,18 @@ resolver: ghc-7.10.2
 # will not be run. This is useful for tweaking upstream packages.
 packages:
 - .
-- react-hs/react-hs
+- location:
+    git: https://github.com/jyrimatti/react-hs.git
+    commit: 85e369432b1a3feb78279784e0ed6e7ffc958fbd
+  subdirs:
+  - react-hs
 
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
-extra-deps: [ghcjs-base-stub-0.1.0.4, string-conversions-0.4.0.1]
+extra-deps:
+- ghcjs-base-stub-0.1.0.4
+- string-conversions-0.4.0.1
+- http-common-0.8.2.0
 
 # Override default flag values for local packages and extra-deps
 flags: {}

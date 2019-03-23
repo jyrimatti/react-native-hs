@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.SnapshotViewIOS (
     module React.Flux.Rn.Components.SnapshotViewIOS,
     ViewProps.AccessibilityComponentTypes(..),
@@ -19,49 +23,58 @@ import           Prelude                       ((.))
 import           Prelude                       (fmap)
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Events          (EventHandlerType, on0)
-import           React.Flux.Rn.Properties      (Props, prop, props)
+import           React.Flux.Rn.Properties      (Has, Props, prop, props)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
+
+
 
 data SnapshotViewIOS
 snapshotViewIOS :: [Props SnapshotViewIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 snapshotViewIOS = foreign_ "SnapshotViewIOS" . fmap props
 
-onSnapshotReady :: EventHandlerType handler -> Props SnapshotViewIOS handler
+
+
+onSnapshotReady :: Has c "onSnapshotReady" => EventHandlerType handler -> Props c handler
 onSnapshotReady = on0 "onSnapshotReady"
 
-testIdentifier :: String -> Props SnapshotViewIOS handler
+testIdentifier :: Has c "testIdentifier" => String -> Props c handler
 testIdentifier = prop "testIdentifier"
+
+
+
+instance Has SnapshotViewIOS "onSnapshotReady"
+instance Has SnapshotViewIOS "testIdentifier"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @SnapshotViewIOS
-accessibilityLabel               = ViewProps.accessibilityLabel @SnapshotViewIOS
-hitSlop                          = ViewProps.hitSlop @SnapshotViewIOS
-nativeID                         = ViewProps.nativeID @SnapshotViewIOS
-onAccessibilityTap               = ViewProps.onAccessibilityTap @SnapshotViewIOS
-onLayout                         = ViewProps.onLayout @SnapshotViewIOS
-onMagicTap                       = ViewProps.onMagicTap @SnapshotViewIOS
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @SnapshotViewIOS
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @SnapshotViewIOS
-onResponderGrant                 = ViewProps.onResponderGrant @SnapshotViewIOS
-onResponderMove                  = ViewProps.onResponderMove @SnapshotViewIOS
-onResponderReject                = ViewProps.onResponderReject @SnapshotViewIOS
-onResponderRelease               = ViewProps.onResponderRelease @SnapshotViewIOS
-onResponderTerminate             = ViewProps.onResponderTerminate @SnapshotViewIOS
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @SnapshotViewIOS
-accessible                       = ViewProps.accessible @SnapshotViewIOS
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @SnapshotViewIOS
-pointerEvents                    = ViewProps.pointerEvents @SnapshotViewIOS
-removeClippedSubviews            = ViewProps.removeClippedSubviews @SnapshotViewIOS
-style                            = ViewProps.style @SnapshotViewIOS
-testID                           = ViewProps.testID @SnapshotViewIOS
-accessibilityComponentType       = ViewProps.accessibilityComponentType @SnapshotViewIOS
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @SnapshotViewIOS
-collapsable                      = ViewProps.collapsable @SnapshotViewIOS
-importantForAccessibility        = ViewProps.importantForAccessibility @SnapshotViewIOS
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @SnapshotViewIOS
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @SnapshotViewIOS
-accessibilityTraits              = ViewProps.accessibilityTraits @SnapshotViewIOS
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @SnapshotViewIOS
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @SnapshotViewIOS
+instance Has SnapshotViewIOS "onStartShouldSetResponder"
+instance Has SnapshotViewIOS "accessibilityLabel"
+instance Has SnapshotViewIOS "hitSlop"
+instance Has SnapshotViewIOS "nativeID"
+instance Has SnapshotViewIOS "onAccessibilityTap"
+instance Has SnapshotViewIOS "onLayout"
+instance Has SnapshotViewIOS "onMagicTap"
+instance Has SnapshotViewIOS "onMoveShouldSetResponder"
+instance Has SnapshotViewIOS "onMoveShouldSetResponderCapture"
+instance Has SnapshotViewIOS "onResponderGrant"
+instance Has SnapshotViewIOS "onResponderMove"
+instance Has SnapshotViewIOS "onResponderReject"
+instance Has SnapshotViewIOS "onResponderRelease"
+instance Has SnapshotViewIOS "onResponderTerminate"
+instance Has SnapshotViewIOS "onResponderTerminationRequest"
+instance Has SnapshotViewIOS "accessible"
+instance Has SnapshotViewIOS "onStartShouldSetResponderCapture"
+instance Has SnapshotViewIOS "pointerEvents"
+instance Has SnapshotViewIOS "removeClippedSubviews"
+instance Has SnapshotViewIOS "style"
+instance Has SnapshotViewIOS "testID"
+instance Has SnapshotViewIOS "accessibilityComponentType"
+instance Has SnapshotViewIOS "accessibilityLiveRegion"
+instance Has SnapshotViewIOS "collapsable"
+instance Has SnapshotViewIOS "importantForAccessibility"
+instance Has SnapshotViewIOS "needsOffscreenAlphaCompositing"
+instance Has SnapshotViewIOS "renderToHardwareTextureAndroid"
+instance Has SnapshotViewIOS "accessibilityTraits"
+instance Has SnapshotViewIOS "accessibilityViewIsModal"
+instance Has SnapshotViewIOS "shouldRasterizeIOS"
 

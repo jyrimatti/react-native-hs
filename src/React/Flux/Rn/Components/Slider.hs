@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.Slider (
     module React.Flux.Rn.Components.Slider,
     Color(..), ImageSource(..),
@@ -21,90 +25,111 @@ import           Prelude                       ((.))
 import           Prelude                       (fmap)
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Events          (EventHandlerType, on1)
-import           React.Flux.Rn.Properties      (Props, prop, props)
+import           React.Flux.Rn.Properties      (Has, Props, prop, props)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
 import           React.Flux.Rn.Types           (Color (..), ImageSource (..))
+
+
 
 data Slider
 slider :: [Props Slider handler] -> ReactElementM handler a -> ReactElementM handler a
 slider = foreign_ "Slider" . fmap props
 
-disabled :: Bool -> Props Slider handler
+
+
+disabled :: Has c "disabled" => Bool -> Props c handler
 disabled = prop "disabled"
 
-maximumValue :: Int -> Props Slider handler
+maximumValue :: Has c "maximumValue" => Int -> Props c handler
 maximumValue = prop "maximumValue"
 
-minimumTrackTintColor :: Color -> Props Slider handler
+minimumTrackTintColor :: Has c "minimumTrackTintColor" => Color -> Props c handler
 minimumTrackTintColor = prop "minimumTrackTintColor"
 
-minimumValue :: Int -> Props Slider handler
+minimumValue :: Has c "minimumValue" => Int -> Props c handler
 minimumValue = prop "minimumValue"
 
-onSlidingComplete :: (Int -> EventHandlerType handler) -> Props Slider handler
+onSlidingComplete :: Has c "onSlidingComplete" => (Int -> EventHandlerType handler) -> Props c handler
 onSlidingComplete = on1 "onSlidingComplete"
 
-onValueChange :: (Int -> EventHandlerType handler) -> Props Slider handler
+onValueChange :: Has c "onValueChange" => (Int -> EventHandlerType handler) -> Props c handler
 onValueChange = on1 "onValueChange"
 
-step :: Natural -> Props Slider handler
+step :: Has c "step" => Natural -> Props c handler
 step = prop "step"
 
-maximumTrackTintColor :: Color -> Props Slider handler
+maximumTrackTintColor :: Has c "maximumTrackTintColor" => Color -> Props c handler
 maximumTrackTintColor = prop "maximumTrackTintColor"
 
-value :: Int -> Props Slider handler
+value :: Has c "value" => Int -> Props c handler
 value = prop "value"
 
 -- Platform: Android
-thumbTintColor :: Color -> Props Slider handler
+thumbTintColor :: Has c "thumbTintColor" => Color -> Props c handler
 thumbTintColor = prop "thumbTintColor"
 
 -- Platform: IOS
-maximumTrackImage :: ImageSource -> Props Slider handler
+maximumTrackImage :: Has c "maximumTrackImage" => ImageSource -> Props c handler
 maximumTrackImage = prop "maximumTrackImage"
 
 -- Platform: IOS
-minimumTrackImage :: ImageSource -> Props Slider handler
+minimumTrackImage :: Has c "minimumTrackImage" => ImageSource -> Props c handler
 minimumTrackImage = prop "minimumTrackImage"
 
 -- Platform: IOS
-thumbImage :: ImageSource -> Props Slider handler
+thumbImage :: Has c "thumbImage" => ImageSource -> Props c handler
 thumbImage = prop "thumbImage"
 
-trackImage :: ImageSource -> Props Slider handler
+trackImage :: Has c "trackImage" => ImageSource -> Props c handler
 trackImage = prop "trackImage"
+
+
+
+instance Has Slider "disabled"
+instance Has Slider "maximumValue"
+instance Has Slider "minimumTrackTintColor"
+instance Has Slider "minimumValue"
+instance Has Slider "onSlidingComplete"
+instance Has Slider "onValueChange"
+instance Has Slider "step"
+instance Has Slider "maximumTrackTintColor"
+instance Has Slider "value"
+instance Has Slider "thumbTintColor"
+instance Has Slider "maximumTrackImage"
+instance Has Slider "minimumTrackImage"
+instance Has Slider "thumbImage"
+instance Has Slider "trackImage"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @Slider
-accessibilityLabel               = ViewProps.accessibilityLabel @Slider
-hitSlop                          = ViewProps.hitSlop @Slider
-nativeID                         = ViewProps.nativeID @Slider
-onAccessibilityTap               = ViewProps.onAccessibilityTap @Slider
-onLayout                         = ViewProps.onLayout @Slider
-onMagicTap                       = ViewProps.onMagicTap @Slider
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @Slider
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @Slider
-onResponderGrant                 = ViewProps.onResponderGrant @Slider
-onResponderMove                  = ViewProps.onResponderMove @Slider
-onResponderReject                = ViewProps.onResponderReject @Slider
-onResponderRelease               = ViewProps.onResponderRelease @Slider
-onResponderTerminate             = ViewProps.onResponderTerminate @Slider
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @Slider
-accessible                       = ViewProps.accessible @Slider
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @Slider
-pointerEvents                    = ViewProps.pointerEvents @Slider
-removeClippedSubviews            = ViewProps.removeClippedSubviews @Slider
-style                            = ViewProps.style @Slider
-testID                           = ViewProps.testID @Slider
-accessibilityComponentType       = ViewProps.accessibilityComponentType @Slider
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @Slider
-collapsable                      = ViewProps.collapsable @Slider
-importantForAccessibility        = ViewProps.importantForAccessibility @Slider
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @Slider
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @Slider
-accessibilityTraits              = ViewProps.accessibilityTraits @Slider
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @Slider
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @Slider
+instance Has Slider "onStartShouldSetResponder"
+instance Has Slider "accessibilityLabel"
+instance Has Slider "hitSlop"
+instance Has Slider "nativeID"
+instance Has Slider "onAccessibilityTap"
+instance Has Slider "onLayout"
+instance Has Slider "onMagicTap"
+instance Has Slider "onMoveShouldSetResponder"
+instance Has Slider "onMoveShouldSetResponderCapture"
+instance Has Slider "onResponderGrant"
+instance Has Slider "onResponderMove"
+instance Has Slider "onResponderReject"
+instance Has Slider "onResponderRelease"
+instance Has Slider "onResponderTerminate"
+instance Has Slider "onResponderTerminationRequest"
+instance Has Slider "accessible"
+instance Has Slider "onStartShouldSetResponderCapture"
+instance Has Slider "pointerEvents"
+instance Has Slider "removeClippedSubviews"
+instance Has Slider "style"
+instance Has Slider "testID"
+instance Has Slider "accessibilityComponentType"
+instance Has Slider "accessibilityLiveRegion"
+instance Has Slider "collapsable"
+instance Has Slider "importantForAccessibility"
+instance Has Slider "needsOffscreenAlphaCompositing"
+instance Has Slider "renderToHardwareTextureAndroid"
+instance Has Slider "accessibilityTraits"
+instance Has Slider "accessibilityViewIsModal"
+instance Has Slider "shouldRasterizeIOS"
 

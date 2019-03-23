@@ -1,54 +1,78 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.NavigatorIOS (
     module React.Flux.Rn.Components.NavigatorIOS,
-    BarStyle(..), Color(..), Route(Route)
+    BarStyle(..), Color(..), Route(Route),
+    CommonProps.tintColor,
+    CommonProps.barStyle
 ) where
 
-import           Prelude                  (Bool)
-import           React.Flux               (ReactElementM, foreign_)
-import React.Flux.Rn.Components.View (View)
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
-import           React.Flux.Rn.Properties (Props, Styles, nestedProp,
-                                           prop, props)
-import           React.Flux.Rn.Types      (BarStyle (..), Color (..),
-                                           Route (Route))
+import           Prelude                         (Bool)
+import           Prelude                         (fmap)
+import           Prelude                         ((.))
+import           React.Flux                      (ReactElementM, foreign_)
+import           React.Flux.Rn.Components.View   (View)
+import           React.Flux.Rn.Properties        (Has, Props, Styles,
+                                                  nestedProp, prop, props)
+import qualified React.Flux.Rn.Props.CommonProps as CommonProps
+import           React.Flux.Rn.Types             (BarStyle (..), Color (..),
+                                                  Route (Route))
+
+
 
 data NavigatorIOS
 navigatorIOS :: [Props NavigatorIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 navigatorIOS = foreign_ "NavigatorIOS" . fmap props
 
+
+
 -- Required
-initialRoute :: Route -> Props NavigatorIOS handler
+initialRoute :: Has c "initialRoute" => Route -> Props c handler
 initialRoute = prop "initialRoute"
 
-barStyle :: BarStyle -> Props NavigatorIOS handler
-barStyle = prop "barStyle"
+--barStyle :: Has c "barStyle" => BarStyle -> Props c handler
+--barStyle = prop "barStyle"
 
-barTintColor :: Color -> Props NavigatorIOS handler
+barTintColor :: Has c "barTintColor" => Color -> Props c handler
 barTintColor = prop "barTintColor"
 
-interactivePopGestureEnabled :: Bool -> Props NavigatorIOS handler
+interactivePopGestureEnabled :: Has c "interactivePopGestureEnabled" => Bool -> Props c handler
 interactivePopGestureEnabled = prop "interactivePopGestureEnabled"
 
-itemWrapperStyle :: [Styles View handler] -> Props NavigatorIOS handler
+itemWrapperStyle :: Has c "itemWrapperStyle" => [Styles View handler] -> Props c handler
 itemWrapperStyle = nestedProp "itemWrapperStyle"
 
-navigationBarHidden :: Bool -> Props NavigatorIOS handler
+navigationBarHidden :: Has c "navigationBarHidden" => Bool -> Props c handler
 navigationBarHidden = prop "navigationBarHidden"
 
-shadowHidden :: Bool -> Props NavigatorIOS handler
+shadowHidden :: Has c "shadowHidden" => Bool -> Props c handler
 shadowHidden = prop "shadowHidden"
 
-tintColor :: Color -> Props NavigatorIOS handler
-tintColor = prop "tintColor"
+--tintColor :: Has c "tintColor" => Color -> Props c handler
+--tintColor = prop "tintColor"
 
-titleTextColor :: Color -> Props NavigatorIOS handler
+titleTextColor :: Has c "titleTextColor" => Color -> Props c handler
 titleTextColor = prop "titleTextColor"
 
-translucent :: Bool -> Props NavigatorIOS handler
+translucent :: Has c "translucent" => Bool -> Props c handler
 translucent = prop "translucent"
+
+
+
+instance Has NavigatorIOS "initialRoute"
+instance Has NavigatorIOS "barStyle"
+instance Has NavigatorIOS "barTintColor"
+instance Has NavigatorIOS "interactivePopGestureEnabled"
+instance Has NavigatorIOS "itemWrapperStyle"
+instance Has NavigatorIOS "navigationBarHidden"
+instance Has NavigatorIOS "shadowHidden"
+instance Has NavigatorIOS "tintColor"
+instance Has NavigatorIOS "titleTextColor"
+instance Has NavigatorIOS "translucent"
 
 -- TODO: methods

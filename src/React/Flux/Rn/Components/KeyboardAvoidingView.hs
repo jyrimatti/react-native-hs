@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.KeyboardAvoidingView (
     module React.Flux.Rn.Components.KeyboardAvoidingView,
     Behavior(..),
@@ -20,57 +24,67 @@ import           Prelude                       ((.))
 import           Prelude                       (fmap)
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Components.View (View)
-import           React.Flux.Rn.Properties      (Props, Styles, nestedProp, prop,
-                                                props)
+import           React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp,
+                                                prop, props)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
 import           React.Flux.Rn.Types           (Behavior (..))
+
+
 
 data KeyboardAvoidingView
 keyboardAvoidingView :: [Props KeyboardAvoidingView handler] -> ReactElementM handler a -> ReactElementM handler a
 keyboardAvoidingView = foreign_ "KeyboardAvoidingView" . fmap props
 
+
+
 -- Required
-keyboardVerticalOffset :: Natural -> Props KeyboardAvoidingView handler
+keyboardVerticalOffset :: Has c "keyboardVerticalOffset" => Natural -> Props c handler
 keyboardVerticalOffset = prop "keyboardVerticalOffset"
 
-behavior :: Behavior -> Props KeyboardAvoidingView handler
+behavior :: Has c "behavior" => Behavior -> Props c handler
 behavior = prop "behavior"
 
-contentContainerStyle :: [Styles View handler] -> Props KeyboardAvoidingView handler
+contentContainerStyle :: Has c "contentContainerStyle" => [Styles View handler] -> Props c handler
 contentContainerStyle = nestedProp "contentContainerStyle"
+
+
+
+instance Has KeyboardAvoidingView "keyboardVerticalOffset"
+instance Has KeyboardAvoidingView "behavior"
+instance Has KeyboardAvoidingView "contentContainerStyle"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @KeyboardAvoidingView
-accessibilityLabel               = ViewProps.accessibilityLabel @KeyboardAvoidingView
-hitSlop                          = ViewProps.hitSlop @KeyboardAvoidingView
-nativeID                         = ViewProps.nativeID @KeyboardAvoidingView
-onAccessibilityTap               = ViewProps.onAccessibilityTap @KeyboardAvoidingView
-onLayout                         = ViewProps.onLayout @KeyboardAvoidingView
-onMagicTap                       = ViewProps.onMagicTap @KeyboardAvoidingView
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @KeyboardAvoidingView
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @KeyboardAvoidingView
-onResponderGrant                 = ViewProps.onResponderGrant @KeyboardAvoidingView
-onResponderMove                  = ViewProps.onResponderMove @KeyboardAvoidingView
-onResponderReject                = ViewProps.onResponderReject @KeyboardAvoidingView
-onResponderRelease               = ViewProps.onResponderRelease @KeyboardAvoidingView
-onResponderTerminate             = ViewProps.onResponderTerminate @KeyboardAvoidingView
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @KeyboardAvoidingView
-accessible                       = ViewProps.accessible @KeyboardAvoidingView
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @KeyboardAvoidingView
-pointerEvents                    = ViewProps.pointerEvents @KeyboardAvoidingView
-removeClippedSubviews            = ViewProps.removeClippedSubviews @KeyboardAvoidingView
-style                            = ViewProps.style @KeyboardAvoidingView
-testID                           = ViewProps.testID @KeyboardAvoidingView
-accessibilityComponentType       = ViewProps.accessibilityComponentType @KeyboardAvoidingView
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @KeyboardAvoidingView
-collapsable                      = ViewProps.collapsable @KeyboardAvoidingView
-importantForAccessibility        = ViewProps.importantForAccessibility @KeyboardAvoidingView
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @KeyboardAvoidingView
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @KeyboardAvoidingView
-accessibilityTraits              = ViewProps.accessibilityTraits @KeyboardAvoidingView
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @KeyboardAvoidingView
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @KeyboardAvoidingView
+instance Has KeyboardAvoidingView "onStartShouldSetResponder"
+instance Has KeyboardAvoidingView "accessibilityLabel"
+instance Has KeyboardAvoidingView "hitSlop"
+instance Has KeyboardAvoidingView "nativeID"
+instance Has KeyboardAvoidingView "onAccessibilityTap"
+instance Has KeyboardAvoidingView "onLayout"
+instance Has KeyboardAvoidingView "onMagicTap"
+instance Has KeyboardAvoidingView "onMoveShouldSetResponder"
+instance Has KeyboardAvoidingView "onMoveShouldSetResponderCapture"
+instance Has KeyboardAvoidingView "onResponderGrant"
+instance Has KeyboardAvoidingView "onResponderMove"
+instance Has KeyboardAvoidingView "onResponderReject"
+instance Has KeyboardAvoidingView "onResponderRelease"
+instance Has KeyboardAvoidingView "onResponderTerminate"
+instance Has KeyboardAvoidingView "onResponderTerminationRequest"
+instance Has KeyboardAvoidingView "accessible"
+instance Has KeyboardAvoidingView "onStartShouldSetResponderCapture"
+instance Has KeyboardAvoidingView "pointerEvents"
+instance Has KeyboardAvoidingView "removeClippedSubviews"
+instance Has KeyboardAvoidingView "style"
+instance Has KeyboardAvoidingView "testID"
+instance Has KeyboardAvoidingView "accessibilityComponentType"
+instance Has KeyboardAvoidingView "accessibilityLiveRegion"
+instance Has KeyboardAvoidingView "collapsable"
+instance Has KeyboardAvoidingView "importantForAccessibility"
+instance Has KeyboardAvoidingView "needsOffscreenAlphaCompositing"
+instance Has KeyboardAvoidingView "renderToHardwareTextureAndroid"
+instance Has KeyboardAvoidingView "accessibilityTraits"
+instance Has KeyboardAvoidingView "accessibilityViewIsModal"
+instance Has KeyboardAvoidingView "shouldRasterizeIOS"
 
 
 -- TODO: methods

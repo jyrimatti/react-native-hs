@@ -1,11 +1,16 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.Image (
     module React.Flux.Rn.Components.Image,
     DefaultSource(..), ImageSource(..), Inset(Inset),
     OnLayout(OnLayout), OnLayoutVals(OnLayoutVals),
-    OnProgress(OnProgress), ResizeMethod(..)
+    OnProgress(OnProgress), ResizeMethod(..),
+    CommonProps.style
 ) where
 
 import           GHCJS.Marshal            (FromJSVal (..))
@@ -15,71 +20,95 @@ import           Prelude                  ((.))
 import           Prelude                  (fmap)
 import           React.Flux               (ReactElementM, foreign_)
 import           React.Flux.Rn.Events     (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties (Props, Styles, nestedProp, prop,
+import           React.Flux.Rn.Properties (Has, Props, Styles, nestedProp, prop,
                                            props)
+import qualified React.Flux.Rn.Props.CommonProps as CommonProps
 import           React.Flux.Rn.Types      (DefaultSource (..), ImageSource (..),
                                            Inset (Inset), OnLayout (OnLayout),
                                            OnLayoutVals (OnLayoutVals),
                                            OnProgress (OnProgress),
                                            ResizeMethod (..))
 
+
+
 data Image
 image :: [Props Image handler] -> ReactElementM handler a -> ReactElementM handler a
 image = foreign_ "Image" . fmap props
 
-style :: [Styles Image handler] -> Props Image handler
-style = nestedProp "style"
 
-blurRadius :: Natural -> Props Image handler
+
+--style :: Has c "style" => [Styles c handler] -> Props c handler
+--style = nestedProp "style"
+
+blurRadius :: Has c "blurRadius" => Natural -> Props c handler
 blurRadius = prop "blurRadius"
 
-onLayout :: (OnLayoutVals -> EventHandlerType handler) -> Props Image handler
+onLayout :: Has c "onLayout" => (OnLayoutVals -> EventHandlerType handler) -> Props c handler
 onLayout f = on1 "onLayout" $ \(OnLayout layout) -> f layout
 
-onLoad :: EventHandlerType handler -> Props Image handler
+onLoad :: Has c "onLoad" => EventHandlerType handler -> Props c handler
 onLoad = on0 "onLoad"
 
-onLoadEnd :: EventHandlerType handler -> Props Image handler
+onLoadEnd :: Has c "onLoadEnd" => EventHandlerType handler -> Props c handler
 onLoadEnd = on0 "onLoadEnd"
 
-onLoadStart :: EventHandlerType handler -> Props Image handler
+onLoadStart :: Has c "onLoadStart" => EventHandlerType handler -> Props c handler
 onLoadStart = on0 "onLoadStart"
 
-source :: ImageSource -> Props Image handler
+source :: Has c "source" => ImageSource -> Props c handler
 source = prop "source"
 
-onError :: FromJSVal err => (err -> EventHandlerType handler) -> Props Image handler
+onError :: Has c "onError" => FromJSVal err => (err -> EventHandlerType handler) -> Props c handler
 onError f = on1 "onError" $ \err -> f err
 
-testID :: String -> Props Image handler
+testID :: Has c "testID" => String -> Props c handler
 testID = prop "testID"
 
 -- Platform: Android
-resizeMethod :: ResizeMethod -> Props Image handler
+resizeMethod :: Has c "resizeMethod" => ResizeMethod -> Props c handler
 resizeMethod = prop "resizeMethod"
 
 -- Platform: IOS
-accessibilityLabel :: String -> Props Image handler
+accessibilityLabel :: Has c "accessibilityLabel" => String -> Props c handler
 accessibilityLabel = prop "accessibilityLabel"
 
 -- Platform: IOS
-accessible :: Bool -> Props Image handler
+accessible :: Has c "accessible" => Bool -> Props c handler
 accessible = prop "accessible"
 
 -- Platform: IOS
-capInsets :: Inset -> Props Image handler
+capInsets :: Has c "capInsets" => Inset -> Props c handler
 capInsets = prop "capInsets"
 
 -- Platform: IOS
-defaultSource :: DefaultSource -> Props Image handler
+defaultSource :: Has c "defaultSource" => DefaultSource -> Props c handler
 defaultSource = prop "defaultSource"
 
 -- Platform: IOS
-onPartialLoad :: EventHandlerType handler -> Props Image handler
+onPartialLoad :: Has c "onPartialLoad" => EventHandlerType handler -> Props c handler
 onPartialLoad = on0 "onPartialLoad"
 
 -- Platform: IOS
-onProgress :: (OnProgress -> EventHandlerType handler) -> Props Image handler
+onProgress :: Has c "onProgress" => (OnProgress -> EventHandlerType handler) -> Props c handler
 onProgress f = on1 "onProgress" $ \x -> f x
+
+
+
+instance Has Image "style"
+instance Has Image "blurRadius"
+instance Has Image "onLayout"
+instance Has Image "onLoad"
+instance Has Image "onLoadEnd"
+instance Has Image "onLoadStart"
+instance Has Image "source"
+instance Has Image "onError"
+instance Has Image "testID"
+instance Has Image "resizeMethod"
+instance Has Image "accessibilityLabel"
+instance Has Image "accessible"
+instance Has Image "capInsets"
+instance Has Image "defaultSource"
+instance Has Image "onPartialLoad"
+instance Has Image "onProgress"
 
 -- TODO: methods

@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ScrollView (
     module React.Flux.Rn.Components.ScrollView,
     ViewProps.AccessibilityComponentTypes(..),
@@ -26,89 +30,93 @@ module React.Flux.Rn.Components.ScrollView (
 import           Prelude                             (fmap)
 import           Prelude                             ((.))
 import           React.Flux                          (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties            (Props, props)
+import           React.Flux.Rn.Properties            (Has, Props, props)
 import qualified React.Flux.Rn.Props.ScrollViewProps as ScrollViewProps
 import qualified React.Flux.Rn.Props.ViewProps       as ViewProps
+
+
 
 data ScrollView
 scrollView :: [Props ScrollView handler] -> ReactElementM handler a -> ReactElementM handler a
 scrollView = foreign_ "ScrollView" . fmap props
 
+
+
 -- ScrollViewProps:
 
-alwaysBounceVertical             = ScrollViewProps.alwaysBounceVertical @ScrollView
-contentContainerStyle            = ScrollViewProps.contentContainerStyle @ScrollView
-keyboardDismissMode              = ScrollViewProps.keyboardDismissMode @ScrollView
-keyboardShouldPersistTaps        = ScrollViewProps.keyboardShouldPersistTaps @ScrollView
-onContentSizeChange              = ScrollViewProps.onContentSizeChange @ScrollView
-onMomentumScrollBegin            = ScrollViewProps.onMomentumScrollBegin @ScrollView
-onMomentumScrollEnd              = ScrollViewProps.onMomentumScrollEnd @ScrollView
-onScroll                         = ScrollViewProps.onScroll @ScrollView
-pagingEnabled                    = ScrollViewProps.pagingEnabled @ScrollView
-refreshControl                   = ScrollViewProps.refreshControl @ScrollView
-scrollEnabled                    = ScrollViewProps.scrollEnabled @ScrollView
-showsHorizontalScrollIndicator   = ScrollViewProps.showsHorizontalScrollIndicator @ScrollView
-showsVerticalScrollIndicator     = ScrollViewProps.showsVerticalScrollIndicator @ScrollView
-stickyHeaderIndices              = ScrollViewProps.stickyHeaderIndices @ScrollView
-endFillColor                     = ScrollViewProps.endFillColor @ScrollView
-overScrollMode                   = ScrollViewProps.overScrollMode @ScrollView
-scrollPerfTag                    = ScrollViewProps.scrollPerfTag @ScrollView
-alwaysBounceHorizontal           = ScrollViewProps.alwaysBounceHorizontal @ScrollView
-horizontal                       = ScrollViewProps.horizontal @ScrollView
-automaticallyAdjustContentInsets = ScrollViewProps.automaticallyAdjustContentInsets @ScrollView
-bounces                          = ScrollViewProps.bounces @ScrollView
-bouncesZoom                      = ScrollViewProps.bouncesZoom @ScrollView
-canCancelContentTouches          = ScrollViewProps.canCancelContentTouches @ScrollView
-centerContent                    = ScrollViewProps.centerContent @ScrollView
-contentInset                     = ScrollViewProps.contentInset @ScrollView
-contentInsetAdjustmentBehavior   = ScrollViewProps.contentInsetAdjustmentBehavior @ScrollView
-contentOffset                    = ScrollViewProps.contentOffset @ScrollView
-decelerationRate                 = ScrollViewProps.decelerationRate @ScrollView
-directionalLockEnabled           = ScrollViewProps.directionalLockEnabled @ScrollView
-indicatorStyle                   = ScrollViewProps.indicatorStyle @ScrollView
-maximumZoomScale                 = ScrollViewProps.maximumZoomScale @ScrollView
-minimumZoomScale                 = ScrollViewProps.minimumZoomScale @ScrollView
-pinchGestureEnabled              = ScrollViewProps.pinchGestureEnabled @ScrollView
-scrollEventThrottle              = ScrollViewProps.scrollEventThrottle @ScrollView
-scrollIndicatorInsets            = ScrollViewProps.scrollIndicatorInsets @ScrollView
-scrollsToTop                     = ScrollViewProps.scrollsToTop @ScrollView
-snapToAlignment                  = ScrollViewProps.snapToAlignment @ScrollView
-snapToInterval                   = ScrollViewProps.snapToInterval @ScrollView
-zoomScale                        = ScrollViewProps.zoomScale @ScrollView
+instance Has ScrollView "alwaysBounceVertical"
+instance Has ScrollView "contentContainerStyle"
+instance Has ScrollView "keyboardDismissMode"
+instance Has ScrollView "keyboardShouldPersistTaps"
+instance Has ScrollView "onContentSizeChange"
+instance Has ScrollView "onMomentumScrollBegin"
+instance Has ScrollView "onMomentumScrollEnd"
+instance Has ScrollView "onScroll"
+instance Has ScrollView "pagingEnabled"
+instance Has ScrollView "refreshControl"
+instance Has ScrollView "scrollEnabled"
+instance Has ScrollView "showsHorizontalScrollIndicator"
+instance Has ScrollView "showsVerticalScrollIndicator"
+instance Has ScrollView "stickyHeaderIndices"
+instance Has ScrollView "endFillColor"
+instance Has ScrollView "overScrollMode"
+instance Has ScrollView "scrollPerfTag"
+instance Has ScrollView "alwaysBounceHorizontal"
+instance Has ScrollView "horizontal"
+instance Has ScrollView "automaticallyAdjustContentInsets"
+instance Has ScrollView "bounces"
+instance Has ScrollView "bouncesZoom"
+instance Has ScrollView "canCancelContentTouches"
+instance Has ScrollView "centerContent"
+instance Has ScrollView "contentInset"
+instance Has ScrollView "contentInsetAdjustmentBehavior"
+instance Has ScrollView "contentOffset"
+instance Has ScrollView "decelerationRate"
+instance Has ScrollView "directionalLockEnabled"
+instance Has ScrollView "indicatorStyle"
+instance Has ScrollView "maximumZoomScale"
+instance Has ScrollView "minimumZoomScale"
+instance Has ScrollView "pinchGestureEnabled"
+instance Has ScrollView "scrollEventThrottle"
+instance Has ScrollView "scrollIndicatorInsets"
+instance Has ScrollView "scrollsToTop"
+instance Has ScrollView "snapToAlignment"
+instance Has ScrollView "snapToInterval"
+instance Has ScrollView "zoomScale"
 
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @ScrollView
-accessibilityLabel               = ViewProps.accessibilityLabel @ScrollView
-hitSlop                          = ViewProps.hitSlop @ScrollView
-nativeID                         = ViewProps.nativeID @ScrollView
-onAccessibilityTap               = ViewProps.onAccessibilityTap @ScrollView
-onLayout                         = ViewProps.onLayout @ScrollView
-onMagicTap                       = ViewProps.onMagicTap @ScrollView
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @ScrollView
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @ScrollView
-onResponderGrant                 = ViewProps.onResponderGrant @ScrollView
-onResponderMove                  = ViewProps.onResponderMove @ScrollView
-onResponderReject                = ViewProps.onResponderReject @ScrollView
-onResponderRelease               = ViewProps.onResponderRelease @ScrollView
-onResponderTerminate             = ViewProps.onResponderTerminate @ScrollView
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @ScrollView
-accessible                       = ViewProps.accessible @ScrollView
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @ScrollView
-pointerEvents                    = ViewProps.pointerEvents @ScrollView
-removeClippedSubviews            = ViewProps.removeClippedSubviews @ScrollView
-style                            = ViewProps.style @ScrollView
-testID                           = ViewProps.testID @ScrollView
-accessibilityComponentType       = ViewProps.accessibilityComponentType @ScrollView
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @ScrollView
-collapsable                      = ViewProps.collapsable @ScrollView
-importantForAccessibility        = ViewProps.importantForAccessibility @ScrollView
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @ScrollView
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @ScrollView
-accessibilityTraits              = ViewProps.accessibilityTraits @ScrollView
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @ScrollView
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @ScrollView
+instance Has ScrollView "onStartShouldSetResponder"
+instance Has ScrollView "accessibilityLabel"
+instance Has ScrollView "hitSlop"
+instance Has ScrollView "nativeID"
+instance Has ScrollView "onAccessibilityTap"
+instance Has ScrollView "onLayout"
+instance Has ScrollView "onMagicTap"
+instance Has ScrollView "onMoveShouldSetResponder"
+instance Has ScrollView "onMoveShouldSetResponderCapture"
+instance Has ScrollView "onResponderGrant"
+instance Has ScrollView "onResponderMove"
+instance Has ScrollView "onResponderReject"
+instance Has ScrollView "onResponderRelease"
+instance Has ScrollView "onResponderTerminate"
+instance Has ScrollView "onResponderTerminationRequest"
+instance Has ScrollView "accessible"
+instance Has ScrollView "onStartShouldSetResponderCapture"
+instance Has ScrollView "pointerEvents"
+instance Has ScrollView "removeClippedSubviews"
+instance Has ScrollView "style"
+instance Has ScrollView "testID"
+instance Has ScrollView "accessibilityComponentType"
+instance Has ScrollView "accessibilityLiveRegion"
+instance Has ScrollView "collapsable"
+instance Has ScrollView "importantForAccessibility"
+instance Has ScrollView "needsOffscreenAlphaCompositing"
+instance Has ScrollView "renderToHardwareTextureAndroid"
+instance Has ScrollView "accessibilityTraits"
+instance Has ScrollView "accessibilityViewIsModal"
+instance Has ScrollView "shouldRasterizeIOS"
 
 
 -- TODO: methods

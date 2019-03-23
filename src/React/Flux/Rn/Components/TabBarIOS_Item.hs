@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TabBarIOS_Item (
     module React.Flux.Rn.Components.TabBarIOS_Item,
     Color(..), ImageSource(..),
@@ -21,79 +25,96 @@ import           Prelude                       (fmap)
 import           Prelude                       ((.))
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Events          (EventHandlerType, on0)
-import           React.Flux.Rn.Properties      (Props, prop, props)
+import           React.Flux.Rn.Properties      (Has, Props, prop, props)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
 import           React.Flux.Rn.Types           (Color (..), ImageSource (..),
                                                 TabBarSystemIcon (..))
 
 {-# ANN module ("HLint: ignore Use camelCase" :: String) #-}
 
+
+
 data TabBarIOS_Item
 tabBarIOS_Item :: [Props TabBarIOS_Item handler] -> ReactElementM handler a -> ReactElementM handler a
 tabBarIOS_Item = foreign_ "TabBarIOS_Item" . fmap props
 
-selected :: Bool -> Props TabBarIOS_Item handler
+
+
+selected :: Has c "selected" => Bool -> Props c handler
 selected = prop "selected"
 
-badge :: Either String Int -> Props TabBarIOS_Item handler
+badge :: Has c "badge" => Either String Int -> Props c handler
 badge (Left x)  = prop "badge" x
 badge (Right x) = prop "badge" x
 
-icon :: ImageSource -> Props TabBarIOS_Item handler
+icon :: Has c "icon" => ImageSource -> Props c handler
 icon = prop "icon"
 
-onPress :: EventHandlerType handler -> Props TabBarIOS_Item handler
+onPress :: Has c "onPress" => EventHandlerType handler -> Props c handler
 onPress = on0 "onPress"
 
-renderAsOriginal :: Bool -> Props TabBarIOS_Item handler
+renderAsOriginal :: Has c "renderAsOriginal" => Bool -> Props c handler
 renderAsOriginal = prop "renderAsOriginal"
 
-badgeColor :: Color -> Props TabBarIOS_Item handler
+badgeColor :: Has c "badgeColor" => Color -> Props c handler
 badgeColor = prop "badgeColor"
 
-selectedIcon :: ImageSource -> Props TabBarIOS_Item handler
+selectedIcon :: Has c "selectedIcon" => ImageSource -> Props c handler
 selectedIcon = prop "selectedIcon"
 
-systemIcon :: TabBarSystemIcon -> Props TabBarIOS_Item handler
+systemIcon :: Has c "systemIcon" => TabBarSystemIcon -> Props c handler
 systemIcon = prop "systemIcon"
 
-title :: String -> Props TabBarIOS_Item handler
+title :: Has c "title" => String -> Props c handler
 title = prop "title"
 
 -- Platform: IOS
-isTVSelectable :: Bool -> Props TabBarIOS_Item handler
+isTVSelectable :: Has c "isTVSelectable" => Bool -> Props c handler
 isTVSelectable = prop "isTVSelectable"
+
+
+
+instance Has TabBarIOS_Item "selected"
+instance Has TabBarIOS_Item "badge"
+instance Has TabBarIOS_Item "icon"
+instance Has TabBarIOS_Item "onPress"
+instance Has TabBarIOS_Item "renderAsOriginal"
+instance Has TabBarIOS_Item "badgeColor"
+instance Has TabBarIOS_Item "selectedIcon"
+instance Has TabBarIOS_Item "systemIcon"
+instance Has TabBarIOS_Item "title"
+instance Has TabBarIOS_Item "isTVSelectable"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @TabBarIOS_Item
-accessibilityLabel               = ViewProps.accessibilityLabel @TabBarIOS_Item
-hitSlop                          = ViewProps.hitSlop @TabBarIOS_Item
-nativeID                         = ViewProps.nativeID @TabBarIOS_Item
-onAccessibilityTap               = ViewProps.onAccessibilityTap @TabBarIOS_Item
-onLayout                         = ViewProps.onLayout @TabBarIOS_Item
-onMagicTap                       = ViewProps.onMagicTap @TabBarIOS_Item
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @TabBarIOS_Item
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @TabBarIOS_Item
-onResponderGrant                 = ViewProps.onResponderGrant @TabBarIOS_Item
-onResponderMove                  = ViewProps.onResponderMove @TabBarIOS_Item
-onResponderReject                = ViewProps.onResponderReject @TabBarIOS_Item
-onResponderRelease               = ViewProps.onResponderRelease @TabBarIOS_Item
-onResponderTerminate             = ViewProps.onResponderTerminate @TabBarIOS_Item
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @TabBarIOS_Item
-accessible                       = ViewProps.accessible @TabBarIOS_Item
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @TabBarIOS_Item
-pointerEvents                    = ViewProps.pointerEvents @TabBarIOS_Item
-removeClippedSubviews            = ViewProps.removeClippedSubviews @TabBarIOS_Item
-style                            = ViewProps.style @TabBarIOS_Item
-testID                           = ViewProps.testID @TabBarIOS_Item
-accessibilityComponentType       = ViewProps.accessibilityComponentType @TabBarIOS_Item
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @TabBarIOS_Item
-collapsable                      = ViewProps.collapsable @TabBarIOS_Item
-importantForAccessibility        = ViewProps.importantForAccessibility @TabBarIOS_Item
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @TabBarIOS_Item
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @TabBarIOS_Item
-accessibilityTraits              = ViewProps.accessibilityTraits @TabBarIOS_Item
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @TabBarIOS_Item
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @TabBarIOS_Item
+instance Has TabBarIOS_Item "onStartShouldSetResponder"
+instance Has TabBarIOS_Item "accessibilityLabel"
+instance Has TabBarIOS_Item "hitSlop"
+instance Has TabBarIOS_Item "nativeID"
+instance Has TabBarIOS_Item "onAccessibilityTap"
+instance Has TabBarIOS_Item "onLayout"
+instance Has TabBarIOS_Item "onMagicTap"
+instance Has TabBarIOS_Item "onMoveShouldSetResponder"
+instance Has TabBarIOS_Item "onMoveShouldSetResponderCapture"
+instance Has TabBarIOS_Item "onResponderGrant"
+instance Has TabBarIOS_Item "onResponderMove"
+instance Has TabBarIOS_Item "onResponderReject"
+instance Has TabBarIOS_Item "onResponderRelease"
+instance Has TabBarIOS_Item "onResponderTerminate"
+instance Has TabBarIOS_Item "onResponderTerminationRequest"
+instance Has TabBarIOS_Item "accessible"
+instance Has TabBarIOS_Item "onStartShouldSetResponderCapture"
+instance Has TabBarIOS_Item "pointerEvents"
+instance Has TabBarIOS_Item "removeClippedSubviews"
+instance Has TabBarIOS_Item "style"
+instance Has TabBarIOS_Item "testID"
+instance Has TabBarIOS_Item "accessibilityComponentType"
+instance Has TabBarIOS_Item "accessibilityLiveRegion"
+instance Has TabBarIOS_Item "collapsable"
+instance Has TabBarIOS_Item "importantForAccessibility"
+instance Has TabBarIOS_Item "needsOffscreenAlphaCompositing"
+instance Has TabBarIOS_Item "renderToHardwareTextureAndroid"
+instance Has TabBarIOS_Item "accessibilityTraits"
+instance Has TabBarIOS_Item "accessibilityViewIsModal"
+instance Has TabBarIOS_Item "shouldRasterizeIOS"
 

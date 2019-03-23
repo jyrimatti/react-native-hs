@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TouchableNativeFeedback (
     module React.Flux.Rn.Components.TouchableNativeFeedback,
     BackgroundPropType,
@@ -13,42 +17,49 @@ module React.Flux.Rn.Components.TouchableNativeFeedback (
 
 import           Prelude                                           (Bool)
 import           Prelude                                           (fmap)
-import           Prelude                       ((.))
+import           Prelude                                           ((.))
 import           React.Flux                                        (ReactElementM,
                                                                     foreign_)
-import           React.Flux.Rn.Properties                          (Props, prop,
-                                                                    props)
+import           React.Flux.Rn.Properties                          (Has, Props,
+                                                                    prop, props)
 import qualified React.Flux.Rn.Props.TouchableWithoutFeedbackProps as TouchableWithoutFeedbackProps
 import           React.Flux.Rn.Types                               (BackgroundPropType)
+
+
 
 data TouchableNativeFeedback
 touchableNativeFeedback :: [Props TouchableNativeFeedback handler] -> ReactElementM handler a -> ReactElementM handler a
 touchableNativeFeedback = foreign_ "TouchableNativeFeedback" . fmap props
 
-background :: BackgroundPropType -> Props TouchableNativeFeedback handler
+
+
+background :: Has c "background" => BackgroundPropType -> Props c handler
 background = prop "background"
 
-useForeground :: Bool -> Props TouchableNativeFeedback handler
+useForeground :: Has c "useForeground" => Bool -> Props c handler
 useForeground = prop "useForeground"
 
 
 
+instance Has TouchableNativeFeedback "background"
+instance Has TouchableNativeFeedback "useForeground"
+
 -- TouchableWithoutFeedbackProps:
 
-hitSlop                    = TouchableWithoutFeedbackProps.hitSlop @TouchableNativeFeedback
-accessibilityComponentType = TouchableWithoutFeedbackProps.accessibilityComponentType @TouchableNativeFeedback
-accessible                 = TouchableWithoutFeedbackProps.accessible @TouchableNativeFeedback
-delayLongPress             = TouchableWithoutFeedbackProps.delayLongPress @TouchableNativeFeedback
-delayPressIn               = TouchableWithoutFeedbackProps.delayPressIn @TouchableNativeFeedback
-delayPressOut              = TouchableWithoutFeedbackProps.delayPressOut @TouchableNativeFeedback
-disabled                   = TouchableWithoutFeedbackProps.disabled @TouchableNativeFeedback
-accessibilityTraits        = TouchableWithoutFeedbackProps.accessibilityTraits @TouchableNativeFeedback
-onLayout                   = TouchableWithoutFeedbackProps.onLayout @TouchableNativeFeedback
-onLongPress                = TouchableWithoutFeedbackProps.onLongPress @TouchableNativeFeedback
-onPress                    = TouchableWithoutFeedbackProps.onPress @TouchableNativeFeedback
-onPressIn                  = TouchableWithoutFeedbackProps.onPressIn @TouchableNativeFeedback
-onPressOut                 = TouchableWithoutFeedbackProps.onPressOut @TouchableNativeFeedback
-pressRetentionOffset       = TouchableWithoutFeedbackProps.pressRetentionOffset @TouchableNativeFeedback
+instance Has TouchableNativeFeedback "hitSlop"
+instance Has TouchableNativeFeedback "accessibilityComponentType"
+instance Has TouchableNativeFeedback "accessible"
+instance Has TouchableNativeFeedback "delayLongPress"
+instance Has TouchableNativeFeedback "delayPressIn"
+instance Has TouchableNativeFeedback "delayPressOut"
+instance Has TouchableNativeFeedback "disabled"
+instance Has TouchableNativeFeedback "accessibilityTraits"
+instance Has TouchableNativeFeedback "onLayout"
+instance Has TouchableNativeFeedback "onLongPress"
+instance Has TouchableNativeFeedback "onPress"
+instance Has TouchableNativeFeedback "onPressIn"
+instance Has TouchableNativeFeedback "onPressOut"
+instance Has TouchableNativeFeedback "pressRetentionOffset"
 
 
 -- TODO: methods

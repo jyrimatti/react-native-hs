@@ -1,10 +1,16 @@
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE KindSignatures #-}
+{-# LANGUAGE DataKinds  #-}
 module React.Flux.Rn.Properties where
 
 import           GHCJS.Marshal (ToJSVal)
 import           GHCJS.Types   (JSString)
 import           Prelude       (fmap, ($), (.))
 import           React.Flux    (PropertyOrHandler, nestedProperty, (&=))
+import           GHC.TypeLits  (Symbol)
+
+class Has component (property :: Symbol)
 
 newtype Props component handler = Props { props :: PropertyOrHandler handler }
 newtype Styles component handler = Styles { styles :: PropertyOrHandler handler }

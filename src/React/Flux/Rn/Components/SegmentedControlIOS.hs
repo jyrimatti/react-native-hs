@@ -1,6 +1,10 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.SegmentedControlIOS (
     module React.Flux.Rn.Components.SegmentedControlIOS,
     Color(..), OnChange(OnChange),
@@ -11,7 +15,8 @@ module React.Flux.Rn.Components.SegmentedControlIOS (
     ViewProps.Inset(Inset),
     ViewProps.OnLayout(OnLayout),
     ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
+    CommonProps.tintColor
 ) where
 
 import           GHCJS.Marshal                 (FromJSVal)
@@ -21,67 +26,82 @@ import           Prelude                       (fmap)
 import           Prelude                       ((.))
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Events          (EventHandlerType, on1)
-import           React.Flux.Rn.Properties      (Props, prop, props)
+import           React.Flux.Rn.Properties      (Has, Props, prop, props)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
+import qualified React.Flux.Rn.Props.CommonProps as CommonProps
 import           React.Flux.Rn.Types           (Color (..), OnChange (OnChange))
+
+
 
 data SegmentedControlIOS
 segmentedControlIOS :: [Props SegmentedControlIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 segmentedControlIOS = foreign_ "SegmentedControlIOS" . fmap props
 
-enabled :: Bool -> Props SegmentedControlIOS handler
+
+
+enabled :: Has c "enabled" => Bool -> Props c handler
 enabled = prop "enabled"
 
-momentary :: Bool -> Props SegmentedControlIOS handler
+momentary :: Has c "momentary" => Bool -> Props c handler
 momentary = prop "momentary"
 
-onChange :: (OnChange -> EventHandlerType handler) -> Props SegmentedControlIOS handler
+onChange :: Has c "onChange" => (OnChange -> EventHandlerType handler) -> Props c handler
 onChange = on1 "onChange"
 
-onValueChange :: FromJSVal value => (value -> EventHandlerType handler) -> Props SegmentedControlIOS handler
+onValueChange :: (Has c "onValueChange", FromJSVal value) => (value -> EventHandlerType handler) -> Props c handler
 onValueChange = on1 "onValueChange"
 
-selectedIndex :: Natural -> Props SegmentedControlIOS handler
+selectedIndex :: Has c "selectedIndex" => Natural -> Props c handler
 selectedIndex = prop "selectedIndex"
 
-tintColor :: Color -> Props SegmentedControlIOS handler
-tintColor = prop "tintColor"
+--tintColor :: Has c "tintColor" => Color -> Props c handler
+--tintColor = prop "tintColor"
 
-values :: [String] -> Props SegmentedControlIOS handler
+values :: Has c "values" => [String] -> Props c handler
 values = prop "values"
+
+
+
+instance Has SegmentedControlIOS "enabled"
+instance Has SegmentedControlIOS "momentary"
+instance Has SegmentedControlIOS "onChange"
+instance Has SegmentedControlIOS "onValueChange"
+instance Has SegmentedControlIOS "selectedIndex"
+instance Has SegmentedControlIOS "tintColor"
+instance Has SegmentedControlIOS "values"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @SegmentedControlIOS
-accessibilityLabel               = ViewProps.accessibilityLabel @SegmentedControlIOS
-hitSlop                          = ViewProps.hitSlop @SegmentedControlIOS
-nativeID                         = ViewProps.nativeID @SegmentedControlIOS
-onAccessibilityTap               = ViewProps.onAccessibilityTap @SegmentedControlIOS
-onLayout                         = ViewProps.onLayout @SegmentedControlIOS
-onMagicTap                       = ViewProps.onMagicTap @SegmentedControlIOS
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @SegmentedControlIOS
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @SegmentedControlIOS
-onResponderGrant                 = ViewProps.onResponderGrant @SegmentedControlIOS
-onResponderMove                  = ViewProps.onResponderMove @SegmentedControlIOS
-onResponderReject                = ViewProps.onResponderReject @SegmentedControlIOS
-onResponderRelease               = ViewProps.onResponderRelease @SegmentedControlIOS
-onResponderTerminate             = ViewProps.onResponderTerminate @SegmentedControlIOS
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @SegmentedControlIOS
-accessible                       = ViewProps.accessible @SegmentedControlIOS
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @SegmentedControlIOS
-pointerEvents                    = ViewProps.pointerEvents @SegmentedControlIOS
-removeClippedSubviews            = ViewProps.removeClippedSubviews @SegmentedControlIOS
-style                            = ViewProps.style @SegmentedControlIOS
-testID                           = ViewProps.testID @SegmentedControlIOS
-accessibilityComponentType       = ViewProps.accessibilityComponentType @SegmentedControlIOS
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @SegmentedControlIOS
-collapsable                      = ViewProps.collapsable @SegmentedControlIOS
-importantForAccessibility        = ViewProps.importantForAccessibility @SegmentedControlIOS
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @SegmentedControlIOS
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @SegmentedControlIOS
-accessibilityTraits              = ViewProps.accessibilityTraits @SegmentedControlIOS
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @SegmentedControlIOS
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @SegmentedControlIOS
+instance Has SegmentedControlIOS "onStartShouldSetResponder"
+instance Has SegmentedControlIOS "accessibilityLabel"
+instance Has SegmentedControlIOS "hitSlop"
+instance Has SegmentedControlIOS "nativeID"
+instance Has SegmentedControlIOS "onAccessibilityTap"
+instance Has SegmentedControlIOS "onLayout"
+instance Has SegmentedControlIOS "onMagicTap"
+instance Has SegmentedControlIOS "onMoveShouldSetResponder"
+instance Has SegmentedControlIOS "onMoveShouldSetResponderCapture"
+instance Has SegmentedControlIOS "onResponderGrant"
+instance Has SegmentedControlIOS "onResponderMove"
+instance Has SegmentedControlIOS "onResponderReject"
+instance Has SegmentedControlIOS "onResponderRelease"
+instance Has SegmentedControlIOS "onResponderTerminate"
+instance Has SegmentedControlIOS "onResponderTerminationRequest"
+instance Has SegmentedControlIOS "accessible"
+instance Has SegmentedControlIOS "onStartShouldSetResponderCapture"
+instance Has SegmentedControlIOS "pointerEvents"
+instance Has SegmentedControlIOS "removeClippedSubviews"
+instance Has SegmentedControlIOS "style"
+instance Has SegmentedControlIOS "testID"
+instance Has SegmentedControlIOS "accessibilityComponentType"
+instance Has SegmentedControlIOS "accessibilityLiveRegion"
+instance Has SegmentedControlIOS "collapsable"
+instance Has SegmentedControlIOS "importantForAccessibility"
+instance Has SegmentedControlIOS "needsOffscreenAlphaCompositing"
+instance Has SegmentedControlIOS "renderToHardwareTextureAndroid"
+instance Has SegmentedControlIOS "accessibilityTraits"
+instance Has SegmentedControlIOS "accessibilityViewIsModal"
+instance Has SegmentedControlIOS "shouldRasterizeIOS"
 
 
 -- TODO: methods

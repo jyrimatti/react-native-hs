@@ -24,14 +24,13 @@ import           GHC.Generics               (Generic)
 import           GHCJS.Marshal              (FromJSVal (..), ToJSVal (..))
 import           GHCJS.Types                (JSString, JSVal)
 import qualified JavaScript.Object.Internal as OI
-import           Network.Http.Types         (Method)
 import           Network.URI                (URI, uriToString)
 import           Numeric.Natural            (Natural)
 import           Prelude                    (Bool, Double, IO, Int, Maybe (..),
                                              Num, Show, String, error, fmap,
-                                             fromIntegral, id, pure, read,
-                                             undefined, ($), (+), (++), (.),
-                                             (<$>), (>>=), last, init, (==))
+                                             fromIntegral, id, init, last, pure,
+                                             read, undefined, ($), (+), (++),
+                                             (.), (<$>), (==), (>>=))
 import qualified Prelude                    as P
 import           React.Flux                 (EventHandlerType, EventTarget (..),
                                              PropertyOrHandler, Touch (..))
@@ -143,11 +142,11 @@ instance ToJSVal Mode where
   toJSVal Time     = str "time"
   toJSVal DateTime = str "datetime"
 
-data DrawerPosition = Left | Right
+data DrawerPosition = LeftDP | RightDP
   deriving (Show, Generic)
 instance ToJSVal DrawerPosition where
-  toJSVal Left  = str "left"
-  toJSVal Right = str "right"
+  toJSVal LeftDP  = str "left"
+  toJSVal RightDP = str "right"
 
 data KeyboardDismissMode = None | OnDrag | Interactive {- IOS -}
   deriving (Show, Generic)
@@ -181,6 +180,18 @@ instance ToJSVal ResizeMode where
   toJSVal Stretch = str "stretch"
   toJSVal Center  = str "center"
   toJSVal Repeat  = str "repeat"
+
+data Method
+    = GET
+    | HEAD
+    | POST
+    | PUT
+    | DELETE
+    | TRACE
+    | OPTIONS
+    | CONNECT
+    | PATCH
+        deriving Show
 
 instance ToJSON URI where
   toJSON uri = toJSON $ uriToString id uri ""

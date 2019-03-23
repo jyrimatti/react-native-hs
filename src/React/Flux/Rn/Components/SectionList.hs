@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.SectionList (
     module React.Flux.Rn.Components.SectionList,
     Index,
@@ -27,112 +31,121 @@ module React.Flux.Rn.Components.SectionList (
 
 import           GHCJS.Marshal                            (FromJSVal)
 import           Prelude                                  (Bool, String)
-import           Prelude                       ((.))
+import           Prelude                                  ((.))
+import           Prelude                                  (fmap)
 import           React.Flux                               (ReactElementM,
                                                            foreign_)
-import           Prelude                       (fmap)
-import           React.Flux.Rn.Properties                 (Props, prop, props)
+import           React.Flux.Rn.Properties                 (Has, Props, prop,
+                                                           props)
 import qualified React.Flux.Rn.Props.ScrollViewProps      as ScrollViewProps
 import qualified React.Flux.Rn.Props.ViewProps            as ViewProps
 import qualified React.Flux.Rn.Props.VirtualizedListProps as VirtualizedListProps
 import           React.Flux.Rn.Types                      (Index)
 
 
+
 data SectionList
 sectionList :: [Props SectionList handler] -> ReactElementM handler a -> ReactElementM handler a
 sectionList = foreign_ "SectionList" . fmap props
 
+
+
 -- Platform: IOS
-stickySectionHeadersEnabled :: Bool -> Props SectionList handler
+stickySectionHeadersEnabled :: Has c "stickySectionHeadersEnabled" => Bool -> Props c handler
 stickySectionHeadersEnabled = prop "stickySectionHeadersEnabled"
+
+
+
+instance Has SectionList "stickySectionHeadersEnabled"
 
 -- VirtualizedListProps:
 
-last                      = VirtualizedListProps.last @SectionList
-first                     = VirtualizedListProps.first @SectionList
-initialNumToRender        = VirtualizedListProps.initialNumToRender @SectionList
-keyExtractor :: forall item handler. FromJSVal item => (item -> Index -> String) -> Props SectionList handler
-keyExtractor              = VirtualizedListProps.keyExtractor @SectionList
-disableVirtualization     = VirtualizedListProps.disableVirtualization @SectionList
-maxToRenderPerBatch       = VirtualizedListProps.maxToRenderPerBatch @SectionList
-onEndReachedThreshold     = VirtualizedListProps.onEndReachedThreshold @SectionList
-updateCellsBatchingPeriod = VirtualizedListProps.updateCellsBatchingPeriod @SectionList
-windowSize                = VirtualizedListProps.windowSize @SectionList
+instance Has SectionList "last"
+instance Has SectionList "first"
+--instance Has SectionList "horizontal"
+instance Has SectionList "initialNumToRender"
+instance Has SectionList "keyExtractor"
+instance Has SectionList "disableVirtualization"
+instance Has SectionList "maxToRenderPerBatch"
+instance Has SectionList "onEndReachedThreshold"
+--instance Has SectionList "scrollEventThrottle"
+instance Has SectionList "updateCellsBatchingPeriod"
+instance Has SectionList "windowSize"
 
 -- ScrollViewProps:
 
-alwaysBounceVertical             = ScrollViewProps.alwaysBounceVertical @SectionList
-contentContainerStyle            = ScrollViewProps.contentContainerStyle @SectionList
-keyboardDismissMode              = ScrollViewProps.keyboardDismissMode @SectionList
-keyboardShouldPersistTaps        = ScrollViewProps.keyboardShouldPersistTaps @SectionList
-onContentSizeChange              = ScrollViewProps.onContentSizeChange @SectionList
-onMomentumScrollBegin            = ScrollViewProps.onMomentumScrollBegin @SectionList
-onMomentumScrollEnd              = ScrollViewProps.onMomentumScrollEnd @SectionList
-onScroll                         = ScrollViewProps.onScroll @SectionList
-pagingEnabled                    = ScrollViewProps.pagingEnabled @SectionList
-refreshControl                   = ScrollViewProps.refreshControl @SectionList
-scrollEnabled                    = ScrollViewProps.scrollEnabled @SectionList
-showsHorizontalScrollIndicator   = ScrollViewProps.showsHorizontalScrollIndicator @SectionList
-showsVerticalScrollIndicator     = ScrollViewProps.showsVerticalScrollIndicator @SectionList
-stickyHeaderIndices              = ScrollViewProps.stickyHeaderIndices @SectionList
-endFillColor                     = ScrollViewProps.endFillColor @SectionList
-overScrollMode                   = ScrollViewProps.overScrollMode @SectionList
-scrollPerfTag                    = ScrollViewProps.scrollPerfTag @SectionList
-alwaysBounceHorizontal           = ScrollViewProps.alwaysBounceHorizontal @SectionList
-horizontal                       = ScrollViewProps.horizontal @SectionList
-automaticallyAdjustContentInsets = ScrollViewProps.automaticallyAdjustContentInsets @SectionList
-bounces                          = ScrollViewProps.bounces @SectionList
-bouncesZoom                      = ScrollViewProps.bouncesZoom @SectionList
-canCancelContentTouches          = ScrollViewProps.canCancelContentTouches @SectionList
-centerContent                    = ScrollViewProps.centerContent @SectionList
-contentInset                     = ScrollViewProps.contentInset @SectionList
-contentInsetAdjustmentBehavior   = ScrollViewProps.contentInsetAdjustmentBehavior @SectionList
-contentOffset                    = ScrollViewProps.contentOffset @SectionList
-decelerationRate                 = ScrollViewProps.decelerationRate @SectionList
-directionalLockEnabled           = ScrollViewProps.directionalLockEnabled @SectionList
-indicatorStyle                   = ScrollViewProps.indicatorStyle @SectionList
-maximumZoomScale                 = ScrollViewProps.maximumZoomScale @SectionList
-minimumZoomScale                 = ScrollViewProps.minimumZoomScale @SectionList
-pinchGestureEnabled              = ScrollViewProps.pinchGestureEnabled @SectionList
-scrollEventThrottle              = ScrollViewProps.scrollEventThrottle @SectionList
-scrollIndicatorInsets            = ScrollViewProps.scrollIndicatorInsets @SectionList
-scrollsToTop                     = ScrollViewProps.scrollsToTop @SectionList
-snapToAlignment                  = ScrollViewProps.snapToAlignment @SectionList
-snapToInterval                   = ScrollViewProps.snapToInterval @SectionList
-zoomScale                        = ScrollViewProps.zoomScale @SectionList
+instance Has SectionList "alwaysBounceVertical"
+instance Has SectionList "contentContainerStyle"
+instance Has SectionList "keyboardDismissMode"
+instance Has SectionList "keyboardShouldPersistTaps"
+instance Has SectionList "onContentSizeChange"
+instance Has SectionList "onMomentumScrollBegin"
+instance Has SectionList "onMomentumScrollEnd"
+instance Has SectionList "onScroll"
+instance Has SectionList "pagingEnabled"
+instance Has SectionList "refreshControl"
+instance Has SectionList "scrollEnabled"
+instance Has SectionList "showsHorizontalScrollIndicator"
+instance Has SectionList "showsVerticalScrollIndicator"
+instance Has SectionList "stickyHeaderIndices"
+instance Has SectionList "endFillColor"
+instance Has SectionList "overScrollMode"
+instance Has SectionList "scrollPerfTag"
+instance Has SectionList "alwaysBounceHorizontal"
+instance Has SectionList "horizontal"
+instance Has SectionList "automaticallyAdjustContentInsets"
+instance Has SectionList "bounces"
+instance Has SectionList "bouncesZoom"
+instance Has SectionList "canCancelContentTouches"
+instance Has SectionList "centerContent"
+instance Has SectionList "contentInset"
+instance Has SectionList "contentInsetAdjustmentBehavior"
+instance Has SectionList "contentOffset"
+instance Has SectionList "decelerationRate"
+instance Has SectionList "directionalLockEnabled"
+instance Has SectionList "indicatorStyle"
+instance Has SectionList "maximumZoomScale"
+instance Has SectionList "minimumZoomScale"
+instance Has SectionList "pinchGestureEnabled"
+instance Has SectionList "scrollEventThrottle"
+instance Has SectionList "scrollIndicatorInsets"
+instance Has SectionList "scrollsToTop"
+instance Has SectionList "snapToAlignment"
+instance Has SectionList "snapToInterval"
+instance Has SectionList "zoomScale"
 
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @SectionList
-accessibilityLabel               = ViewProps.accessibilityLabel @SectionList
-hitSlop                          = ViewProps.hitSlop @SectionList
-nativeID                         = ViewProps.nativeID @SectionList
-onAccessibilityTap               = ViewProps.onAccessibilityTap @SectionList
-onLayout                         = ViewProps.onLayout @SectionList
-onMagicTap                       = ViewProps.onMagicTap @SectionList
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @SectionList
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @SectionList
-onResponderGrant                 = ViewProps.onResponderGrant @SectionList
-onResponderMove                  = ViewProps.onResponderMove @SectionList
-onResponderReject                = ViewProps.onResponderReject @SectionList
-onResponderRelease               = ViewProps.onResponderRelease @SectionList
-onResponderTerminate             = ViewProps.onResponderTerminate @SectionList
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @SectionList
-accessible                       = ViewProps.accessible @SectionList
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @SectionList
-pointerEvents                    = ViewProps.pointerEvents @SectionList
-removeClippedSubviews            = ViewProps.removeClippedSubviews @SectionList
-style                            = ViewProps.style @SectionList
-testID                           = ViewProps.testID @SectionList
-accessibilityComponentType       = ViewProps.accessibilityComponentType @SectionList
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @SectionList
-collapsable                      = ViewProps.collapsable @SectionList
-importantForAccessibility        = ViewProps.importantForAccessibility @SectionList
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @SectionList
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @SectionList
-accessibilityTraits              = ViewProps.accessibilityTraits @SectionList
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @SectionList
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @SectionList
+instance Has SectionList "onStartShouldSetResponder"
+instance Has SectionList "accessibilityLabel"
+instance Has SectionList "hitSlop"
+instance Has SectionList "nativeID"
+instance Has SectionList "onAccessibilityTap"
+instance Has SectionList "onLayout"
+instance Has SectionList "onMagicTap"
+instance Has SectionList "onMoveShouldSetResponder"
+instance Has SectionList "onMoveShouldSetResponderCapture"
+instance Has SectionList "onResponderGrant"
+instance Has SectionList "onResponderMove"
+instance Has SectionList "onResponderReject"
+instance Has SectionList "onResponderRelease"
+instance Has SectionList "onResponderTerminate"
+instance Has SectionList "onResponderTerminationRequest"
+instance Has SectionList "accessible"
+instance Has SectionList "onStartShouldSetResponderCapture"
+instance Has SectionList "pointerEvents"
+instance Has SectionList "removeClippedSubviews"
+instance Has SectionList "style"
+instance Has SectionList "testID"
+instance Has SectionList "accessibilityComponentType"
+instance Has SectionList "accessibilityLiveRegion"
+instance Has SectionList "collapsable"
+instance Has SectionList "importantForAccessibility"
+instance Has SectionList "needsOffscreenAlphaCompositing"
+instance Has SectionList "renderToHardwareTextureAndroid"
+instance Has SectionList "accessibilityTraits"
+instance Has SectionList "accessibilityViewIsModal"
+instance Has SectionList "shouldRasterizeIOS"
 
 -- TODO: methods

@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TextInput (
     module React.Flux.Rn.Components.TextInput,
     Color(..), KeyboardType(..),
@@ -14,222 +18,279 @@ module React.Flux.Rn.Components.TextInput (
     ViewProps.Inset(Inset),
     ViewProps.OnLayout(OnLayout),
     ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
+    CommonProps.selectionColor,
+    CommonProps.style
 ) where
 
-import           Numeric.Natural               (Natural)
-import           Prelude                       (Bool, Int, String)
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties      (Props, Styles, nestedProp, prop,
-                                                props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (AutoCapitalize (..),
-                                                ClearButtonMode (..),
-                                                Color (..),
-                                                DataDetectorTypes (..),
-                                                DocumentSelectionState,
-                                                KeyboardAppearance (..),
-                                                KeyboardType (..),
-                                                OnContentSizeChange (OnContentSizeChange),
-                                                OnKeyPress (OnKeyPress),
-                                                OnScroll (OnScroll),
-                                                OnSelectionChange (OnSelectionChange),
-                                                ReturnKeyType (..),
-                                                Selection (Selection),
-                                                TextBreakStrategy (..))
+import           Numeric.Natural                 (Natural)
+import           Prelude                         (Bool, Int, String)
+import           Prelude                         (fmap)
+import           Prelude                         ((.))
+import           React.Flux                      (ReactElementM, foreign_)
+import           React.Flux.Rn.Events            (EventHandlerType, on0, on1)
+import           React.Flux.Rn.Properties        (Has, Props, Styles,
+                                                  nestedProp, prop, props)
+import qualified React.Flux.Rn.Props.CommonProps as CommonProps
+import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
+import           React.Flux.Rn.Types             (AutoCapitalize (..),
+                                                  ClearButtonMode (..),
+                                                  Color (..),
+                                                  DataDetectorTypes (..),
+                                                  DocumentSelectionState,
+                                                  KeyboardAppearance (..),
+                                                  KeyboardType (..),
+                                                  OnContentSizeChange (OnContentSizeChange),
+                                                  OnKeyPress (OnKeyPress),
+                                                  OnScroll (OnScroll),
+                                                  OnSelectionChange (OnSelectionChange),
+                                                  ReturnKeyType (..),
+                                                  Selection (Selection),
+                                                  TextBreakStrategy (..))
+
+
 
 data TextInput
 textInput :: [Props TextInput handler] -> ReactElementM handler a -> ReactElementM handler a
 textInput = foreign_ "TextInput" . fmap props
 
-placeholderTextColor :: Color -> Props TextInput handler
+
+
+placeholderTextColor :: Has c "placeholderTextColor" => Color -> Props c handler
 placeholderTextColor = prop "placeholderTextColor"
 
-allowFontScaling :: Bool -> Props TextInput handler
+allowFontScaling :: Has c "allowFontScaling" => Bool -> Props c handler
 allowFontScaling = prop "allowFontScaling"
 
-autoCorrect :: Bool -> Props TextInput handler
+autoCorrect :: Has c "autoCorrect" => Bool -> Props c handler
 autoCorrect = prop "autoCorrect"
 
-autoFocus :: Bool -> Props TextInput handler
+autoFocus :: Has c "autoFocus" => Bool -> Props c handler
 autoFocus = prop "autoFocus"
 
-blurOnSubmit :: Bool -> Props TextInput handler
+blurOnSubmit :: Has c "blurOnSubmit" => Bool -> Props c handler
 blurOnSubmit = prop "blurOnSubmit"
 
-caretHidden :: Bool -> Props TextInput handler
+caretHidden :: Has c "caretHidden" => Bool -> Props c handler
 caretHidden = prop "caretHidden"
 
-defaultValue :: String -> Props TextInput handler
+defaultValue :: Has c "defaultValue" => String -> Props c handler
 defaultValue = prop "defaultValue"
 
-editable :: Bool -> Props TextInput handler
+editable :: Has c "editable" => Bool -> Props c handler
 editable = prop "editable"
 
-keyboardType :: KeyboardType -> Props TextInput handler
+keyboardType :: Has c "keyboardType" => KeyboardType -> Props c handler
 keyboardType = prop "keyboardType"
 
-maxHeight :: Natural -> Props TextInput handler
+maxHeight :: Has c "maxHeight" => Natural -> Props c handler
 maxHeight = prop "maxHeight"
 
-maxLength :: Natural -> Props TextInput handler
+maxLength :: Has c "maxLength" => Natural -> Props c handler
 maxLength = prop "maxLength"
 
-multiline :: Bool -> Props TextInput handler
+multiline :: Has c "multiline" => Bool -> Props c handler
 multiline = prop "multiline"
 
-onBlur :: EventHandlerType handler -> Props TextInput handler
+onBlur :: Has c "onBlur" => EventHandlerType handler -> Props c handler
 onBlur = on0 "onBlur"
 
-onChange :: EventHandlerType handler -> Props TextInput handler
+onChange :: Has c "onChange" => EventHandlerType handler -> Props c handler
 onChange = on0 "onChange"
 
-onChangeText :: (String -> EventHandlerType handler) -> Props TextInput handler
+onChangeText :: Has c "onChangeText" => (String -> EventHandlerType handler) -> Props c handler
 onChangeText = on1 "onChangeText"
 
-onContentSizeChange :: (OnContentSizeChange -> EventHandlerType handler) -> Props TextInput handler
+onContentSizeChange :: Has c "onContentSizeChange" => (OnContentSizeChange -> EventHandlerType handler) -> Props c handler
 onContentSizeChange = on1 "onContentSizeChange"
 
-onEndEditing :: EventHandlerType handler -> Props TextInput handler
+onEndEditing :: Has c "onEndEditing" => EventHandlerType handler -> Props c handler
 onEndEditing = on0 "onEndEditing"
 
-onFocus :: EventHandlerType handler -> Props TextInput handler
+onFocus :: Has c "onFocus" => EventHandlerType handler -> Props c handler
 onFocus = on0 "onFocus"
 
-onScroll :: (OnScroll -> EventHandlerType handler) -> Props TextInput handler
+onScroll :: Has c "onScroll" => (OnScroll -> EventHandlerType handler) -> Props c handler
 onScroll = on1 "onScroll"
 
-onSelectionChange :: (OnSelectionChange -> EventHandlerType handler) -> Props TextInput handler
+onSelectionChange :: Has c "onSelectionChange" => (OnSelectionChange -> EventHandlerType handler) -> Props c handler
 onSelectionChange = on1 "onSelectionChange"
 
-onSubmitEditing :: EventHandlerType handler -> Props TextInput handler
+onSubmitEditing :: Has c "onSubmitEditing" => EventHandlerType handler -> Props c handler
 onSubmitEditing = on0 "onSubmitEditing"
 
-placeholder :: String -> Props TextInput handler
+placeholder :: Has c "placeholder" => String -> Props c handler
 placeholder = prop "placeholder"
 
-autoCapitalize :: AutoCapitalize -> Props TextInput handler
+autoCapitalize :: Has c "autoCapitalize" => AutoCapitalize -> Props c handler
 autoCapitalize = prop "autoCapitalize"
 
-returnKeyType :: ReturnKeyType -> Props TextInput handler
+returnKeyType :: Has c "returnKeyType" => ReturnKeyType -> Props c handler
 returnKeyType = prop "returnKeyType"
 
-secureTextEntry :: Bool -> Props TextInput handler
+secureTextEntry :: Has c "secureTextEntry" => Bool -> Props c handler
 secureTextEntry = prop "secureTextEntry"
 
-selectTextOnFocus :: Bool -> Props TextInput handler
+selectTextOnFocus :: Has c "selectTextOnFocus" => Bool -> Props c handler
 selectTextOnFocus = prop "selectTextOnFocus"
 
-selection :: Selection -> Props TextInput handler
+selection :: Has c "selection" => Selection -> Props c handler
 selection = prop "selection"
 
-selectionColor :: Color -> Props TextInput handler
-selectionColor = prop "selectionColor"
+--selectionColor :: Has c "selectionColor" => Color -> Props c handler
+--selectionColor = prop "selectionColor"
 
-style :: [Styles TextInput handler] -> Props TextInput handler
-style = nestedProp "style"
+--style :: Has c "style" => [Styles TextInput handler] -> Props c handler
+--style = nestedProp "style"
 
-value :: String -> Props TextInput handler
+value :: Has c "value" => String -> Props c handler
 value = prop "value"
 
 -- Platform: Android
-autoGrow :: Bool -> Props TextInput handler
+autoGrow :: Has c "autoGrow" => Bool -> Props c handler
 autoGrow = prop "autoGrow"
 
 -- Platform: Android
-disableFullscreenUI :: Bool -> Props TextInput handler
+disableFullscreenUI :: Has c "disableFullscreenUI" => Bool -> Props c handler
 disableFullscreenUI = prop "disableFullscreenUI"
 
 -- Platform: Android
-inlineImageLeft :: String -> Props TextInput handler
+inlineImageLeft :: Has c "inlineImageLeft" => String -> Props c handler
 inlineImageLeft = prop "inlineImageLeft"
 
 -- Platform: Android
-inlineImagePadding :: Int -> Props TextInput handler
+inlineImagePadding :: Has c "inlineImagePadding" => Int -> Props c handler
 inlineImagePadding = prop "inlineImagePadding"
 
 -- Platform: Android
-numberOfLines :: Natural -> Props TextInput handler
+numberOfLines :: Has c "numberOfLines" => Natural -> Props c handler
 numberOfLines = prop "numberOfLines"
 
 -- Platform: Android
-returnKeyLabel :: String -> Props TextInput handler
+returnKeyLabel :: Has c "returnKeyLabel" => String -> Props c handler
 returnKeyLabel = prop "returnKeyLabel"
 
 -- Platform: Android
-textBreakStrategy :: TextBreakStrategy -> Props TextInput handler
+textBreakStrategy :: Has c "textBreakStrategy" => TextBreakStrategy -> Props c handler
 textBreakStrategy = prop "textBreakStrategy"
 
 -- Platform: Android
-underlineColorAndroid :: Color -> Props TextInput handler
+underlineColorAndroid :: Has c "underlineColorAndroid" => Color -> Props c handler
 underlineColorAndroid = prop "underlineColorAndroid"
 
 -- Platform: IOS
-clearButtonMode :: ClearButtonMode -> Props TextInput handler
+clearButtonMode :: Has c "clearButtonMode" => ClearButtonMode -> Props c handler
 clearButtonMode = prop "clearButtonMode"
 
 -- Platform: IOS
-clearTextOnFocus :: Bool -> Props TextInput handler
+clearTextOnFocus :: Has c "clearTextOnFocus" => Bool -> Props c handler
 clearTextOnFocus = prop "clearTextOnFocus"
 
 -- Platform: IOS
-dataDetectorTypes :: DataDetectorTypes -> Props TextInput handler
+dataDetectorTypes :: Has c "dataDetectorTypes" => DataDetectorTypes -> Props c handler
 dataDetectorTypes = prop "dataDetectorTypes"
 
 -- Platform: IOS
-enablesReturnKeyAutomatically :: Bool -> Props TextInput handler
+enablesReturnKeyAutomatically :: Has c "enablesReturnKeyAutomatically" => Bool -> Props c handler
 enablesReturnKeyAutomatically = prop "enablesReturnKeyAutomatically"
 
 -- Platform: IOS
-keyboardAppearance :: KeyboardAppearance -> Props TextInput handler
+keyboardAppearance :: Has c "keyboardAppearance" => KeyboardAppearance -> Props c handler
 keyboardAppearance = prop "keyboardAppearance"
 
 -- Platform: IOS
-onKeyPress :: (OnKeyPress -> EventHandlerType handler) -> Props TextInput handler
+onKeyPress :: Has c "onKeyPress" => (OnKeyPress -> EventHandlerType handler) -> Props c handler
 onKeyPress = on1 "onKeyPress"
 
 -- Platform: IOS
-selectionState :: DocumentSelectionState -> Props TextInput handler
+selectionState :: Has c "selectionState" => DocumentSelectionState -> Props c handler
 selectionState = prop "selectionState"
 
 -- Platform: IOS
-spellCheck :: Bool -> Props TextInput handler
+spellCheck :: Has c "spellCheck" => Bool -> Props c handler
 spellCheck = prop "spellCheck"
+
+
+
+instance Has TextInput "placeholderTextColor"
+instance Has TextInput "allowFontScaling"
+instance Has TextInput "autoCorrect"
+instance Has TextInput "autoFocus"
+instance Has TextInput "blurOnSubmit"
+instance Has TextInput "caretHidden"
+instance Has TextInput "defaultValue"
+instance Has TextInput "editable"
+instance Has TextInput "keyboardType"
+instance Has TextInput "maxHeight"
+instance Has TextInput "maxLength"
+instance Has TextInput "multiline"
+instance Has TextInput "onBlur"
+instance Has TextInput "onChange"
+instance Has TextInput "onChangeText"
+instance Has TextInput "onContentSizeChange"
+instance Has TextInput "onEndEditing"
+instance Has TextInput "onFocus"
+instance Has TextInput "onScroll"
+instance Has TextInput "onSelectionChange"
+instance Has TextInput "onSubmitEditing"
+instance Has TextInput "placeholder"
+instance Has TextInput "autoCapitalize"
+instance Has TextInput "returnKeyType"
+instance Has TextInput "secureTextEntry"
+instance Has TextInput "selectTextOnFocus"
+instance Has TextInput "selection"
+instance Has TextInput "selectionColor"
+--instance Has TextInput "style"
+instance Has TextInput "value"
+instance Has TextInput "autoGrow"
+instance Has TextInput "disableFullscreenUI"
+instance Has TextInput "inlineImageLeft"
+instance Has TextInput "inlineImagePadding"
+instance Has TextInput "numberOfLines"
+instance Has TextInput "returnKeyLabel"
+instance Has TextInput "textBreakStrategy"
+instance Has TextInput "underlineColorAndroid"
+instance Has TextInput "clearButtonMode"
+instance Has TextInput "clearTextOnFocus"
+instance Has TextInput "dataDetectorTypes"
+instance Has TextInput "enablesReturnKeyAutomatically"
+instance Has TextInput "keyboardAppearance"
+instance Has TextInput "onKeyPress"
+instance Has TextInput "selectionState"
+instance Has TextInput "spellCheck"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @TextInput
-accessibilityLabel               = ViewProps.accessibilityLabel @TextInput
-hitSlop                          = ViewProps.hitSlop @TextInput
-nativeID                         = ViewProps.nativeID @TextInput
-onAccessibilityTap               = ViewProps.onAccessibilityTap @TextInput
-onLayout                         = ViewProps.onLayout @TextInput
-onMagicTap                       = ViewProps.onMagicTap @TextInput
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @TextInput
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @TextInput
-onResponderGrant                 = ViewProps.onResponderGrant @TextInput
-onResponderMove                  = ViewProps.onResponderMove @TextInput
-onResponderReject                = ViewProps.onResponderReject @TextInput
-onResponderRelease               = ViewProps.onResponderRelease @TextInput
-onResponderTerminate             = ViewProps.onResponderTerminate @TextInput
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @TextInput
-accessible                       = ViewProps.accessible @TextInput
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @TextInput
-pointerEvents                    = ViewProps.pointerEvents @TextInput
-removeClippedSubviews            = ViewProps.removeClippedSubviews @TextInput
-testID                           = ViewProps.testID @TextInput
-accessibilityComponentType       = ViewProps.accessibilityComponentType @TextInput
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @TextInput
-collapsable                      = ViewProps.collapsable @TextInput
-importantForAccessibility        = ViewProps.importantForAccessibility @TextInput
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @TextInput
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @TextInput
-accessibilityTraits              = ViewProps.accessibilityTraits @TextInput
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @TextInput
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @TextInput
+instance Has TextInput "onStartShouldSetResponder"
+instance Has TextInput "accessibilityLabel"
+instance Has TextInput "hitSlop"
+instance Has TextInput "nativeID"
+instance Has TextInput "onAccessibilityTap"
+instance Has TextInput "onLayout"
+instance Has TextInput "onMagicTap"
+instance Has TextInput "onMoveShouldSetResponder"
+instance Has TextInput "onMoveShouldSetResponderCapture"
+instance Has TextInput "onResponderGrant"
+instance Has TextInput "onResponderMove"
+instance Has TextInput "onResponderReject"
+instance Has TextInput "onResponderRelease"
+instance Has TextInput "onResponderTerminate"
+instance Has TextInput "onResponderTerminationRequest"
+instance Has TextInput "accessible"
+instance Has TextInput "onStartShouldSetResponderCapture"
+instance Has TextInput "pointerEvents"
+instance Has TextInput "removeClippedSubviews"
+instance Has TextInput "style"
+instance Has TextInput "testID"
+instance Has TextInput "accessibilityComponentType"
+instance Has TextInput "accessibilityLiveRegion"
+instance Has TextInput "collapsable"
+instance Has TextInput "importantForAccessibility"
+instance Has TextInput "needsOffscreenAlphaCompositing"
+instance Has TextInput "renderToHardwareTextureAndroid"
+instance Has TextInput "accessibilityTraits"
+instance Has TextInput "accessibilityViewIsModal"
+instance Has TextInput "shouldRasterizeIOS"
 
 
 -- TODO: methods

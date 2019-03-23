@@ -1,7 +1,11 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes        #-}
-{-# LANGUAGE TypeApplications  #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ToolbarAndroid (
     module React.Flux.Rn.Components.ToolbarAndroid,
     Action(Action_), Color(..), ImageSource(..),
@@ -12,94 +16,115 @@ module React.Flux.Rn.Components.ToolbarAndroid (
     ViewProps.Inset(Inset),
     ViewProps.OnLayout(OnLayout),
     ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
+    CommonProps.titleColor
 ) where
 
-import           Numeric.Natural               (Natural)
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
-import           Prelude                       (Bool, Int, String)
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties      (Props, prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (Action (Action_), Color (..),
-                                                ImageSource (..))
+import           Numeric.Natural                 (Natural)
+import           Prelude                         (fmap)
+import           Prelude                         ((.))
+import           Prelude                         (Bool, Int, String)
+import           React.Flux                      (ReactElementM, foreign_)
+import           React.Flux.Rn.Events            (EventHandlerType, on0, on1)
+import           React.Flux.Rn.Properties        (Has, Props, prop, props)
+import qualified React.Flux.Rn.Props.CommonProps as CommonProps
+import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
+import           React.Flux.Rn.Types             (Action (Action_), Color (..),
+                                                  ImageSource (..))
+
 
 
 data ToolbarAndroid
 toolbarAndroid :: [Props ToolbarAndroid handler] -> ReactElementM handler a -> ReactElementM handler a
 toolbarAndroid = foreign_ "ToolbarAndroid" . fmap props
 
-overflowIcon :: ImageSource -> Props ToolbarAndroid handler
+
+
+overflowIcon :: Has c "overflowIcon" => ImageSource -> Props c handler
 overflowIcon = prop "overflowIcon"
 
-actions :: [Action] -> Props ToolbarAndroid handler
+actions :: Has c "actions" => [Action] -> Props c handler
 actions = prop "actions"
 
-contentInsetStart :: Int -> Props ToolbarAndroid handler
+contentInsetStart :: Has c "contentInsetStart" => Int -> Props c handler
 contentInsetStart = prop "contentInsetStart"
 
-logo :: ImageSource -> Props ToolbarAndroid handler
+logo :: Has c "logo" => ImageSource -> Props c handler
 logo = prop "logo"
 
-navIcon :: ImageSource -> Props ToolbarAndroid handler
+navIcon :: Has c "navIcon" => ImageSource -> Props c handler
 navIcon = prop "navIcon"
 
-onActionSelected :: (Natural -> EventHandlerType handler) -> Props ToolbarAndroid handler
+onActionSelected :: Has c "onActionSelected" => (Natural -> EventHandlerType handler) -> Props c handler
 onActionSelected = on1 "onActionSelected"
 
-onIconClicked :: EventHandlerType handler -> Props ToolbarAndroid handler
+onIconClicked :: Has c "onIconClicked" => EventHandlerType handler -> Props c handler
 onIconClicked = on0 "onIconClicked"
 
-contentInsetEnd :: Int -> Props ToolbarAndroid handler
+contentInsetEnd :: Has c "contentInsetEnd" => Int -> Props c handler
 contentInsetEnd = prop "contentInsetEnd"
 
-rtl :: Bool -> Props ToolbarAndroid handler
+rtl :: Has c "rtl" => Bool -> Props c handler
 rtl = prop "rtl"
 
-subtitle :: String -> Props ToolbarAndroid handler
+subtitle :: Has c "subtitle" => String -> Props c handler
 subtitle = prop "subtitle"
 
-subtitleColor :: Color -> Props ToolbarAndroid handler
+subtitleColor :: Has c "subtitleColor" => Color -> Props c handler
 subtitleColor = prop "subtitleColor"
 
-title :: String -> Props ToolbarAndroid handler
+title :: Has c "title" => String -> Props c handler
 title = prop "title"
 
-titleColor :: Color -> Props ToolbarAndroid handler
-titleColor = prop "titleColor"
+--titleColor :: Has c "titleColor" => Color -> Props c handler
+--titleColor = prop "titleColor"
+
+
+
+instance Has ToolbarAndroid "overflowIcon"
+instance Has ToolbarAndroid "actions"
+instance Has ToolbarAndroid "contentInsetStart"
+instance Has ToolbarAndroid "logo"
+instance Has ToolbarAndroid "navIcon"
+instance Has ToolbarAndroid "onActionSelected"
+instance Has ToolbarAndroid "onIconClicked"
+instance Has ToolbarAndroid "contentInsetEnd"
+instance Has ToolbarAndroid "rtl"
+instance Has ToolbarAndroid "subtitle"
+instance Has ToolbarAndroid "subtitleColor"
+instance Has ToolbarAndroid "title"
+instance Has ToolbarAndroid "titleColor"
 
 -- ViewProps:
 
-onStartShouldSetResponder        = ViewProps.onStartShouldSetResponder @ToolbarAndroid
-accessibilityLabel               = ViewProps.accessibilityLabel @ToolbarAndroid
-hitSlop                          = ViewProps.hitSlop @ToolbarAndroid
-nativeID                         = ViewProps.nativeID @ToolbarAndroid
-onAccessibilityTap               = ViewProps.onAccessibilityTap @ToolbarAndroid
-onLayout                         = ViewProps.onLayout @ToolbarAndroid
-onMagicTap                       = ViewProps.onMagicTap @ToolbarAndroid
-onMoveShouldSetResponder         = ViewProps.onMoveShouldSetResponder @ToolbarAndroid
-onMoveShouldSetResponderCapture  = ViewProps.onMoveShouldSetResponderCapture @ToolbarAndroid
-onResponderGrant                 = ViewProps.onResponderGrant @ToolbarAndroid
-onResponderMove                  = ViewProps.onResponderMove @ToolbarAndroid
-onResponderReject                = ViewProps.onResponderReject @ToolbarAndroid
-onResponderRelease               = ViewProps.onResponderRelease @ToolbarAndroid
-onResponderTerminate             = ViewProps.onResponderTerminate @ToolbarAndroid
-onResponderTerminationRequest    = ViewProps.onResponderTerminationRequest @ToolbarAndroid
-accessible                       = ViewProps.accessible @ToolbarAndroid
-onStartShouldSetResponderCapture = ViewProps.onStartShouldSetResponderCapture @ToolbarAndroid
-pointerEvents                    = ViewProps.pointerEvents @ToolbarAndroid
-removeClippedSubviews            = ViewProps.removeClippedSubviews @ToolbarAndroid
-style                            = ViewProps.style @ToolbarAndroid
-testID                           = ViewProps.testID @ToolbarAndroid
-accessibilityComponentType       = ViewProps.accessibilityComponentType @ToolbarAndroid
-accessibilityLiveRegion          = ViewProps.accessibilityLiveRegion @ToolbarAndroid
-collapsable                      = ViewProps.collapsable @ToolbarAndroid
-importantForAccessibility        = ViewProps.importantForAccessibility @ToolbarAndroid
-needsOffscreenAlphaCompositing   = ViewProps.needsOffscreenAlphaCompositing @ToolbarAndroid
-renderToHardwareTextureAndroid   = ViewProps.renderToHardwareTextureAndroid @ToolbarAndroid
-accessibilityTraits              = ViewProps.accessibilityTraits @ToolbarAndroid
-accessibilityViewIsModal         = ViewProps.accessibilityViewIsModal @ToolbarAndroid
-shouldRasterizeIOS               = ViewProps.shouldRasterizeIOS @ToolbarAndroid
+instance Has ToolbarAndroid "onStartShouldSetResponder"
+instance Has ToolbarAndroid "accessibilityLabel"
+instance Has ToolbarAndroid "hitSlop"
+instance Has ToolbarAndroid "nativeID"
+instance Has ToolbarAndroid "onAccessibilityTap"
+instance Has ToolbarAndroid "onLayout"
+instance Has ToolbarAndroid "onMagicTap"
+instance Has ToolbarAndroid "onMoveShouldSetResponder"
+instance Has ToolbarAndroid "onMoveShouldSetResponderCapture"
+instance Has ToolbarAndroid "onResponderGrant"
+instance Has ToolbarAndroid "onResponderMove"
+instance Has ToolbarAndroid "onResponderReject"
+instance Has ToolbarAndroid "onResponderRelease"
+instance Has ToolbarAndroid "onResponderTerminate"
+instance Has ToolbarAndroid "onResponderTerminationRequest"
+instance Has ToolbarAndroid "accessible"
+instance Has ToolbarAndroid "onStartShouldSetResponderCapture"
+instance Has ToolbarAndroid "pointerEvents"
+instance Has ToolbarAndroid "removeClippedSubviews"
+instance Has ToolbarAndroid "style"
+instance Has ToolbarAndroid "testID"
+instance Has ToolbarAndroid "accessibilityComponentType"
+instance Has ToolbarAndroid "accessibilityLiveRegion"
+instance Has ToolbarAndroid "collapsable"
+instance Has ToolbarAndroid "importantForAccessibility"
+instance Has ToolbarAndroid "needsOffscreenAlphaCompositing"
+instance Has ToolbarAndroid "renderToHardwareTextureAndroid"
+instance Has ToolbarAndroid "accessibilityTraits"
+instance Has ToolbarAndroid "accessibilityViewIsModal"
+instance Has ToolbarAndroid "shouldRasterizeIOS"
 

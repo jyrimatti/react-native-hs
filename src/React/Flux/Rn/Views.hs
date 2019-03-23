@@ -6,7 +6,6 @@
 {-# LANGUAGE RankNTypes          #-}
 module React.Flux.Rn.Views (
     module React.Flux.Rn.Views,
-    R.View,
     R.mkControllerView,
     R.ReactElementM,
     R.StoreArg
@@ -17,6 +16,8 @@ import           Data.Typeable       (Typeable)
 import           Prelude             (Eq, ($))
 import qualified React.Flux          as R
 import qualified React.Flux.Internal as I
+
+type ReactView = R.View
 
 mkView :: forall (props :: *) handler. (Typeable props, I.AllEq '[props]) => JSString -> (props -> R.ReactElementM 'R.EventHandlerCode ()) -> props -> R.ReactElementM handler ()
 mkView name buildNode = R.xview_ $ R.mkView name buildNode
