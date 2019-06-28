@@ -85,9 +85,6 @@ pointerEvents = prop "pointerEvents"
 removeClippedSubviews :: Has component "removeClippedSubviews" => Bool -> Props component handler
 removeClippedSubviews = prop "removeClippedSubviews"
 
-style :: forall component handler. Has component "style" => [Styles View handler] -> Props component handler
-style = nestedProp "style"
-
 testID :: Has component "testID" => String -> Props component handler
 testID = prop "testID"
 

@@ -8,7 +8,8 @@
 {-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.View (
     module React.Flux.Rn.Components.View,
-    ViewProps.View,
+    module ViewProps,
+    CommonProps.style,
     ViewProps.AccessibilityComponentTypes(..),
     ViewProps.AccessibilityLiveRegion(..),
     ViewProps.AccessibilityTraits(..),
@@ -23,6 +24,7 @@ import           Prelude                       (fmap)
 import           Prelude                       ((.))
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Properties      (Has, Props, props)
+import qualified React.Flux.Rn.Props.CommonProps as CommonProps
 import           React.Flux.Rn.Props.ViewProps (View)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
 
@@ -32,6 +34,8 @@ view :: [Props View handler] -> ReactElementM handler a -> ReactElementM handler
 view = foreign_ "View" . fmap props
 
 
+-- CommonProps:
+instance Has View "style"
 
 -- ViewProps:
 
@@ -54,7 +58,6 @@ instance Has View "accessible"
 instance Has View "onStartShouldSetResponderCapture"
 instance Has View "pointerEvents"
 instance Has View "removeClippedSubviews"
-instance Has View "style"
 instance Has View "testID"
 instance Has View "accessibilityComponentType"
 instance Has View "accessibilityLiveRegion"

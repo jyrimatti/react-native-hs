@@ -8,6 +8,8 @@
 {-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ScrollView (
     module React.Flux.Rn.Components.ScrollView,
+    module ScrollViewProps,
+    module ViewProps,
     ViewProps.AccessibilityComponentTypes(..),
     ViewProps.AccessibilityLiveRegion(..),
     ViewProps.AccessibilityTraits(..),

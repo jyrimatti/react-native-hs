@@ -76,7 +76,8 @@ library
                     React.Flux.Rn.Styles.Picker,
                     React.Flux.Rn.Styles.TextInput,
                     React.Flux.Rn.Styles.Text,
-                    React.Flux.Rn.Styles.View
+                    React.Flux.Rn.Styles.View,
+                    React.Flux.Rn.Styles.ScrollView
   if impl(ghcjs)
       build-depends: ghcjs-base
   else

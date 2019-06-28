@@ -8,6 +8,9 @@
 {-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.FlatList (
     module React.Flux.Rn.Components.FlatList,
+    module VirtualizedListProps,
+    module ScrollViewProps,
+    module ViewProps,
     Index,
     ViewProps.AccessibilityComponentTypes(..),
     ViewProps.AccessibilityLiveRegion(..),

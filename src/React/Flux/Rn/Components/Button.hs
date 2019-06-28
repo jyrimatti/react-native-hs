@@ -10,8 +10,8 @@ module React.Flux.Rn.Components.Button (
     CommonProps.color
 ) where
 
-import           Prelude                  (Bool, String, fmap)
-import           Prelude                  ((.))
+import Prelude (Bool, String, fmap, (.))
+import           Prelude                  ((.),($),mempty)
 import           React.Flux               (ReactElementM, foreign_)
 import           React.Flux.Rn.Events     (EventHandlerType, on0)
 import           React.Flux.Rn.Properties (Has, Props, prop, props)
@@ -21,8 +21,8 @@ import qualified React.Flux.Rn.Props.CommonProps as CommonProps
 
 
 data Button
-button :: [Props Button handler] -> ReactElementM handler a -> ReactElementM handler a
-button = foreign_ "Button" . fmap props
+button :: [Props Button handler] -> ReactElementM handler ()
+button = ($ mempty) . foreign_ "Button" . fmap props
 
 
 

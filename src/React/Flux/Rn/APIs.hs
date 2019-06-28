@@ -4,17 +4,25 @@
 module React.Flux.Rn.APIs where
 
 import           GHCJS.Marshal    (FromJSVal (..), ToJSVal (..))
-import           GHCJS.Types      (JSVal)
-import           Prelude          (IO, Maybe (..), Show, String, undefined, ($),
-                                   (>>=))
+import           GHCJS.Types      (JSString, JSVal)
+import           Prelude          (IO, Maybe (..), Show, String, undefined, ($),(>>=),Eq)
 import           System.IO.Unsafe (unsafePerformIO)
 
 {-# ANN module ("HLint: ignore Use camelCase" :: String) #-}
 
+#ifdef __GHCJS__
+foreign import javascript unsafe
+    "console.log($1)"
+  log :: JSString -> IO ()
+#else
+log :: JSString -> IO ()
+log = undefined
+#endif
+
 -- Platform
 
 data Platform = IOS | Android | MacOS | Web | Windows | Other String
-  deriving Show
+  deriving (Show, Eq)
 
 platform :: Platform
 platform = case platformOS of
