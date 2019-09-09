@@ -1,53 +1,55 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
 module React.Flux.Rn.StyleProps.ImageStyleProps (
     module React.Flux.Rn.StyleProps.ImageStyleProps,
     Color(..), ResizeMode(..), UnitInterval, Visibility(..)
 ) where
 
 import           Numeric.Natural          (Natural)
-import           React.Flux.Rn.Properties (Styles, style)
+import           React.Flux.Rn.Properties (Styles, style, Has)
 import           React.Flux.Rn.Types      (Color (..), ResizeMode (..),
                                            UnitInterval, Visibility (..))
 
-borderTopRightRadius :: Natural -> Styles component handler
+borderTopRightRadius :: Has c "borderTopRightRadius" => Natural -> Styles c handler
 borderTopRightRadius = style "borderTopRightRadius"
 
-backfaceVisibility :: Visibility -> Styles component handler
+backfaceVisibility :: Has c "backfaceVisibility" => Visibility -> Styles c handler
 backfaceVisibility = style "backfaceVisibility"
 
-borderBottomLeftRadius :: Natural -> Styles component handler
+borderBottomLeftRadius :: Has c "borderBottomLeftRadius" => Natural -> Styles c handler
 borderBottomLeftRadius = style "borderBottomLeftRadius"
 
-borderBottomRightRadius :: Natural -> Styles component handler
+borderBottomRightRadius :: Has c "borderBottomRightRadius" => Natural -> Styles c handler
 borderBottomRightRadius = style "borderBottomRightRadius"
 
-borderColor :: Color -> Styles component handler
+borderColor :: Has c "borderColor" => Color -> Styles c handler
 borderColor = style "borderColor"
 
-borderRadius :: Natural -> Styles component handler
+borderRadius :: Has c "borderRadius" => Natural -> Styles c handler
 borderRadius = style "borderRadius"
 
-borderTopLeftRadius :: Natural -> Styles component handler
+borderTopLeftRadius :: Has c "borderTopLeftRadius" => Natural -> Styles c handler
 borderTopLeftRadius = style "borderTopLeftRadius"
 
-backgroundColor :: Color -> Styles component handler
+backgroundColor :: Has c "backgroundColor" => Color -> Styles c handler
 backgroundColor = style "backgroundColor"
 
-borderWidth :: Natural -> Styles component handler
+borderWidth :: Has c "borderWidth" => Natural -> Styles c handler
 borderWidth = style "borderWidth"
 
-opacity :: UnitInterval -> Styles component handler
+opacity :: Has c "opacity" => UnitInterval -> Styles c handler
 opacity = style "opacity"
 
-overflow :: Visibility -> Styles component handler
+overflow :: Has c "overflow" => Visibility -> Styles c handler
 overflow = style "overflow"
 
-resizeMode :: ResizeMode -> Styles component handler
+resizeMode :: Has c "resizeMode" => ResizeMode -> Styles c handler
 resizeMode = style "resizeMode"
 
-tintColor :: Color -> Styles component handler
+tintColor :: Has c "tintColor" => Color -> Styles c handler
 tintColor = style "tintColor"
 
-overlayColor :: Color -> Styles component handler
+overlayColor :: Has c "overlayColor" => Color -> Styles c handler
 overlayColor = style "overlayColor"

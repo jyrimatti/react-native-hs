@@ -3,10 +3,10 @@
 
 module React.Flux.Rn.APIs where
 
-import           GHCJS.Marshal    (FromJSVal (..), ToJSVal (..))
-import           GHCJS.Types      (JSString, JSVal)
-import           Prelude          (IO, Maybe (..), Show, String, undefined, ($),(>>=),Eq)
-import           System.IO.Unsafe (unsafePerformIO)
+import GHCJS.Marshal    (FromJSVal (..), ToJSVal (..))
+import GHCJS.Types      (JSString, JSVal)
+import Prelude          (IO, Maybe (..), Show, String, undefined, ($),(>>=),Eq)
+import System.IO.Unsafe (unsafePerformIO)
 
 {-# ANN module ("HLint: ignore Use camelCase" :: String) #-}
 
@@ -33,9 +33,11 @@ platform = case platformOS of
              "windows" -> Windows
              p         -> Other p
 
+{-# NOINLINE platformOS #-}
 platformOS :: String
 platformOS = unsafePerformIO $ js_platform_os >>= fromJSValUnchecked
 
+{-# NOINLINE platformVersion #-}
 platformVersion :: String
 platformVersion = unsafePerformIO $ js_platform_version >>= fromJSValUnchecked
 

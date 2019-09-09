@@ -20,7 +20,6 @@ module React.Flux.Rn.Props.ScrollViewProps (
 import           Data.Typeable                 (Typeable)
 import           Numeric.Natural               (Natural)
 import           Prelude                       (Bool, Double, String)
-import           React.Flux.Rn.Components.View (View)
 import           React.Flux.Rn.Events          (EventHandlerType, on0, on2,
                                                 view0)
 import           React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp,
@@ -40,7 +39,7 @@ import           React.Flux.Rn.Types           (Color (..), ContentInsetAdjustme
 alwaysBounceVertical :: Has component "alwaysBounceVertical" => Bool -> Props component handler
 alwaysBounceVertical = prop "alwaysBounceVertical"
 
-contentContainerStyle :: forall component handler. Has component "contentContainerStyle" => [Styles View handler] -> Props component handler
+contentContainerStyle :: forall component handler. Has component "contentContainerStyle" => [Styles component handler] -> Props component handler
 contentContainerStyle = nestedProp "contentContainerStyle"
 
 keyboardDismissMode :: Has component "keyboardDismissMode" => KeyboardDismissMode -> Props component handler

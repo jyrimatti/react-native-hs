@@ -5,9 +5,13 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TextInput (
     module React.Flux.Rn.Components.TextInput,
+    module TextStyleProps,
+    module ViewStyleProps,
+    module LayoutStyleProps,
+    module ShadowStyleProps,
+    module TransformsStyleProps,
     Color(..), KeyboardType(..),
     OnContentSizeChange(OnContentSizeChange), DataDetectorTypes(..), KeyboardAppearance(..), OnKeyPress(OnKeyPress), DocumentSelectionState,
     ReturnKeyType(..), Selection(Selection), TextBreakStrategy(..), ClearButtonMode(..), OnScroll(OnScroll), OnSelectionChange(OnSelectionChange), AutoCapitalize(..),
@@ -24,15 +28,17 @@ module React.Flux.Rn.Components.TextInput (
 ) where
 
 import           Numeric.Natural                 (Natural)
-import           Prelude                         (Bool, Int, String)
-import           Prelude                         (fmap)
-import           Prelude                         ((.))
+import           Prelude                         (Bool, Int, String, fmap, (.))
 import           React.Flux                      (ReactElementM, foreign_)
 import           React.Flux.Rn.Events            (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties        (Has, Props, Styles,
-                                                  nestedProp, prop, props)
+import           React.Flux.Rn.Properties        (Has, Props, prop, props)
 import qualified React.Flux.Rn.Props.CommonProps as CommonProps
 import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
+import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps hiding (maxHeight)
+import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
+import           React.Flux.Rn.StyleProps.TextStyleProps as TextStyleProps
+import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
+import           React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
 import           React.Flux.Rn.Types             (AutoCapitalize (..),
                                                   ClearButtonMode (..),
                                                   Color (..),
@@ -47,7 +53,6 @@ import           React.Flux.Rn.Types             (AutoCapitalize (..),
                                                   ReturnKeyType (..),
                                                   Selection (Selection),
                                                   TextBreakStrategy (..))
-
 
 
 data TextInput
@@ -294,3 +299,122 @@ instance Has TextInput "shouldRasterizeIOS"
 
 
 -- TODO: methods
+
+
+
+
+-- TextStyleProps:
+
+instance Has TextInput "TextInputShadowOffset"
+instance Has TextInput "color"
+instance Has TextInput "fontSize"
+instance Has TextInput "fontStyle"
+instance Has TextInput "fontWeight"
+instance Has TextInput "lineHeight"
+instance Has TextInput "TextInputAlign"
+instance Has TextInput "TextInputDecorationLine"
+instance Has TextInput "TextInputShadowColor"
+instance Has TextInput "fontFamily"
+instance Has TextInput "TextInputShadowRadius"
+instance Has TextInput "includeFontPadding"
+instance Has TextInput "TextInputAlignVertical"
+instance Has TextInput "fontVariant"
+instance Has TextInput "letterSpacing"
+instance Has TextInput "TextInputDecorationColor"
+instance Has TextInput "TextInputDecorationStyle"
+instance Has TextInput "writingDirection"
+
+-- ViewStyleProps:
+
+instance Has TextInput "borderRightColor"
+instance Has TextInput "backfaceVisibility"
+instance Has TextInput "borderBottomColor"
+instance Has TextInput "borderBottomEndRadius"
+instance Has TextInput "borderBottomLeftRadius"
+instance Has TextInput "borderBottomRightRadius"
+instance Has TextInput "borderBottomStartRadius"
+--instance Has TextInput "borderBottomWidth"
+instance Has TextInput "borderColor"
+instance Has TextInput "borderEndColor"
+--instance Has TextInput "borderLeftWidth"
+instance Has TextInput "borderRadius"
+instance Has TextInput "backgroundColor"
+--instance Has TextInput "borderRightWidth"
+instance Has TextInput "borderStartColor"
+instance Has TextInput "borderStyle"
+instance Has TextInput "borderTopColor"
+instance Has TextInput "borderTopEndRadius"
+instance Has TextInput "borderTopLeftRadius"
+instance Has TextInput "borderTopRightRadius"
+instance Has TextInput "borderTopStartRadius"
+--instance Has TextInput "borderTopWidth"
+--instance Has TextInput "borderWidth"
+instance Has TextInput "opacity"
+instance Has TextInput "elevation"
+
+-- LayoutStyleProps:
+
+instance Has TextInput "marginHorizontal"
+instance Has TextInput "alignContent"
+instance Has TextInput "alignSelf"
+instance Has TextInput "aspectRatio"
+instance Has TextInput "borderBottomWidth"
+instance Has TextInput "borderEndWidth"
+instance Has TextInput "borderLeftWidth"
+instance Has TextInput "borderRightWidth"
+instance Has TextInput "borderStartWidth"
+instance Has TextInput "borderTopWidth"
+instance Has TextInput "borderWidth"
+instance Has TextInput "bottom"
+instance Has TextInput "display"
+instance Has TextInput "end"
+instance Has TextInput "flex"
+instance Has TextInput "flexBasis"
+instance Has TextInput "flexDirection"
+instance Has TextInput "flexGrow"
+instance Has TextInput "flexShrink"
+instance Has TextInput "flexWrap"
+instance Has TextInput "height"
+instance Has TextInput "justifyContent"
+instance Has TextInput "left"
+instance Has TextInput "margin"
+instance Has TextInput "marginBottom"
+instance Has TextInput "marginEnd"
+instance Has TextInput "alignItems"
+instance Has TextInput "marginLeft"
+instance Has TextInput "marginRight"
+instance Has TextInput "marginStart"
+instance Has TextInput "marginTop"
+instance Has TextInput "marginVertical"
+--instance Has TextInput "maxHeight"
+instance Has TextInput "maxWidth"
+instance Has TextInput "minHeight"
+instance Has TextInput "minWidth"
+instance Has TextInput "overflow"
+instance Has TextInput "padding"
+instance Has TextInput "paddingBottom"
+instance Has TextInput "paddingEnd"
+instance Has TextInput "paddingHorizontal"
+instance Has TextInput "paddingLeft"
+instance Has TextInput "paddingRight"
+instance Has TextInput "paddingStart"
+instance Has TextInput "paddingTop"
+instance Has TextInput "paddingVertical"
+instance Has TextInput "position"
+instance Has TextInput "right"
+instance Has TextInput "start"
+instance Has TextInput "top"
+instance Has TextInput "width"
+instance Has TextInput "zIndex"
+instance Has TextInput "direction"
+
+-- ShadowStyleProps:
+
+instance Has TextInput "shadowColor"
+instance Has TextInput "shadowOffset"
+instance Has TextInput "shadowOpacity"
+instance Has TextInput "shadowRadius"
+
+-- TransformsStyleProps:
+
+instance Has TextInput "transform"

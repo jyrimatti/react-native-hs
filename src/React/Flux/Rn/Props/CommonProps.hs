@@ -7,10 +7,8 @@
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Props.CommonProps where
 
-import           React.Flux.Rn.Properties (Has, Props, Styles, nestedProp, prop,
-                                           props)
-import           React.Flux.Rn.Types      (BarStyle (..), Color (..),
-                                           Route (Route))
+import React.Flux.Rn.Properties (Has, Styles, Props(..), nestedProp, prop)
+import React.Flux.Rn.Types      (BarStyle (..), Color (..))
 
 color :: Has c "color" => Color -> Props c handler
 color = prop "color"

@@ -12,9 +12,7 @@ module React.Flux.Rn.Components.VirtualizedList (
 ) where
 
 import           GHCJS.Marshal                            (FromJSVal)
-import           Prelude                                  (String)
-import           Prelude                                  (fmap)
-import           Prelude                                  ((.))
+import           Prelude                                  (String, fmap, (.))
 import           React.Flux                               (ReactElementM,
                                                            foreign_)
 import           React.Flux.Rn.Properties                 (Has, Props, props)

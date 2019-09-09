@@ -5,9 +5,12 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.Picker (
     module React.Flux.Rn.Components.Picker,
+    module ViewStyleProps,
+    module LayoutStyleProps,
+    module ShadowStyleProps,
+    module TransformsStyleProps,
     PickerMode(..),
     ViewProps.AccessibilityComponentTypes(..),
     ViewProps.AccessibilityLiveRegion(..),
@@ -21,17 +24,18 @@ module React.Flux.Rn.Components.Picker (
 
 import           GHCJS.Marshal                 (FromJSVal, ToJSVal)
 import           Numeric.Natural               (Natural)
-import           Prelude                       (fmap)
-import           Prelude                       (Bool, String)
-import           Prelude                       ((.))
+import           Prelude                       (Bool, String, (.), fmap)
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Components.Text (Text)
 import           React.Flux.Rn.Events          (EventHandlerType, on2)
 import           React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp,
-                                                prop, props)
+                                                prop, props, style)
 import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (PickerMode (..))
-
+import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
+import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
+import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
+import           React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
+import           React.Flux.Rn.Types           (PickerMode (..), Color(..))
 
 
 data Picker
@@ -106,3 +110,106 @@ instance Has Picker "shouldRasterizeIOS"
 
 
 -- TODO: methods
+
+
+
+
+color :: Color -> Styles Picker handler
+color = style "color"
+
+instance Has Picker "color"
+
+-- ViewStyleProps:
+
+instance Has Picker "borderRightColor"
+instance Has Picker "backfaceVisibility"
+instance Has Picker "borderBottomColor"
+instance Has Picker "borderBottomEndRadius"
+instance Has Picker "borderBottomLeftRadius"
+instance Has Picker "borderBottomRightRadius"
+instance Has Picker "borderBottomStartRadius"
+--instance Has Picker "borderBottomWidth"
+instance Has Picker "borderColor"
+instance Has Picker "borderEndColor"
+--instance Has Picker "borderLeftWidth"
+instance Has Picker "borderRadius"
+instance Has Picker "backgroundColor"
+--instance Has Picker "borderRightWidth"
+instance Has Picker "borderStartColor"
+instance Has Picker "borderStyle"
+instance Has Picker "borderTopColor"
+instance Has Picker "borderTopEndRadius"
+instance Has Picker "borderTopLeftRadius"
+instance Has Picker "borderTopRightRadius"
+instance Has Picker "borderTopStartRadius"
+--instance Has Picker "borderTopWidth"
+--instance Has Picker "borderWidth"
+instance Has Picker "opacity"
+instance Has Picker "elevation"
+
+-- LayoutStyleProps:
+
+instance Has Picker "marginHorizontal"
+instance Has Picker "alignContent"
+instance Has Picker "alignSelf"
+instance Has Picker "aspectRatio"
+instance Has Picker "borderBottomWidth"
+instance Has Picker "borderEndWidth"
+instance Has Picker "borderLeftWidth"
+instance Has Picker "borderRightWidth"
+instance Has Picker "borderStartWidth"
+instance Has Picker "borderTopWidth"
+instance Has Picker "borderWidth"
+instance Has Picker "bottom"
+instance Has Picker "display"
+instance Has Picker "end"
+instance Has Picker "flex"
+instance Has Picker "flexBasis"
+instance Has Picker "flexDirection"
+instance Has Picker "flexGrow"
+instance Has Picker "flexShrink"
+instance Has Picker "flexWrap"
+instance Has Picker "height"
+instance Has Picker "justifyContent"
+instance Has Picker "left"
+instance Has Picker "margin"
+instance Has Picker "marginBottom"
+instance Has Picker "marginEnd"
+instance Has Picker "alignItems"
+instance Has Picker "marginLeft"
+instance Has Picker "marginRight"
+instance Has Picker "marginStart"
+instance Has Picker "marginTop"
+instance Has Picker "marginVertical"
+instance Has Picker "maxHeight"
+instance Has Picker "maxWidth"
+instance Has Picker "minHeight"
+instance Has Picker "minWidth"
+instance Has Picker "overflow"
+instance Has Picker "padding"
+instance Has Picker "paddingBottom"
+instance Has Picker "paddingEnd"
+instance Has Picker "paddingHorizontal"
+instance Has Picker "paddingLeft"
+instance Has Picker "paddingRight"
+instance Has Picker "paddingStart"
+instance Has Picker "paddingTop"
+instance Has Picker "paddingVertical"
+instance Has Picker "position"
+instance Has Picker "right"
+instance Has Picker "start"
+instance Has Picker "top"
+instance Has Picker "width"
+instance Has Picker "zIndex"
+instance Has Picker "direction"
+
+-- ShadowStyleProps:
+
+instance Has Picker "shadowColor"
+instance Has Picker "shadowOffset"
+instance Has Picker "shadowOpacity"
+instance Has Picker "shadowRadius"
+
+-- TransformsStyleProps:
+
+instance Has Picker "transform"

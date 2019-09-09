@@ -4,9 +4,12 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ListView {-# DEPRECATED "Use FlatList or SectionList" #-} (
     module React.Flux.Rn.Components.ListView,
+    module ViewStyleProps,
+    module LayoutStyleProps,
+    module ShadowStyleProps,
+    module TransformsStyleProps,
     ListViewDataSourceRef, ReactViewRef,
     ScrollViewProps.Color (..),
     ScrollViewProps.ContentInsetAdjustmentBehavior (..),
@@ -23,18 +26,19 @@ module React.Flux.Rn.Components.ListView {-# DEPRECATED "Use FlatList or Section
 import           Data.Typeable                       (Typeable)
 import           GHCJS.Marshal                       (FromJSVal)
 import           Numeric.Natural                     (Natural)
-import           Prelude                             ((.))
-import           Prelude                             (Bool, IO)
-import           Prelude                             (fmap)
+import           Prelude                             (Bool, IO, (.), fmap)
 import           React.Flux                          (ReactElementM, foreign_)
 import           React.Flux.Rn.Events                (EventHandlerType, on1,
                                                       on2, view0, view1, view2,
                                                       view3, view4)
 import           React.Flux.Rn.Properties            (Has, Props, prop, props)
 import qualified React.Flux.Rn.Props.ScrollViewProps as ScrollViewProps
+import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
+import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
+import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
+import           React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
 import           React.Flux.Rn.Types                 (ListViewDataSourceRef,
                                                       ReactViewRef)
-
 
 
 data ListView
@@ -113,7 +117,7 @@ instance Has ListView "renderSeparator"
 instance Has ListView "onChangeVisibleRows"
 instance Has ListView "renderFooter"
 
--- ScrollViewProps:
+-- ListViewProps:
 
 instance Has ListView "alwaysBounceVertical"
 instance Has ListView "contentContainerStyle"
@@ -156,3 +160,100 @@ instance Has ListView "snapToInterval"
 instance Has ListView "zoomScale"
 
 -- TODO: methods
+
+
+
+-- ViewStyleProps:
+
+instance Has ListView "borderRightColor"
+instance Has ListView "backfaceVisibility"
+instance Has ListView "borderBottomColor"
+instance Has ListView "borderBottomEndRadius"
+instance Has ListView "borderBottomLeftRadius"
+instance Has ListView "borderBottomRightRadius"
+instance Has ListView "borderBottomStartRadius"
+--instance Has ListView "borderBottomWidth"
+instance Has ListView "borderColor"
+instance Has ListView "borderEndColor"
+--instance Has ListView "borderLeftWidth"
+instance Has ListView "borderRadius"
+instance Has ListView "backgroundColor"
+--instance Has ListView "borderRightWidth"
+instance Has ListView "borderStartColor"
+instance Has ListView "borderStyle"
+instance Has ListView "borderTopColor"
+instance Has ListView "borderTopEndRadius"
+instance Has ListView "borderTopLeftRadius"
+instance Has ListView "borderTopRightRadius"
+instance Has ListView "borderTopStartRadius"
+--instance Has ListView "borderTopWidth"
+--instance Has ListView "borderWidth"
+instance Has ListView "opacity"
+instance Has ListView "elevation"
+
+-- LayoutStyleProps:
+
+instance Has ListView "marginHorizontal"
+instance Has ListView "alignContent"
+instance Has ListView "alignSelf"
+instance Has ListView "aspectRatio"
+instance Has ListView "borderBottomWidth"
+instance Has ListView "borderEndWidth"
+instance Has ListView "borderLeftWidth"
+instance Has ListView "borderRightWidth"
+instance Has ListView "borderStartWidth"
+instance Has ListView "borderTopWidth"
+instance Has ListView "borderWidth"
+instance Has ListView "bottom"
+instance Has ListView "display"
+instance Has ListView "end"
+instance Has ListView "flex"
+instance Has ListView "flexBasis"
+instance Has ListView "flexDirection"
+instance Has ListView "flexGrow"
+instance Has ListView "flexShrink"
+instance Has ListView "flexWrap"
+instance Has ListView "height"
+instance Has ListView "justifyContent"
+instance Has ListView "left"
+instance Has ListView "margin"
+instance Has ListView "marginBottom"
+instance Has ListView "marginEnd"
+instance Has ListView "alignItems"
+instance Has ListView "marginLeft"
+instance Has ListView "marginRight"
+instance Has ListView "marginStart"
+instance Has ListView "marginTop"
+instance Has ListView "marginVertical"
+instance Has ListView "maxHeight"
+instance Has ListView "maxWidth"
+instance Has ListView "minHeight"
+instance Has ListView "minWidth"
+instance Has ListView "overflow"
+instance Has ListView "padding"
+instance Has ListView "paddingBottom"
+instance Has ListView "paddingEnd"
+instance Has ListView "paddingHorizontal"
+instance Has ListView "paddingLeft"
+instance Has ListView "paddingRight"
+instance Has ListView "paddingStart"
+instance Has ListView "paddingTop"
+instance Has ListView "paddingVertical"
+instance Has ListView "position"
+instance Has ListView "right"
+instance Has ListView "start"
+instance Has ListView "top"
+instance Has ListView "width"
+instance Has ListView "zIndex"
+instance Has ListView "direction"
+
+-- ShadowStyleProps:
+
+instance Has ListView "shadowColor"
+instance Has ListView "shadowOffset"
+instance Has ListView "shadowOpacity"
+instance Has ListView "shadowRadius"
+
+-- TransformsStyleProps:
+
+instance Has ListView "transform"

@@ -5,7 +5,6 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TouchableHighlight (
     module React.Flux.Rn.Components.TouchableHighlight,
     Color(..), TvParallaxProperties(TvParallaxProperties),
@@ -17,18 +16,12 @@ module React.Flux.Rn.Components.TouchableHighlight (
     CommonProps.style
 ) where
 
-import           Prelude                                           (Bool)
-import           Prelude                                           ((.))
-import           Prelude                                           (fmap)
+import           Prelude                                           (Bool, (.), fmap)
 import           React.Flux                                        (ReactElementM,
                                                                     foreign_)
-import           React.Flux.Rn.Components.View                     (View)
 import           React.Flux.Rn.Events                              (EventHandlerType,
                                                                     on0)
-import           React.Flux.Rn.Properties                          (Has, Props,
-                                                                    Styles,
-                                                                    nestedProp,
-                                                                    prop, props)
+import           React.Flux.Rn.Properties                          (Has, Props, prop, props)
 import qualified React.Flux.Rn.Props.CommonProps                   as CommonProps
 import qualified React.Flux.Rn.Props.TouchableWithoutFeedbackProps as TouchableWithoutFeedbackProps
 import           React.Flux.Rn.Types                               (Color (..), TvParallaxProperties (TvParallaxProperties),

@@ -15,10 +15,10 @@ module React.Flux.Rn.Props.ViewProps (
     SyntheticTouchEvent(SyntheticTouchEvent)
 ) where
 
-import           Prelude                  (Bool, String)
-import           React.Flux.Rn.Events     (EventHandlerType, on0, on1, ret1)
-import           React.Flux.Rn.Properties (Has, Props, Styles, nestedProp, prop)
-import           React.Flux.Rn.Types      (AccessibilityComponentTypes (..),
+import Prelude                  (Bool, String)
+import React.Flux.Rn.Events     (EventHandlerType, on0, on1, ret1)
+import React.Flux.Rn.Properties (Has, Props, prop)
+import React.Flux.Rn.Types      (AccessibilityComponentTypes (..),
                                            AccessibilityLiveRegion (..),
                                            AccessibilityTraits (..),
                                            ImportantForAccessibility (..),

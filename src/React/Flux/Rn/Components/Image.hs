@@ -7,6 +7,9 @@
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.Image (
     module React.Flux.Rn.Components.Image,
+    module LayoutStyleProps,
+    module ShadowStyleProps,
+    module TransformsStyleProps,
     DefaultSource(..), ImageSource(..), Inset(Inset),
     OnLayout(OnLayout), OnLayoutVals(OnLayoutVals),
     OnProgress(OnProgress), ResizeMethod(..),
@@ -15,14 +18,14 @@ module React.Flux.Rn.Components.Image (
 
 import           GHCJS.Marshal            (FromJSVal (..))
 import           Numeric.Natural          (Natural)
-import           Prelude                  (Bool, String, ($))
-import           Prelude                  ((.))
-import           Prelude                  (fmap)
+import           Prelude ((.), Bool, String, ($), fmap)
 import           React.Flux               (ReactElementM, foreign_)
 import           React.Flux.Rn.Events     (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties (Has, Props, Styles, nestedProp, prop,
-                                           props)
+import           React.Flux.Rn.Properties (Has, Props, prop, props)
 import qualified React.Flux.Rn.Props.CommonProps as CommonProps
+import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
+import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
+import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
 import           React.Flux.Rn.Types      (DefaultSource (..), ImageSource (..),
                                            Inset (Inset), OnLayout (OnLayout),
                                            OnLayoutVals (OnLayoutVals),
@@ -30,15 +33,11 @@ import           React.Flux.Rn.Types      (DefaultSource (..), ImageSource (..),
                                            ResizeMethod (..))
 
 
-
 data Image
 image :: [Props Image handler] -> ReactElementM handler a -> ReactElementM handler a
 image = foreign_ "Image" . fmap props
 
 
-
---style :: Has c "style" => [Styles c handler] -> Props c handler
---style = nestedProp "style"
 
 blurRadius :: Has c "blurRadius" => Natural -> Props c handler
 blurRadius = prop "blurRadius"
@@ -112,3 +111,87 @@ instance Has Image "onPartialLoad"
 instance Has Image "onProgress"
 
 -- TODO: methods
+
+
+
+instance Has Image "borderTopRightRadius"
+instance Has Image "backfaceVisibility"
+instance Has Image "borderBottomLeftRadius"
+instance Has Image "borderBottomRightRadius"
+instance Has Image "borderColor"
+instance Has Image "borderRadius"
+instance Has Image "borderTopLeftRadius"
+instance Has Image "backgroundColor"
+--instance Has Image "borderWidth"
+instance Has Image "opacity"
+--instance Has Image "overflow"
+instance Has Image "resizeMode"
+instance Has Image "tintColor"
+instance Has Image "overlayColor"
+
+-- LayoutStyleProps:
+
+instance Has Image "marginHorizontal"
+instance Has Image "alignContent"
+instance Has Image "alignSelf"
+instance Has Image "aspectRatio"
+instance Has Image "borderBottomWidth"
+instance Has Image "borderEndWidth"
+instance Has Image "borderLeftWidth"
+instance Has Image "borderRightWidth"
+instance Has Image "borderStartWidth"
+instance Has Image "borderTopWidth"
+instance Has Image "borderWidth"
+instance Has Image "bottom"
+instance Has Image "display"
+instance Has Image "end"
+instance Has Image "flex"
+instance Has Image "flexBasis"
+instance Has Image "flexDirection"
+instance Has Image "flexGrow"
+instance Has Image "flexShrink"
+instance Has Image "flexWrap"
+instance Has Image "height"
+instance Has Image "justifyContent"
+instance Has Image "left"
+instance Has Image "margin"
+instance Has Image "marginBottom"
+instance Has Image "marginEnd"
+instance Has Image "alignItems"
+instance Has Image "marginLeft"
+instance Has Image "marginRight"
+instance Has Image "marginStart"
+instance Has Image "marginTop"
+instance Has Image "marginVertical"
+instance Has Image "maxHeight"
+instance Has Image "maxWidth"
+instance Has Image "minHeight"
+instance Has Image "minWidth"
+instance Has Image "overflow"
+instance Has Image "padding"
+instance Has Image "paddingBottom"
+instance Has Image "paddingEnd"
+instance Has Image "paddingHorizontal"
+instance Has Image "paddingLeft"
+instance Has Image "paddingRight"
+instance Has Image "paddingStart"
+instance Has Image "paddingTop"
+instance Has Image "paddingVertical"
+instance Has Image "position"
+instance Has Image "right"
+instance Has Image "start"
+instance Has Image "top"
+instance Has Image "width"
+instance Has Image "zIndex"
+instance Has Image "direction"
+
+-- ShadowStyleProps:
+
+instance Has Image "shadowColor"
+instance Has Image "shadowOffset"
+instance Has Image "shadowOpacity"
+instance Has Image "shadowRadius"
+
+-- TransformsStyleProps:
+
+instance Has Image "transform"

@@ -5,7 +5,6 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TouchableOpacity (
     module React.Flux.Rn.Components.TouchableOpacity,
     TvParallaxProperties(TvParallaxProperties),
@@ -16,9 +15,7 @@ module React.Flux.Rn.Components.TouchableOpacity (
     TouchableWithoutFeedbackProps.OnLayout(OnLayout)
 ) where
 
-import           Prelude                                           (Bool)
-import           Prelude                                           (fmap)
-import           Prelude                                           ((.))
+import           Prelude                                           (Bool, fmap, (.))
 import           React.Flux                                        (ReactElementM,
                                                                     foreign_)
 import           React.Flux.Rn.Properties                          (Has, Props,

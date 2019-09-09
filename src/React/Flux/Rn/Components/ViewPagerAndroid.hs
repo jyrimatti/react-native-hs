@@ -5,7 +5,6 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ViewPagerAndroid (
     module React.Flux.Rn.Components.ViewPagerAndroid,
     KeyboardDismissMode(..), OnPageScroll(OnPageScroll), OnPageSelected(OnPageSelected), PageScrollingState(..),
@@ -20,9 +19,7 @@ module React.Flux.Rn.Components.ViewPagerAndroid (
 ) where
 
 import           Numeric.Natural               (Natural)
-import           Prelude                       (Bool, Int)
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
+import           Prelude                       (Bool, Int, fmap, (.))
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Events          (EventHandlerType, on1)
 import           React.Flux.Rn.Properties      (Has, Props, prop, props)

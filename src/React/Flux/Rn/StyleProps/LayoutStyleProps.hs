@@ -1,5 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
 module React.Flux.Rn.StyleProps.LayoutStyleProps (
     module React.Flux.Rn.StyleProps.LayoutStyleProps,
     AlignContent(..), AlignItems(..), AlignSelf(..), Direction(..), Display(..), FlexDirection(..), FlexWrap(..), JustifyContent(..), Length(..), Overflow(..), Position(..)
@@ -7,7 +9,7 @@ module React.Flux.Rn.StyleProps.LayoutStyleProps (
 
 import           Numeric.Natural          (Natural)
 import           Prelude                  (Int)
-import           React.Flux.Rn.Properties (Styles, style)
+import           React.Flux.Rn.Properties (Styles, style, Has)
 import           React.Flux.Rn.Types      (AlignContent (..), AlignItems (..),
                                            AlignSelf (..), Direction (..),
                                            Display (..), FlexDirection (..),
@@ -15,162 +17,162 @@ import           React.Flux.Rn.Types      (AlignContent (..), AlignItems (..),
                                            Length (..), Overflow (..),
                                            Position (..))
 
-marginHorizontal :: Length -> Styles component handler
+marginHorizontal :: Has c "marginHorizontal" => Length -> Styles c handler
 marginHorizontal = style "marginHorizontal"
 
-alignContent :: AlignContent -> Styles component handler
+alignContent :: Has c "alignContent" => AlignContent -> Styles c handler
 alignContent = style "alignContent"
 
-alignSelf :: AlignSelf -> Styles component handler
+alignSelf :: Has c "alignSelf" => AlignSelf -> Styles c handler
 alignSelf = style "alignSelf"
 
-aspectRatio :: Natural -> Styles component handler
+aspectRatio :: Has c "aspectRatio" => Natural -> Styles c handler
 aspectRatio = style "aspectRatio"
 
-borderBottomWidth :: Natural -> Styles component handler
+borderBottomWidth :: Has c "borderBottomWidth" => Natural -> Styles c handler
 borderBottomWidth = style "borderBottomWidth"
 
-borderEndWidth :: Natural -> Styles component handler
+borderEndWidth :: Has c "borderEndWidth" => Natural -> Styles c handler
 borderEndWidth = style "borderEndWidth"
 
-borderLeftWidth :: Natural -> Styles component handler
+borderLeftWidth :: Has c "borderLeftWidth" => Natural -> Styles c handler
 borderLeftWidth = style "borderLeftWidth"
 
-borderRightWidth :: Natural -> Styles component handler
+borderRightWidth :: Has c "borderRightWidth" => Natural -> Styles c handler
 borderRightWidth = style "borderRightWidth"
 
-borderStartWidth :: Natural -> Styles component handler
+borderStartWidth :: Has c "borderStartWidth" => Natural -> Styles c handler
 borderStartWidth = style "borderStartWidth"
 
-borderTopWidth :: Natural -> Styles component handler
+borderTopWidth :: Has c "borderTopWidth" => Natural -> Styles c handler
 borderTopWidth = style "borderTopWidth"
 
-borderWidth :: Natural -> Styles component handler
+borderWidth :: Has c "borderWidth" => Natural -> Styles c handler
 borderWidth = style "borderWidth"
 
-bottom :: Length -> Styles component handler
+bottom :: Has c "bottom" => Length -> Styles c handler
 bottom = style "bottom"
 
-display :: Display -> Styles component handler
+display :: Has c "display" => Display -> Styles c handler
 display = style "display"
 
-end :: Length -> Styles component handler
+end :: Has c "end" => Length -> Styles c handler
 end = style "end"
 
-flex :: Int -> Styles component handler
+flex :: Has c "flex" => Int -> Styles c handler
 flex = style "flex"
 
-flexBasis :: Length -> Styles component handler
+flexBasis :: Has c "v" => Length -> Styles c handler
 flexBasis = style "flexBasis"
 
-flexDirection :: FlexDirection -> Styles component handler
+flexDirection :: Has c "flexDirection" => FlexDirection -> Styles c handler
 flexDirection = style "flexDirection"
 
-flexGrow :: Natural -> Styles component handler
+flexGrow :: Has c "flexGrow" => Natural -> Styles c handler
 flexGrow = style "flexGrow"
 
-flexShrink :: Natural -> Styles component handler
+flexShrink :: Has c "flexShrink" => Natural -> Styles c handler
 flexShrink = style "flexShrink"
 
-flexWrap :: FlexWrap -> Styles component handler
+flexWrap :: Has c "flexWrap" => FlexWrap -> Styles c handler
 flexWrap = style "flexWrap"
 
-height :: Length -> Styles component handler
+height :: Has c "height" => Length -> Styles c handler
 height = style "height"
 
-justifyContent :: JustifyContent -> Styles component handler
+justifyContent :: Has c "justifyContent" => JustifyContent -> Styles c handler
 justifyContent = style "justifyContent"
 
-left :: Length -> Styles component handler
+left :: Has c "left" => Length -> Styles c handler
 left = style "left"
 
-margin :: Length -> Styles component handler
+margin :: Has c "margin" => Length -> Styles c handler
 margin = style "margin"
 
-marginBottom :: Length -> Styles component handler
+marginBottom :: Has c "marginBottom" => Length -> Styles c handler
 marginBottom = style "marginBottom"
 
-marginEnd :: Length -> Styles component handler
+marginEnd :: Has c "marginEnd" => Length -> Styles c handler
 marginEnd = style "marginEnd"
 
-alignItems :: AlignItems -> Styles component handler
+alignItems :: Has c "alignItems" => AlignItems -> Styles c handler
 alignItems = style "alignItems"
 
-marginLeft :: Length -> Styles component handler
+marginLeft :: Has c "marginLeft" => Length -> Styles c handler
 marginLeft = style "marginLeft"
 
-marginRight :: Length -> Styles component handler
+marginRight :: Has c "marginRight" => Length -> Styles c handler
 marginRight = style "marginRight"
 
-marginStart :: Length -> Styles component handler
+marginStart :: Has c "marginStart" => Length -> Styles c handler
 marginStart = style "marginStart"
 
-marginTop :: Length -> Styles component handler
+marginTop :: Has c "marginTop" => Length -> Styles c handler
 marginTop = style "marginTop"
 
-marginVertical :: Length -> Styles component handler
+marginVertical :: Has c "marginVertical" => Length -> Styles c handler
 marginVertical = style "marginVertical"
 
-maxHeight :: Length -> Styles component handler
+maxHeight :: Has c "maxHeight" => Length -> Styles c handler
 maxHeight = style "maxHeight"
 
-maxWidth :: Length -> Styles component handler
+maxWidth :: Has c "maxWidth" => Length -> Styles c handler
 maxWidth = style "maxWidth"
 
-minHeight :: Length -> Styles component handler
+minHeight :: Has c "minHeight" => Length -> Styles c handler
 minHeight = style "minHeight"
 
-minWidth :: Length -> Styles component handler
+minWidth :: Has c "minWidth" => Length -> Styles c handler
 minWidth = style "minWidth"
 
-overflow :: Overflow -> Styles component handler
+overflow :: Has c "overflow" => Overflow -> Styles c handler
 overflow = style "overflow"
 
-padding :: Length -> Styles component handler
+padding :: Has c "padding" => Length -> Styles c handler
 padding = style "padding"
 
-paddingBottom :: Length -> Styles component handler
+paddingBottom :: Has c "paddingBottom" => Length -> Styles c handler
 paddingBottom = style "paddingBottom"
 
-paddingEnd :: Length -> Styles component handler
+paddingEnd :: Has c "paddingEnd" => Length -> Styles c handler
 paddingEnd = style "paddingEnd"
 
-paddingHorizontal :: Length -> Styles component handler
+paddingHorizontal :: Has c "paddingHorizontal" => Length -> Styles c handler
 paddingHorizontal = style "paddingHorizontal"
 
-paddingLeft :: Length -> Styles component handler
+paddingLeft :: Has c "paddingLeft" => Length -> Styles c handler
 paddingLeft = style "paddingLeft"
 
-paddingRight :: Length -> Styles component handler
+paddingRight :: Has c "paddingRight" => Length -> Styles c handler
 paddingRight = style "paddingRight"
 
-paddingStart :: Length -> Styles component handler
+paddingStart :: Has c "paddingStart" => Length -> Styles c handler
 paddingStart = style "paddingStart"
 
-paddingTop :: Length -> Styles component handler
+paddingTop :: Has c "paddingTop" => Length -> Styles c handler
 paddingTop = style "paddingTop"
 
-paddingVertical :: Length -> Styles component handler
+paddingVertical :: Has c "paddingVertical" => Length -> Styles c handler
 paddingVertical = style "paddingVertical"
 
-position :: Position -> Styles component handler
+position :: Has c "position" => Position -> Styles c handler
 position = style "position"
 
-right :: Length -> Styles component handler
+right :: Has c "right" => Length -> Styles c handler
 right = style "right"
 
-start :: Length -> Styles component handler
+start :: Has c "start" => Length -> Styles c handler
 start = style "start"
 
-top :: Length -> Styles component handler
+top :: Has c "top" => Length -> Styles c handler
 top = style "top"
 
-width :: Length -> Styles component handler
+width :: Has c "width" => Length -> Styles c handler
 width = style "width"
 
-zIndex :: Int -> Styles component handler
+zIndex :: Has c "zIndex" => Int -> Styles c handler
 zIndex = style "zIndex"
 
 -- Platform: IOS
-direction :: Direction -> Styles component handler
+direction :: Has c "direction" => Direction -> Styles c handler
 direction = style "direction"

@@ -4,7 +4,6 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.MaskedViewIOS (
     module React.Flux.Rn.Components.MaskedViewIOS,
     ReactViewRef,
@@ -19,8 +18,7 @@ module React.Flux.Rn.Components.MaskedViewIOS (
 ) where
 
 import           Data.Typeable                 (Typeable)
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
+import           Prelude                       (fmap, (.))
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Events          (view0)
 import           React.Flux.Rn.Properties      (Has, Props, props)

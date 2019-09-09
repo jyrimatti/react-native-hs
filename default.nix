@@ -1,35 +1,37 @@
-{ nixpkgs ? import <nixpkgs> {}, compiler ? "ghcjs" }:
+{ nixpkgs ? import (fetchTarball https://github.com/NixOS/nixpkgs/archive/29200f051766af17924fdcf9f9cb25c73591d509.tar.gz) {}, compiler ? "ghcjs" }:
 
 let
-
   inherit (nixpkgs) pkgs;
 
+  hp = if compiler == "default"
+                    then pkgs.haskellPackages
+                    else pkgs.haskell.packages.${compiler};
+
+  haskellPackages = hp.override (old: {
+    overrides = pkgs.lib.composeExtensions (old.overrides or (_: _: {})) (self: super: {
+      QuickCheck = pkgs.haskell.lib.dontCheck super.QuickCheck;
+   });
+  });
+
   react-native-hs = { mkDerivation, base, deepseq, ghcjs-base, react-hs, stdenv, nodejs,
-        text, time, transformers, containers, http-common, network-uri, semigroups
+        text, time, transformers, containers, network-uri, semigroups
       }:
       mkDerivation {
         pname = "react-native-hs";
         version = "0.1.1";
         src = ./.;
         libraryHaskellDepends = [
-          base deepseq ghcjs-base react-hs text time transformers containers http-common network-uri semigroups
+          base deepseq ghcjs-base react-hs text time transformers containers network-uri semigroups
         ];
-        buildDepends = [pkgs.haskellPackages.cabal-install pkgs.haskellPackages.Cabal] ++
-          (if compiler == "default"
-             then with haskellPackages; [nodejs hlint stack intero hasktags pointfree hdevtools stylish-haskell hindent (hoogle.override { process-extras = pkgs.haskell.lib.dontCheck process-extras; }) (apply-refact.override { ghc-exactprint = pkgs.haskell.lib.dontCheck ghc-exactprint; })]
-             else []);
+        buildDepends = [pkgs.haskellPackages.cabal-install pkgs.haskellPackages.Cabal];
         homepage = "https://github.com/jyrimatti/react-native-hs";
         description = "React-native support for react-hs";
         license = stdenv.lib.licenses.mit;
       };
-  
-  haskellPackages = if compiler == "default"
-                       then pkgs.haskellPackages
-                       else pkgs.haskell.packages.${compiler};
 
-  ghcjsbase = if compiler == "default"
-                 then haskellPackages.ghcjs-base-stub
-                 else haskellPackages.ghcjs-base;
+  ghcjsbase = if compiler == "ghcjs" || compiler == "ghcjs84" || compiler == "ghcjs86"
+                 then haskellPackages.ghcjs-base
+                 else haskellPackages.ghcjs-base-stub;
 
   # my fork, until it gets to Hackage
   react-hs-forked = { fetchgit, stdenv, mkDerivation,

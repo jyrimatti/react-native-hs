@@ -71,13 +71,7 @@ library
                     React.Flux.Rn.StyleProps.ShadowStyleProps,
                     React.Flux.Rn.StyleProps.TextStyleProps,
                     React.Flux.Rn.StyleProps.TransformsStyleProps,
-                    React.Flux.Rn.StyleProps.ViewStyleProps,
-                    React.Flux.Rn.Styles.Image,
-                    React.Flux.Rn.Styles.Picker,
-                    React.Flux.Rn.Styles.TextInput,
-                    React.Flux.Rn.Styles.Text,
-                    React.Flux.Rn.Styles.View,
-                    React.Flux.Rn.Styles.ScrollView
+                    React.Flux.Rn.StyleProps.ViewStyleProps
   if impl(ghcjs)
       build-depends: ghcjs-base
   else

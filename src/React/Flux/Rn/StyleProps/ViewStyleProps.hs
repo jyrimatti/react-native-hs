@@ -1,86 +1,88 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
 module React.Flux.Rn.StyleProps.ViewStyleProps (
     module React.Flux.Rn.StyleProps.ViewStyleProps,
     BorderStyle(..), Color(..), UnitInterval, Visibility(..)
 ) where
 
 import           Numeric.Natural          (Natural)
-import           React.Flux.Rn.Properties (Styles, style)
+import           React.Flux.Rn.Properties (Styles, style, Has)
 import           React.Flux.Rn.Types      (BorderStyle (..), Color (..),
                                            UnitInterval, Visibility (..))
 
-borderRightColor :: Color -> Styles component handler
+borderRightColor :: Has c "borderRightColor" => Color -> Styles c handler
 borderRightColor = style "borderRightColor"
 
-backfaceVisibility :: Visibility -> Styles component handler
+backfaceVisibility :: Has c "backfaceVisibility" => Visibility -> Styles c handler
 backfaceVisibility = style "backfaceVisibility"
 
-borderBottomColor :: Color -> Styles component handler
+borderBottomColor :: Has c "borderBottomColor" => Color -> Styles c handler
 borderBottomColor = style "borderBottomColor"
 
-borderBottomEndRadius :: Natural -> Styles component handler
+borderBottomEndRadius :: Has c "borderBottomEndRadius" => Natural -> Styles c handler
 borderBottomEndRadius = style "borderBottomEndRadius"
 
-borderBottomLeftRadius :: Natural -> Styles component handler
+borderBottomLeftRadius :: Has c "borderBottomLeftRadius" => Natural -> Styles c handler
 borderBottomLeftRadius = style "borderBottomLeftRadius"
 
-borderBottomRightRadius :: Natural -> Styles component handler
+borderBottomRightRadius :: Has c "borderBottomRightRadius" => Natural -> Styles c handler
 borderBottomRightRadius = style "borderBottomRightRadius"
 
-borderBottomStartRadius :: Natural -> Styles component handler
+borderBottomStartRadius :: Has c "borderBottomStartRadius" => Natural -> Styles c handler
 borderBottomStartRadius = style "borderBottomStartRadius"
 
-borderBottomWidth :: Natural -> Styles component handler
+borderBottomWidth :: Has c "borderBottomWidth" => Natural -> Styles c handler
 borderBottomWidth = style "borderBottomWidth"
 
-borderColor :: Color -> Styles component handler
+borderColor :: Has c "borderColor" => Color -> Styles c handler
 borderColor = style "borderColor"
 
-borderEndColor :: Color -> Styles component handler
+borderEndColor :: Has c "borderEndColor" => Color -> Styles c handler
 borderEndColor = style "borderEndColor"
 
-borderLeftWidth :: Natural -> Styles component handler
+borderLeftWidth :: Has c "borderLeftWidth" => Natural -> Styles c handler
 borderLeftWidth = style "borderLeftWidth"
 
-borderRadius :: Natural -> Styles component handler
+borderRadius :: Has c "borderRadius" => Natural -> Styles c handler
 borderRadius = style "borderRadius"
 
-backgroundColor :: Color -> Styles component handler
+backgroundColor :: Has c "backgroundColor" => Color -> Styles c handler
 backgroundColor = style "backgroundColor"
 
-borderRightWidth :: Natural -> Styles component handler
+borderRightWidth :: Has c "borderRightWidth" => Natural -> Styles c handler
 borderRightWidth = style "borderRightWidth"
 
-borderStartColor :: Color -> Styles component handler
+borderStartColor :: Has c "borderStartColor" => Color -> Styles c handler
 borderStartColor = style "borderStartColor"
 
-borderStyle :: BorderStyle -> Styles component handler
+borderStyle :: Has c "borderStyle" => BorderStyle -> Styles c handler
 borderStyle = style "borderStyle"
 
-borderTopColor :: Color -> Styles component handler
+borderTopColor :: Has c "borderTopColor" => Color -> Styles c handler
 borderTopColor = style "borderTopColor"
 
-borderTopEndRadius :: Natural -> Styles component handler
+borderTopEndRadius :: Has c "borderTopEndRadius" => Natural -> Styles c handler
 borderTopEndRadius = style "borderTopEndRadius"
 
-borderTopLeftRadius :: Natural -> Styles component handler
+borderTopLeftRadius :: Has c "borderTopLeftRadius" => Natural -> Styles c handler
 borderTopLeftRadius = style "borderTopLeftRadius"
 
-borderTopRightRadius :: Natural -> Styles component handler
+borderTopRightRadius :: Has c "borderTopRightRadius" => Natural -> Styles c handler
 borderTopRightRadius = style "borderTopRightRadius"
 
-borderTopStartRadius :: Natural -> Styles component handler
+borderTopStartRadius :: Has c "borderTopStartRadius" => Natural -> Styles c handler
 borderTopStartRadius = style "borderTopStartRadius"
 
-borderTopWidth :: Natural -> Styles component handler
+borderTopWidth :: Has c "borderTopWidth" => Natural -> Styles c handler
 borderTopWidth = style "borderTopWidth"
 
-borderWidth :: Natural -> Styles component handler
+borderWidth :: Has c "borderWidth" => Natural -> Styles c handler
 borderWidth = style "borderWidth"
 
-opacity :: UnitInterval -> Styles component handler
+opacity :: Has c "opacity" => UnitInterval -> Styles c handler
 opacity = style "opacity"
 
-elevation :: Natural -> Styles component handler
+elevation :: Has c "elevation" => Natural -> Styles c handler
 elevation = style "elevation"

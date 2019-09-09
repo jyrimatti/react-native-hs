@@ -5,7 +5,6 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.WebView (
     module React.Flux.Rn.Components.WebView,
     DataDetectorTypes(..),
@@ -22,9 +21,7 @@ module React.Flux.Rn.Components.WebView (
 ) where
 
 import           Data.Typeable                 (Typeable)
-import           Prelude                       (Bool, String)
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
+import           Prelude                       (Bool, String, fmap, (.))
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Events          (EventHandlerType, on0, on1,
                                                 ret1, view0)

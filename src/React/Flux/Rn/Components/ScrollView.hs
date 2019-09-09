@@ -5,11 +5,14 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ScrollView (
     module React.Flux.Rn.Components.ScrollView,
     module ScrollViewProps,
     module ViewProps,
+    module ViewStyleProps,
+    module LayoutStyleProps,
+    module ShadowStyleProps,
+    module TransformsStyleProps,
     ViewProps.AccessibilityComponentTypes(..),
     ViewProps.AccessibilityLiveRegion(..),
     ViewProps.AccessibilityTraits(..),
@@ -29,13 +32,15 @@ module React.Flux.Rn.Components.ScrollView (
     ScrollViewProps.SnapToAlignment (..)
 ) where
 
-import           Prelude                             (fmap)
-import           Prelude                             ((.))
-import           React.Flux                          (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties            (Has, Props, props)
-import qualified React.Flux.Rn.Props.ScrollViewProps as ScrollViewProps
-import qualified React.Flux.Rn.Props.ViewProps       as ViewProps
-
+import Prelude                             (fmap, (.))
+import React.Flux                          (ReactElementM, foreign_)
+import React.Flux.Rn.Properties            (Has, Props, props)
+import React.Flux.Rn.Props.ScrollViewProps as ScrollViewProps
+import React.Flux.Rn.Props.ViewProps       as ViewProps
+import React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
+import React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
+import React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
+import React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
 
 
 data ScrollView
@@ -122,3 +127,101 @@ instance Has ScrollView "shouldRasterizeIOS"
 
 
 -- TODO: methods
+
+
+
+
+-- ViewStyleProps:
+
+instance Has ScrollView "borderRightColor"
+instance Has ScrollView "backfaceVisibility"
+instance Has ScrollView "borderBottomColor"
+instance Has ScrollView "borderBottomEndRadius"
+instance Has ScrollView "borderBottomLeftRadius"
+instance Has ScrollView "borderBottomRightRadius"
+instance Has ScrollView "borderBottomStartRadius"
+--instance Has ScrollView "borderBottomWidth"
+instance Has ScrollView "borderColor"
+instance Has ScrollView "borderEndColor"
+--instance Has ScrollView "borderLeftWidth"
+instance Has ScrollView "borderRadius"
+instance Has ScrollView "backgroundColor"
+--instance Has ScrollView "borderRightWidth"
+instance Has ScrollView "borderStartColor"
+instance Has ScrollView "borderStyle"
+instance Has ScrollView "borderTopColor"
+instance Has ScrollView "borderTopEndRadius"
+instance Has ScrollView "borderTopLeftRadius"
+instance Has ScrollView "borderTopRightRadius"
+instance Has ScrollView "borderTopStartRadius"
+--instance Has ScrollView "borderTopWidth"
+--instance Has ScrollView "borderWidth"
+instance Has ScrollView "opacity"
+instance Has ScrollView "elevation"
+
+-- LayoutStyleProps:
+
+instance Has ScrollView "marginHorizontal"
+instance Has ScrollView "alignContent"
+instance Has ScrollView "alignSelf"
+instance Has ScrollView "aspectRatio"
+instance Has ScrollView "borderBottomWidth"
+instance Has ScrollView "borderEndWidth"
+instance Has ScrollView "borderLeftWidth"
+instance Has ScrollView "borderRightWidth"
+instance Has ScrollView "borderStartWidth"
+instance Has ScrollView "borderTopWidth"
+instance Has ScrollView "borderWidth"
+instance Has ScrollView "bottom"
+instance Has ScrollView "display"
+instance Has ScrollView "end"
+instance Has ScrollView "flex"
+instance Has ScrollView "flexBasis"
+instance Has ScrollView "flexDirection"
+instance Has ScrollView "flexGrow"
+instance Has ScrollView "flexShrink"
+instance Has ScrollView "flexWrap"
+instance Has ScrollView "height"
+instance Has ScrollView "justifyContent"
+instance Has ScrollView "left"
+instance Has ScrollView "margin"
+instance Has ScrollView "marginBottom"
+instance Has ScrollView "marginEnd"
+instance Has ScrollView "alignItems"
+instance Has ScrollView "marginLeft"
+instance Has ScrollView "marginRight"
+instance Has ScrollView "marginStart"
+instance Has ScrollView "marginTop"
+instance Has ScrollView "marginVertical"
+instance Has ScrollView "maxHeight"
+instance Has ScrollView "maxWidth"
+instance Has ScrollView "minHeight"
+instance Has ScrollView "minWidth"
+instance Has ScrollView "overflow"
+instance Has ScrollView "padding"
+instance Has ScrollView "paddingBottom"
+instance Has ScrollView "paddingEnd"
+instance Has ScrollView "paddingHorizontal"
+instance Has ScrollView "paddingLeft"
+instance Has ScrollView "paddingRight"
+instance Has ScrollView "paddingStart"
+instance Has ScrollView "paddingTop"
+instance Has ScrollView "paddingVertical"
+instance Has ScrollView "position"
+instance Has ScrollView "right"
+instance Has ScrollView "start"
+instance Has ScrollView "top"
+instance Has ScrollView "width"
+instance Has ScrollView "zIndex"
+instance Has ScrollView "direction"
+
+-- ShadowStyleProps:
+
+instance Has ScrollView "shadowColor"
+instance Has ScrollView "shadowOffset"
+instance Has ScrollView "shadowOpacity"
+instance Has ScrollView "shadowRadius"
+
+-- TransformsStyleProps:
+
+instance Has ScrollView "transform"

@@ -1,5 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
 module React.Flux.Rn.StyleProps.TextStyleProps (
     module React.Flux.Rn.StyleProps.TextStyleProps,
     Color (..), ContentSize (ContentSize), FontStyle (..), FontVariant (..), FontWeight (..), TextAlign (..), TextAlignVertical (..), TextDecorationLine (..), TextDecorationStyle (..), WritingDirection (..)
@@ -7,7 +9,7 @@ module React.Flux.Rn.StyleProps.TextStyleProps (
 
 import           Numeric.Natural          (Natural)
 import           Prelude                  (Bool, Double, String)
-import           React.Flux.Rn.Properties (Styles, style)
+import           React.Flux.Rn.Properties (Styles, style, Has)
 import           React.Flux.Rn.Types      (Color (..),
                                            ContentSize (ContentSize),
                                            FontStyle (..), FontVariant (..),
@@ -17,63 +19,63 @@ import           React.Flux.Rn.Types      (Color (..),
                                            TextDecorationStyle (..),
                                            WritingDirection (..))
 
-textShadowOffset :: ContentSize -> Styles component handler
+textShadowOffset :: Has c "textShadowOffset" => ContentSize -> Styles c handler
 textShadowOffset = style "textShadowOffset"
 
-color :: Color -> Styles component handler
+color :: Has c "color" => Color -> Styles c handler
 color = style "color"
 
-fontSize :: Natural -> Styles component handler
+fontSize :: Has c "fontSize" => Natural -> Styles c handler
 fontSize = style "fontSize"
 
-fontStyle :: FontStyle -> Styles component handler
+fontStyle :: Has c "fontStyle" => FontStyle -> Styles c handler
 fontStyle = style "fontStyle"
 
-fontWeight :: FontWeight -> Styles component handler
+fontWeight :: Has c "fontWeight" => FontWeight -> Styles c handler
 fontWeight = style "fontWeight"
 
-lineHeight :: Double -> Styles component handler
+lineHeight :: Has c "lineHeight" => Double -> Styles c handler
 lineHeight = style "lineHeight"
 
-textAlign :: TextAlign -> Styles component handler
+textAlign :: Has c "textAlign" => TextAlign -> Styles c handler
 textAlign = style "textAlign"
 
-textDecorationLine :: TextDecorationLine -> Styles component handler
+textDecorationLine :: Has c "textDecorationLine" => TextDecorationLine -> Styles c handler
 textDecorationLine = style "textDecorationLine"
 
-textShadowColor :: Color -> Styles component handler
+textShadowColor :: Has c "textShadowColor" => Color -> Styles c handler
 textShadowColor = style "textShadowColor"
 
-fontFamily :: String -> Styles component handler
+fontFamily :: Has c "fontFamily" => String -> Styles c handler
 fontFamily = style "fontFamily"
 
-textShadowRadius :: Natural -> Styles component handler
+textShadowRadius :: Has c "textShadowRadius" => Natural -> Styles c handler
 textShadowRadius = style "textShadowRadius"
 
 -- Platform: Android
-includeFontPadding :: Bool -> Styles component handler
+includeFontPadding :: Has c "includeFontPadding" => Bool -> Styles c handler
 includeFontPadding = style "includeFontPadding"
 
 -- Platform: Android
-textAlignVertical :: TextAlignVertical -> Styles component handler
+textAlignVertical :: Has c "textAlignVertical" => TextAlignVertical -> Styles c handler
 textAlignVertical = style "textAlignVertical"
 
 -- Platform: IOS
-fontVariant :: FontVariant -> Styles component handler
+fontVariant :: Has c "fontVariant" => FontVariant -> Styles c handler
 fontVariant = style "fontVariant"
 
 -- Platform: IOS
-letterSpacing :: Natural -> Styles component handler
+letterSpacing :: Has c "letterSpacing" => Natural -> Styles c handler
 letterSpacing = style "letterSpacing"
 
 -- Platform: IOS
-textDecorationColor :: Color -> Styles component handler
+textDecorationColor :: Has c "textDecorationColor" => Color -> Styles c handler
 textDecorationColor = style "textDecorationColor"
 
 -- Platform: IOS
-textDecorationStyle :: TextDecorationStyle -> Styles component handler
+textDecorationStyle :: Has c "textDecorationStyle" => TextDecorationStyle -> Styles c handler
 textDecorationStyle = style "textDecorationStyle"
 
 -- Platform: IOS
-writingDirection :: WritingDirection -> Styles component handler
+writingDirection :: Has c "writingDirection" => WritingDirection -> Styles c handler
 writingDirection = style "writingDirection"

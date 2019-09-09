@@ -5,7 +5,6 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TouchableWithoutFeedback (
     module React.Flux.Rn.Components.TouchableWithoutFeedback,
     TouchableWithoutFeedbackProps.AccessibilityComponentTypes(..),
@@ -14,8 +13,7 @@ module React.Flux.Rn.Components.TouchableWithoutFeedback (
     TouchableWithoutFeedbackProps.OnLayout(OnLayout)
 ) where
 
-import           Prelude                                           (fmap)
-import           Prelude                                           ((.))
+import           Prelude                                           (fmap, (.))
 import           React.Flux                                        (ReactElementM,
                                                                     foreign_)
 import           React.Flux.Rn.Properties                          (Has, Props,

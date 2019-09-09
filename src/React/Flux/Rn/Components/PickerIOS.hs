@@ -5,7 +5,6 @@
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.PickerIOS (
     module React.Flux.Rn.Components.PickerIOS,
     ViewProps.AccessibilityComponentTypes(..),
@@ -19,8 +18,7 @@ module React.Flux.Rn.Components.PickerIOS (
 ) where
 
 import           GHCJS.Marshal                 (ToJSVal)
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
+import           Prelude                       (fmap, (.))
 import           React.Flux                    (ReactElementM, foreign_)
 import           React.Flux.Rn.Components.Text (Text)
 import           React.Flux.Rn.Events          (EventHandlerType, on0)
