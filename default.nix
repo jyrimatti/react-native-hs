@@ -1,4 +1,4 @@
-{ nixpkgs ? import (fetchTarball https://github.com/NixOS/nixpkgs/archive/29200f051766af17924fdcf9f9cb25c73591d509.tar.gz) {}, compiler ? "ghcjs" }:
+{ nixpkgs ? import <nixpkgs> {}, compiler ? "ghcjs" }:
 
 let
   inherit (nixpkgs) pkgs;
@@ -23,7 +23,7 @@ let
         libraryHaskellDepends = [
           base deepseq ghcjs-base react-hs text time transformers containers network-uri semigroups
         ];
-        buildDepends = [pkgs.haskellPackages.cabal-install pkgs.haskellPackages.Cabal];
+        buildDepends = [haskellPackages.cabal-install haskellPackages.Cabal];
         homepage = "https://github.com/jyrimatti/react-native-hs";
         description = "React-native support for react-hs";
         license = stdenv.lib.licenses.mit;
