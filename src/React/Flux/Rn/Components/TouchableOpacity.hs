@@ -2,27 +2,21 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.TouchableOpacity (
     module React.Flux.Rn.Components.TouchableOpacity,
-    TvParallaxProperties(TvParallaxProperties),
-    UnitInterval,
-    TouchableWithoutFeedbackProps.AccessibilityComponentTypes(..),
-    TouchableWithoutFeedbackProps.AccessibilityTraits(..),
-    TouchableWithoutFeedbackProps.Inset(Inset),
-    TouchableWithoutFeedbackProps.OnLayout(OnLayout)
+    module React.Flux.Rn.Props.TouchableWithoutFeedbackProps,
+    module React.Flux.Rn.Types.TvParallaxProperties,
+    module React.Flux.Rn.Types
 ) where
 
-import           Prelude                                           (Bool, fmap, (.))
-import           React.Flux                                        (ReactElementM,
-                                                                    foreign_)
-import           React.Flux.Rn.Properties                          (Has, Props,
-                                                                    prop, props)
-import qualified React.Flux.Rn.Props.TouchableWithoutFeedbackProps as TouchableWithoutFeedbackProps
-import           React.Flux.Rn.Types                               (TvParallaxProperties (TvParallaxProperties),
-                                                                    UnitInterval)
+import Prelude                                           (Bool, fmap, (.))
+import React.Flux                                        (ReactElementM, foreign_)
+import React.Flux.Rn.Properties                          (Has, Props, prop, props)
+import React.Flux.Rn.Props.TouchableWithoutFeedbackProps
+import React.Flux.Rn.Types                               (UnitInterval)
+import React.Flux.Rn.Types.TvParallaxProperties
 
 
 

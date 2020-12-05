@@ -1,33 +1,23 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.KeyboardAvoidingView (
     module React.Flux.Rn.Components.KeyboardAvoidingView,
-    Behavior(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           Numeric.Natural               (Natural)
-import           Prelude                       ((.))
-import           Prelude                       (fmap)
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Components.View (View)
-import           React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp,
-                                                prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (Behavior (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Numeric.Natural               (Natural)
+import Prelude                    (Show, String, (.), fmap)
+import React.Flux                 (ReactElementM, foreign_)
+import React.Flux.Rn.Components.View (View)
+import React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp, prop, props)
+import React.Flux.Rn.Props.ViewProps
 
 
 
@@ -35,6 +25,13 @@ data KeyboardAvoidingView
 keyboardAvoidingView :: [Props KeyboardAvoidingView handler] -> ReactElementM handler a -> ReactElementM handler a
 keyboardAvoidingView = foreign_ "KeyboardAvoidingView" . fmap props
 
+
+data Behavior = Height | Position | Padding
+  deriving (Show, Generic)
+instance ToJSVal Behavior where
+  toJSVal Height   = toJSVal ("height" :: String)
+  toJSVal Position = toJSVal ("position" :: String)
+  toJSVal Padding  = toJSVal ("padding" :: String)
 
 
 -- Required

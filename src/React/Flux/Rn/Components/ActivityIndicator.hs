@@ -1,38 +1,36 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.Components.ActivityIndicator (
     module React.Flux.Rn.Components.ActivityIndicator,
-    ActivityIndicatorSize(..), Color(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    CommonProps.color
+    module React.Flux.Rn.Props.CommonProps,
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           Prelude                         (Bool, fmap)
-import           Prelude                         ((.))
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties        (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
-import           React.Flux.Rn.Types             (ActivityIndicatorSize (..),
-                                                  Color (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Numeric.Natural            (Natural)
+import Prelude                    (Show, String, Bool, fmap, (.))
+import React.Flux                      (ReactElementM, foreign_)
+import React.Flux.Rn.Properties        (Has, Props, prop, props)
 
-
+import React.Flux.Rn.Props.CommonProps (color, Color(..))
+import React.Flux.Rn.Props.ViewProps
 
 data ActivityIndicator
 activityIndicator :: [Props ActivityIndicator handler] -> ReactElementM handler a -> ReactElementM handler a
 activityIndicator = foreign_ "ActivityIndicator" . fmap props
 
+
+data ActivityIndicatorSize = Small | Large | Size Natural
+  deriving (Show, Generic)
+instance ToJSVal ActivityIndicatorSize where
+  toJSVal Small    = toJSVal ("small" :: String)
+  toJSVal Large    = toJSVal ("large" :: String)
+  toJSVal (Size x) = toJSVal x
 
 
 animating :: Has c "animating" => Bool -> Props c handler

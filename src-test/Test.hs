@@ -1,4 +1,3 @@
-{-# LANGUAGE NoImplicitPrelude #-}
 module Test ( tests ) where
 
 import           Distribution.TestSuite

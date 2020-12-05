@@ -2,38 +2,27 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.View (
     module React.Flux.Rn.Components.View,
-    module ViewStyleProps,
-    module LayoutStyleProps,
-    module ShadowStyleProps,
-    module TransformsStyleProps,
-    module ViewProps,
-    CommonProps.style,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.StyleProps.ViewStyleProps,
+    module React.Flux.Rn.StyleProps.LayoutStyleProps,
+    module React.Flux.Rn.StyleProps.ShadowStyleProps,
+    module React.Flux.Rn.StyleProps.TransformsStyleProps,
+    module React.Flux.Rn.Props.CommonProps
 ) where
 
-import           Prelude                       (fmap, (.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties      (Has, Props, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Props.ViewProps (View)
-import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
-import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
-import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
-import           React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
-
+import Prelude                       (fmap, (.))
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Properties      (Has, Props, props)
+import React.Flux.Rn.Props.CommonProps (style)
+import React.Flux.Rn.Props.ViewProps hiding (Inset(..), OnLayoutVals(..))
+import React.Flux.Rn.StyleProps.LayoutStyleProps hiding (borderTopWidth, borderRightWidth, borderLeftWidth, borderBottomWidth, borderWidth, Display(..))
+import React.Flux.Rn.StyleProps.ShadowStyleProps hiding (ContentSize(..))
+import React.Flux.Rn.StyleProps.TransformsStyleProps
+import React.Flux.Rn.StyleProps.ViewStyleProps hiding (Visibility(..))
 
 
 view :: [Props View handler] -> ReactElementM handler a -> ReactElementM handler a

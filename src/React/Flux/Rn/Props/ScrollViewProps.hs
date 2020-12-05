@@ -1,39 +1,54 @@
-{-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE FlexibleContexts      #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE DataKinds               #-}
+{-# LANGUAGE DeriveGeneric           #-}
+{-# LANGUAGE FlexibleContexts        #-}
+{-# LANGUAGE OverloadedStrings       #-}
+{-# LANGUAGE RankNTypes              #-}
 module React.Flux.Rn.Props.ScrollViewProps (
-    module React.Flux.Rn.Props.ScrollViewProps,
-    Color (..),
-    ContentInsetAdjustmentBehavior (..),
-    ContentOffset (ContentOffset), DecelerationRate (..),
-    IndicatorStyle (..), Inset (Inset),
-    KeyboardDismissMode (..),
-    KeyboardShouldPersistTaps (..),
-    OverScrollMode (..), ReactViewRef,
-    SnapToAlignment (..)
+  module React.Flux.Rn.Props.ScrollViewProps,
+  module React.Flux.Rn.Types,
+  module React.Flux.Rn.Types.Color,
+  module React.Flux.Rn.Types.ContentInsetAdjustmentBehavior,
+  module React.Flux.Rn.Types.ContentOffset,
+  module React.Flux.Rn.Types.DecelerationRate,
+  module React.Flux.Rn.Types.Inset,
+  module React.Flux.Rn.Types.KeyboardDismissMode,
+  module React.Flux.Rn.Types.KeyboardShouldPersistTaps,
+  module React.Flux.Rn.Types.OverScrollMode
 ) where
 
-import           Data.Typeable                 (Typeable)
-import           Numeric.Natural               (Natural)
-import           Prelude                       (Bool, Double, String)
-import           React.Flux.Rn.Events          (EventHandlerType, on0, on2,
+import Data.Typeable                 (Typeable)
+import GHC.Generics               (Generic)
+import GHCJS.Marshal (ToJSVal(..))
+import Numeric.Natural               (Natural)
+import Prelude                       (Bool, Double, String, Show)
+import React.Flux.Rn.Events          (EventHandlerType, on0, on2,
                                                 view0)
-import           React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp,
+import React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp,
                                                 prop)
-import           React.Flux.Rn.Types           (Color (..), ContentInsetAdjustmentBehavior (..),
-                                                ContentOffset (ContentOffset),
-                                                DecelerationRate (..),
-                                                IndicatorStyle (..),
-                                                Inset (Inset),
-                                                KeyboardDismissMode (..),
-                                                KeyboardShouldPersistTaps (..),
-                                                OverScrollMode (..),
-                                                ReactViewRef,
-                                                SnapToAlignment (..))
+import React.Flux.Rn.Types           (ReactViewRef)
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.ContentInsetAdjustmentBehavior
+import React.Flux.Rn.Types.ContentOffset
+import React.Flux.Rn.Types.DecelerationRate
+import React.Flux.Rn.Types.Inset
+import React.Flux.Rn.Types.KeyboardDismissMode
+import React.Flux.Rn.Types.KeyboardShouldPersistTaps (KeyboardShouldPersistTaps)
+import React.Flux.Rn.Types.OverScrollMode (OverScrollMode)
+
+
+data IndicatorStyle = Default | Black | White
+  deriving (Show, Generic)
+instance ToJSVal IndicatorStyle where
+  toJSVal Default = toJSVal ("default" :: String)
+  toJSVal Black   = toJSVal ("black" :: String)
+  toJSVal White   = toJSVal ("white" :: String)
+
+data SnapToAlignment = Start | Center | End
+  deriving (Show, Generic)
+instance ToJSVal SnapToAlignment where
+  toJSVal Start  = toJSVal ("start" :: String)
+  toJSVal Center = toJSVal ("center" :: String)
+  toJSVal End    = toJSVal ("end" :: String)
 
 -- Platform: IOS
 alwaysBounceVertical :: Has component "alwaysBounceVertical" => Bool -> Props component handler

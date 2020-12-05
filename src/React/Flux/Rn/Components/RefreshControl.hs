@@ -2,36 +2,25 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE TypeApplications      #-}
+{-# LANGUAGE DeriveGeneric      #-}
 module React.Flux.Rn.Components.RefreshControl (
     module React.Flux.Rn.Components.RefreshControl,
-    Color(..), RefreshControlSize(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    CommonProps.tintColor,
-    CommonProps.titleColor
+    module React.Flux.Rn.Props.CommonProps,
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           Data.List.NonEmpty              (NonEmpty)
-import           Numeric.Natural                 (Natural)
-import           Prelude                         (fmap)
-import           Prelude                         ((.))
-import           Prelude                         (Bool, String)
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Events            (EventHandlerType, on0)
-import           React.Flux.Rn.Properties        (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
-import           React.Flux.Rn.Types             (Color (..),
-                                                  RefreshControlSize (..))
+import Data.List.NonEmpty              (NonEmpty)
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Numeric.Natural                 (Natural)
+import Prelude                    (Show, Int, Bool, String, fmap, (.))
+import React.Flux                      (ReactElementM, foreign_)
+import React.Flux.Rn.Events            (EventHandlerType, on0)
+
+import React.Flux.Rn.Properties        (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (tintColor, Color(..))
+import React.Flux.Rn.Props.ViewProps
 
 
 
@@ -39,6 +28,12 @@ data RefreshControl
 refreshControl :: [Props RefreshControl handler] -> ReactElementM handler a -> ReactElementM handler a
 refreshControl = foreign_ "RefreshControl" . fmap props
 
+
+data RefreshControlSize = Default | Large
+  deriving (Show, Generic)
+instance ToJSVal RefreshControlSize where
+  toJSVal Default = toJSVal (1 :: Int)
+  toJSVal Large   = toJSVal (0 :: Int)
 
 
 -- Required
@@ -77,8 +72,8 @@ title :: Has c "title" => String -> Props c handler
 title = prop "title"
 
 -- Platform: IOS
---titleColor :: Has c "titleColor" => Color -> Props c handler
---titleColor = prop "titleColor"
+titleColor :: Has c "titleColor" => Color -> Props c handler
+titleColor = prop "titleColor"
 
 
 

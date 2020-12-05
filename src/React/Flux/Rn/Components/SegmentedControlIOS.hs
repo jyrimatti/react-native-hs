@@ -1,35 +1,25 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.SegmentedControlIOS (
     module React.Flux.Rn.Components.SegmentedControlIOS,
-    Color(..), OnChange(OnChange),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    CommonProps.tintColor
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.Props.CommonProps
 ) where
 
-import           GHCJS.Marshal                 (FromJSVal)
-import           Numeric.Natural               (Natural)
-import           Prelude                       (Bool, String)
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on1)
-import           React.Flux.Rn.Properties      (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import           React.Flux.Rn.Types           (Color (..), OnChange (OnChange))
+import Data.Aeson                 (FromJSON (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (FromJSVal (..))
+import Numeric.Natural               (Natural)
+import Prelude                    (Show, Bool, String, fmap, (.))
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Events       (fromNativeJSON, EventHandlerType, on1)
+import React.Flux.Rn.Properties      (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (tintColor, Color(..))
+import React.Flux.Rn.Props.ViewProps
 
 
 
@@ -37,6 +27,12 @@ data SegmentedControlIOS
 segmentedControlIOS :: [Props SegmentedControlIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 segmentedControlIOS = foreign_ "SegmentedControlIOS" . fmap props
 
+
+newtype OnChange = OnChange {
+    selectedSegmentIndex :: Natural
+} deriving (Show, Generic)
+instance FromJSON OnChange
+instance FromJSVal OnChange where fromJSVal = fromNativeJSON
 
 
 enabled :: Has c "enabled" => Bool -> Props c handler

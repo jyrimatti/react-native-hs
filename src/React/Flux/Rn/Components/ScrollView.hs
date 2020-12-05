@@ -2,46 +2,27 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.ScrollView (
     module React.Flux.Rn.Components.ScrollView,
-    module ScrollViewProps,
-    module ViewProps,
-    module ViewStyleProps,
-    module LayoutStyleProps,
-    module ShadowStyleProps,
-    module TransformsStyleProps,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    ScrollViewProps.Color (..),
-    ScrollViewProps.ContentInsetAdjustmentBehavior (..),
-    ScrollViewProps.ContentOffset (ContentOffset),
-    ScrollViewProps.DecelerationRate (..),
-    ScrollViewProps.IndicatorStyle (..),
-    ScrollViewProps.KeyboardDismissMode (..),
-    ScrollViewProps.KeyboardShouldPersistTaps (..),
-    ScrollViewProps.OverScrollMode (..),
-    ScrollViewProps.SnapToAlignment (..)
+    module React.Flux.Rn.Props.ScrollViewProps,
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.StyleProps.ViewStyleProps,
+    module React.Flux.Rn.StyleProps.LayoutStyleProps,
+    module React.Flux.Rn.StyleProps.ShadowStyleProps,
+    module React.Flux.Rn.StyleProps.TransformsStyleProps
 ) where
 
 import Prelude                             (fmap, (.))
 import React.Flux                          (ReactElementM, foreign_)
 import React.Flux.Rn.Properties            (Has, Props, props)
-import React.Flux.Rn.Props.ScrollViewProps as ScrollViewProps
-import React.Flux.Rn.Props.ViewProps       as ViewProps
-import React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
-import React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
-import React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
-import React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
-
+import React.Flux.Rn.Props.ScrollViewProps hiding (ContentOffset(..), KeyboardDismissMode(..))
+import React.Flux.Rn.Props.ViewProps        hiding (OnLayoutVals(..))
+import React.Flux.Rn.StyleProps.LayoutStyleProps   hiding (bottom, left, right, top, AlignItems(..), Display(..))
+import React.Flux.Rn.StyleProps.ShadowStyleProps  hiding (ContentSize(..))
+import React.Flux.Rn.StyleProps.TransformsStyleProps  
+import React.Flux.Rn.StyleProps.ViewStyleProps hiding (Visibility(..), borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
 
 data ScrollView
 scrollView :: [Props ScrollView handler] -> ReactElementM handler a -> ReactElementM handler a

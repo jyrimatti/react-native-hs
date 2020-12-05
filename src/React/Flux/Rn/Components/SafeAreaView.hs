@@ -2,27 +2,16 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.SafeAreaView (
     module React.Flux.Rn.Components.SafeAreaView,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties      (Has, Props, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-
+import Prelude                       (fmap, (.))
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Properties      (Has, Props, props)
+import React.Flux.Rn.Props.ViewProps
 
 
 data SafeAreaView

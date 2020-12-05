@@ -2,29 +2,18 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.SnapshotViewIOS (
     module React.Flux.Rn.Components.SnapshotViewIOS,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           Prelude                       (String)
-import           Prelude                       ((.))
-import           Prelude                       (fmap)
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on0)
-import           React.Flux.Rn.Properties      (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
+import Prelude                       (fmap, String, (.))
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Events          (EventHandlerType, on0)
+import React.Flux.Rn.Properties      (Has, Props, prop, props)
+import React.Flux.Rn.Props.ViewProps
 
 
 

@@ -1,47 +1,47 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.Picker (
     module React.Flux.Rn.Components.Picker,
-    module ViewStyleProps,
-    module LayoutStyleProps,
-    module ShadowStyleProps,
-    module TransformsStyleProps,
-    PickerMode(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.StyleProps.ViewStyleProps,
+    module React.Flux.Rn.StyleProps.LayoutStyleProps,
+    module React.Flux.Rn.StyleProps.ShadowStyleProps,
+    module React.Flux.Rn.StyleProps.TransformsStyleProps,
+    PickerMode(..)
 ) where
 
-import           GHCJS.Marshal                 (FromJSVal, ToJSVal)
-import           Numeric.Natural               (Natural)
-import           Prelude                       (Bool, String, (.), fmap)
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Components.Text (Text)
-import           React.Flux.Rn.Events          (EventHandlerType, on2)
-import           React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp,
-                                                prop, props, style)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
-import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
-import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
-import           React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
-import           React.Flux.Rn.Types           (PickerMode (..), Color(..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal                 (FromJSVal, ToJSVal(..))
+import Numeric.Natural               (Natural)
+import Prelude                       (Bool, String, (.), fmap, Show)
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Components.Text (Text)
+import React.Flux.Rn.Events          (EventHandlerType, on2)
+import React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp, prop, props)
+import qualified React.Flux.Rn.Properties as P
+import React.Flux.Rn.Props.ViewProps hiding (Inset(..), OnLayoutVals(..))
+import React.Flux.Rn.StyleProps.LayoutStyleProps hiding (Display(..))
+import React.Flux.Rn.StyleProps.ShadowStyleProps hiding (ContentSize(..))
+import React.Flux.Rn.StyleProps.TransformsStyleProps
+
+import React.Flux.Rn.StyleProps.ViewStyleProps hiding (Visibility(..), borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
 
 
 data Picker
 picker :: [Props Picker handler] -> ReactElementM handler a -> ReactElementM handler a
 picker = foreign_ "Picker" . fmap props
 
+
+data PickerMode = Dialog | Dropdown
+  deriving (Show, Generic)
+instance ToJSVal PickerMode where
+  toJSVal Dialog   = toJSVal ("dialog" :: String)
+  toJSVal Dropdown = toJSVal ("dropdown" :: String)
 
 
 onValueChange :: (Has c "onValueChange", FromJSVal value) => (value -> Natural -> EventHandlerType handler) -> Props c handler
@@ -66,7 +66,8 @@ prompt = prop "prompt"
 itemStyle :: Has c "itemStyle" => [Styles Text handler] -> Props c handler
 itemStyle = nestedProp "itemStyle"
 
-
+color :: Color -> Styles Picker handler
+color = P.style "color"
 
 instance Has Picker "onValueChange"
 instance Has Picker "selectedValue"
@@ -74,6 +75,11 @@ instance Has Picker "enabled"
 instance Has Picker "mode"
 instance Has Picker "prompt"
 instance Has Picker "itemStyle"
+instance Has Picker "color"
+
+
+-- TODO: methods
+
 
 -- ViewProps:
 
@@ -109,15 +115,6 @@ instance Has Picker "accessibilityViewIsModal"
 instance Has Picker "shouldRasterizeIOS"
 
 
--- TODO: methods
-
-
-
-
-color :: Color -> Styles Picker handler
-color = style "color"
-
-instance Has Picker "color"
 
 -- ViewStyleProps:
 

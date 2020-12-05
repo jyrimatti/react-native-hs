@@ -1,23 +1,77 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.StyleProps.TextStyleProps (
     module React.Flux.Rn.StyleProps.TextStyleProps,
-    Color (..), ContentSize (ContentSize), FontStyle (..), FontVariant (..), FontWeight (..), TextAlign (..), TextAlignVertical (..), TextDecorationLine (..), TextDecorationStyle (..), WritingDirection (..)
+    module React.Flux.Rn.Types.Color,
+    module React.Flux.Rn.Types.ContentSize,
+    module React.Flux.Rn.Types.TextAlignVertical,
+    module React.Flux.Rn.Types.WritingDirection,
+    module React.Flux.Rn.Types.FontStyle
 ) where
 
-import           Numeric.Natural          (Natural)
-import           Prelude                  (Bool, Double, String)
-import           React.Flux.Rn.Properties (Styles, style, Has)
-import           React.Flux.Rn.Types      (Color (..),
-                                           ContentSize (ContentSize),
-                                           FontStyle (..), FontVariant (..),
-                                           FontWeight (..), TextAlign (..),
-                                           TextAlignVertical (..),
-                                           TextDecorationLine (..),
-                                           TextDecorationStyle (..),
-                                           WritingDirection (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal(..))
+import Numeric.Natural            (Natural)
+import Prelude                    (String, Show, Bool, Double)
+import React.Flux.Rn.Properties (Styles, style, Has)
+
+import React.Flux.Rn.Types ()
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.ContentSize
+import React.Flux.Rn.Types.FontStyle (FontStyle)
+import React.Flux.Rn.Types.TextAlignVertical (TextAlignVertical)
+import React.Flux.Rn.Types.WritingDirection (WritingDirection)
+  
+data TextDecorationStyle = Solid | Double | Dotted | Dashed
+  deriving (Show, Generic)
+instance ToJSVal TextDecorationStyle where
+  toJSVal Solid  = toJSVal ("solid" :: String)
+  toJSVal Double = toJSVal ("double" :: String)
+  toJSVal Dotted = toJSVal ("dotted" :: String)
+  toJSVal Dashed = toJSVal ("dashed" :: String)
+
+data FontVariant = SmallCaps | OldStyleNums | LiningNums | TabularNums | ProportionalNums
+  deriving (Show, Generic)
+instance ToJSVal FontVariant where
+  toJSVal SmallCaps        = toJSVal ("small-caps" :: String)
+  toJSVal OldStyleNums     = toJSVal ("oldstyle-nums" :: String)
+  toJSVal LiningNums       = toJSVal ("lining-nums" :: String)
+  toJSVal TabularNums      = toJSVal ("tabular-nums" :: String)
+  toJSVal ProportionalNums = toJSVal ("proportional-nums" :: String)
+
+data TextDecorationLine = None | Underline | LineThrough | UnderlineLineThrough
+  deriving (Show, Generic)
+instance ToJSVal TextDecorationLine where
+  toJSVal None                 = toJSVal ("none" :: String)
+  toJSVal Underline            = toJSVal ("underline" :: String)
+  toJSVal LineThrough          = toJSVal ("line-through" :: String)
+  toJSVal UnderlineLineThrough = toJSVal ("underline line-through" :: String)
+
+data TextAlign = Auto | Left | Right | Center | Justify
+  deriving (Show, Generic)
+instance ToJSVal TextAlign where
+  toJSVal Auto    = toJSVal ("normal" :: String)
+  toJSVal Left    = toJSVal ("italic" :: String)
+  toJSVal Right   = toJSVal ("italic" :: String)
+  toJSVal Center  = toJSVal ("italic" :: String)
+  toJSVal Justify = toJSVal ("italic" :: String)
+
+data FontWeight = Normal | Bold | W100 | W200 | W300 | W400 | W500 | W600 | W700 | W800 | W900
+  deriving (Show, Generic)
+instance ToJSVal FontWeight where
+  toJSVal Normal    = toJSVal ("normal" :: String)
+  toJSVal Bold      = toJSVal ("bold" :: String)
+  toJSVal W100      = toJSVal ("100" :: String)
+  toJSVal W200      = toJSVal ("200" :: String)
+  toJSVal W300      = toJSVal ("300" :: String)
+  toJSVal W400      = toJSVal ("400" :: String)
+  toJSVal W500      = toJSVal ("500" :: String)
+  toJSVal W600      = toJSVal ("600" :: String)
+  toJSVal W700      = toJSVal ("700" :: String)
+  toJSVal W800      = toJSVal ("800" :: String)
+  toJSVal W900      = toJSVal ("900" :: String)
 
 textShadowOffset :: Has c "textShadowOffset" => ContentSize -> Styles c handler
 textShadowOffset = style "textShadowOffset"

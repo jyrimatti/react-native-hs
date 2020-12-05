@@ -2,28 +2,20 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.Components.MaskedViewIOS (
     module React.Flux.Rn.Components.MaskedViewIOS,
-    ReactViewRef,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Types,
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           Data.Typeable                 (Typeable)
-import           Prelude                       (fmap, (.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (view0)
-import           React.Flux.Rn.Properties      (Has, Props, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (ReactViewRef)
+import Data.Typeable                 (Typeable)
+import Prelude                       (fmap, (.))
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Events          (view0)
+import React.Flux.Rn.Properties      (Has, Props, props)
+import React.Flux.Rn.Props.ViewProps
+import React.Flux.Rn.Types           (ReactViewRef)
 
 
 

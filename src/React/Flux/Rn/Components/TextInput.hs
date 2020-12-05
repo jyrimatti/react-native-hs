@@ -1,65 +1,100 @@
-{-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE FlexibleContexts      #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE DataKinds                 #-}
+{-# LANGUAGE DeriveGeneric             #-}
+{-# LANGUAGE DuplicateRecordFields     #-}
+{-# LANGUAGE FlexibleContexts          #-}
+{-# LANGUAGE FlexibleInstances         #-}
+{-# LANGUAGE MultiParamTypeClasses     #-}
+{-# LANGUAGE OverloadedStrings         #-}
+{-# LANGUAGE RankNTypes                #-}
 module React.Flux.Rn.Components.TextInput (
     module React.Flux.Rn.Components.TextInput,
-    module TextStyleProps,
-    module ViewStyleProps,
-    module LayoutStyleProps,
-    module ShadowStyleProps,
-    module TransformsStyleProps,
-    Color(..), KeyboardType(..),
-    OnContentSizeChange(OnContentSizeChange), DataDetectorTypes(..), KeyboardAppearance(..), OnKeyPress(OnKeyPress), DocumentSelectionState,
-    ReturnKeyType(..), Selection(Selection), TextBreakStrategy(..), ClearButtonMode(..), OnScroll(OnScroll), OnSelectionChange(OnSelectionChange), AutoCapitalize(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    CommonProps.selectionColor,
-    CommonProps.style
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.StyleProps.TextStyleProps,
+    module React.Flux.Rn.StyleProps.ViewStyleProps,
+    module React.Flux.Rn.StyleProps.LayoutStyleProps,
+    module React.Flux.Rn.StyleProps.ShadowStyleProps,
+    module React.Flux.Rn.StyleProps.TransformsStyleProps,
+    module React.Flux.Rn.Types.ContentSize,
+    module React.Flux.Rn.Types.OnScroll,
+    module React.Flux.Rn.Types.Color,
+    module React.Flux.Rn.Types.OnSelectionChange,
+    module React.Flux.Rn.Types.TextBreakStrategy,
+    module React.Flux.Rn.Types.DataDetectorTypes,
+    module React.Flux.Rn.Types.KeyboardType,
+    module React.Flux.Rn.Types.ReturnKeyType,
+    module  React.Flux.Rn.Props.CommonProps
 ) where
 
-import           Numeric.Natural                 (Natural)
-import           Prelude                         (Bool, Int, String, fmap, (.))
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Events            (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties        (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
-import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps hiding (maxHeight)
-import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
-import           React.Flux.Rn.StyleProps.TextStyleProps as TextStyleProps
-import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
-import           React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
-import           React.Flux.Rn.Types             (AutoCapitalize (..),
-                                                  ClearButtonMode (..),
-                                                  Color (..),
-                                                  DataDetectorTypes (..),
-                                                  DocumentSelectionState,
-                                                  KeyboardAppearance (..),
-                                                  KeyboardType (..),
-                                                  OnContentSizeChange (OnContentSizeChange),
-                                                  OnKeyPress (OnKeyPress),
-                                                  OnScroll (OnScroll),
-                                                  OnSelectionChange (OnSelectionChange),
-                                                  ReturnKeyType (..),
-                                                  Selection (Selection),
-                                                  TextBreakStrategy (..))
-
+import Data.Aeson                 (FromJSON (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (FromJSVal (..), ToJSVal (..))
+import Numeric.Natural                 (Natural)
+import Prelude                         (Bool, Int, String, fmap, (.), Show)
+import React.Flux                      (ReactElementM, foreign_, EventHandlerType)
+import React.Flux.Rn.Events       (fromNativeJSON, on0, on1)
+import React.Flux.Rn.Properties        (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (style)
+import React.Flux.Rn.Props.ViewProps    hiding (width, height, OnLayout(..), AccessibilityTraits(..), None, ImportantForAccessibility(..))
+import React.Flux.Rn.StyleProps.LayoutStyleProps hiding (maxHeight, Overflow(..), bottom, left, right, top, AlignItems(..), Display(..), Direction(..))
+import React.Flux.Rn.StyleProps.ShadowStyleProps hiding (ContentSize(..))
+import React.Flux.Rn.StyleProps.TextStyleProps hiding (None, ContentSize(..))
+import React.Flux.Rn.StyleProps.TransformsStyleProps
+import React.Flux.Rn.StyleProps.ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth, BorderStyle(..))
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.ContentSize (ContentSize)
+import React.Flux.Rn.Types.DataDetectorTypes (DataDetectorTypes)
+import React.Flux.Rn.Types.KeyboardType (KeyboardType)
+import React.Flux.Rn.Types.OnScroll
+import React.Flux.Rn.Types.OnSelectionChange hiding (start, end, selection)
+import React.Flux.Rn.Types.ReturnKeyType (ReturnKeyType)
+import React.Flux.Rn.Types.TextBreakStrategy
 
 data TextInput
 textInput :: [Props TextInput handler] -> ReactElementM handler a -> ReactElementM handler a
 textInput = foreign_ "TextInput" . fmap props
 
 
+newtype OnContentSizeChange = OnContentSizeChange {
+    contentSize :: ContentSize
+} deriving (Show, Generic)
+instance FromJSON OnContentSizeChange
+instance FromJSVal OnContentSizeChange where fromJSVal = fromNativeJSON
+
+-- TODO
+data DocumentSelectionState
+  deriving Generic
+instance ToJSVal DocumentSelectionState
+
+
+newtype OnKeyPress = OnKeyPress {
+  key :: String
+} deriving (Show, Generic)
+instance FromJSON OnKeyPress
+instance FromJSVal OnKeyPress where
+  fromJSVal = fromNativeJSON
+
+data KeyboardAppearance = Default | Light | Dark
+  deriving (Show, Generic)
+instance ToJSVal KeyboardAppearance where
+  toJSVal Default = toJSVal ("default" :: String)
+  toJSVal Light   = toJSVal ("light" :: String)
+  toJSVal Dark    = toJSVal ("dark" :: String)
+
+data ClearButtonMode = Never | WhileEditing | UnlessEditing | Always
+  deriving (Show, Generic)
+instance ToJSVal ClearButtonMode where
+  toJSVal Never         = toJSVal ("never" :: String)
+  toJSVal WhileEditing  = toJSVal ("while-editing" :: String)
+  toJSVal UnlessEditing = toJSVal ("unless-editing" :: String)
+  toJSVal Always        = toJSVal ("always" :: String)
+
+data AutoCapitalize = None | Sentences | Words | Characters
+  deriving (Show, Generic)
+instance ToJSVal AutoCapitalize where
+  toJSVal None       = toJSVal ("none" :: String)
+  toJSVal Sentences  = toJSVal ("words" :: String)
+  toJSVal Words      = toJSVal ("sentences" :: String)
+  toJSVal Characters = toJSVal ("characters" :: String)
 
 placeholderTextColor :: Has c "placeholderTextColor" => Color -> Props c handler
 placeholderTextColor = prop "placeholderTextColor"
@@ -142,8 +177,8 @@ selectTextOnFocus = prop "selectTextOnFocus"
 selection :: Has c "selection" => Selection -> Props c handler
 selection = prop "selection"
 
---selectionColor :: Has c "selectionColor" => Color -> Props c handler
---selectionColor = prop "selectionColor"
+selectionColor :: Has c "selectionColor" => Color -> Props c handler
+selectionColor = prop "selectionColor"
 
 --style :: Has c "style" => [Styles TextInput handler] -> Props c handler
 --style = nestedProp "style"

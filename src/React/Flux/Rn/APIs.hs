@@ -1,5 +1,4 @@
 {-# LANGUAGE CPP               #-}
-{-# LANGUAGE NoImplicitPrelude #-}
 
 module React.Flux.Rn.APIs where
 
@@ -9,15 +8,6 @@ import Prelude          (IO, Maybe (..), Show, String, undefined, ($),(>>=),Eq)
 import System.IO.Unsafe (unsafePerformIO)
 
 {-# ANN module ("HLint: ignore Use camelCase" :: String) #-}
-
-#ifdef __GHCJS__
-foreign import javascript unsafe
-    "console.log($1)"
-  log :: JSString -> IO ()
-#else
-log :: JSString -> IO ()
-log = undefined
-#endif
 
 -- Platform
 

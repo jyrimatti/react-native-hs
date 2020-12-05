@@ -2,30 +2,26 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.TouchableHighlight (
     module React.Flux.Rn.Components.TouchableHighlight,
-    Color(..), TvParallaxProperties(TvParallaxProperties),
-    UnitInterval,
-    TouchableWithoutFeedbackProps.AccessibilityComponentTypes(..),
-    TouchableWithoutFeedbackProps.AccessibilityTraits(..),
-    TouchableWithoutFeedbackProps.Inset(Inset),
-    TouchableWithoutFeedbackProps.OnLayout(OnLayout),
-    CommonProps.style
+    module React.Flux.Rn.Props.TouchableWithoutFeedbackProps,
+    module React.Flux.Rn.Types,
+    module React.Flux.Rn.Props.CommonProps,
+    module React.Flux.Rn.Types.Color,
+    module React.Flux.Rn.Types.TvParallaxProperties
 ) where
 
-import           Prelude                                           (Bool, (.), fmap)
-import           React.Flux                                        (ReactElementM,
-                                                                    foreign_)
-import           React.Flux.Rn.Events                              (EventHandlerType,
-                                                                    on0)
-import           React.Flux.Rn.Properties                          (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps                   as CommonProps
-import qualified React.Flux.Rn.Props.TouchableWithoutFeedbackProps as TouchableWithoutFeedbackProps
-import           React.Flux.Rn.Types                               (Color (..), TvParallaxProperties (TvParallaxProperties),
-                                                                    UnitInterval)
+import Prelude                                           (Bool, (.), fmap)
+import React.Flux                                        (ReactElementM, foreign_)
+import React.Flux.Rn.Events                              (EventHandlerType, on0)
+import React.Flux.Rn.Properties                          (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (style)
+import React.Flux.Rn.Props.TouchableWithoutFeedbackProps
+import React.Flux.Rn.Types (UnitInterval)
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.TvParallaxProperties
 
 
 

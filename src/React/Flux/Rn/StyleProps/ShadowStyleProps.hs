@@ -1,17 +1,19 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DataKinds             #-}
 {-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.StyleProps.ShadowStyleProps (
     module React.Flux.Rn.StyleProps.ShadowStyleProps,
-    Color(..), ContentSize(ContentSize), UnitInterval
+    module React.Flux.Rn.Types,
+    module React.Flux.Rn.Types.Color,
+    module React.Flux.Rn.Types.ContentSize
 ) where
 
-import           Numeric.Natural          (Natural)
-import           React.Flux.Rn.Properties (Styles, style, Has)
-import           React.Flux.Rn.Types      (Color (..),
-                                           ContentSize (ContentSize),
-                                           UnitInterval)
+import Numeric.Natural          (Natural)
+import React.Flux.Rn.Properties (Styles, style, Has)
+
+import React.Flux.Rn.Types      (UnitInterval)
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.ContentSize
 
 -- Platform: IOS
 shadowColor :: Has c "shadowColor" => Color -> Styles c handler

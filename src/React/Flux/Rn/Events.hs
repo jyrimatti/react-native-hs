@@ -1,12 +1,13 @@
 {-# LANGUAGE CPP               #-}
-{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module React.Flux.Rn.Events (
   module React.Flux.Rn.Events,
   EventHandlerType,
   ReactViewRef
 ) where
 
+import Control.DeepSeq (NFData)
 import Data.Aeson               (FromJSON, parseJSON)
 import Data.Aeson.Types         (parseMaybe)
 import Data.Maybe               (fromMaybe)
@@ -17,27 +18,24 @@ import GHCJS.Types              (JSString, JSVal, IsJSVal, jsval)
 import JavaScript.Array         (index)
 import Prelude                  (IO, Maybe, String, const, error,
                                            print, pure, undefined, ($), (<$>), return,
-                                           (<*>))
+                                           (<*>), Show(..),Eq(..), Bool(True))
 import React.Flux               (EventHandlerType)
 import React.Flux.Internal      (HandlerArg (..),
                                            PropertyOrHandler_ (..),
                                            ReactViewRef)
 import React.Flux.Rn.Properties (Props, prop_)
+import React.Flux.Rn.Util
 
 {-# ANN module ("HLint: ignore Use camelCase" :: String) #-}
 
-newtype This component = This { reactThisRef :: JSVal }
-instance IsJSVal (This component)
-
+newtype This component = This JSString
+  deriving (Show, NFData, Eq, ToJSVal)
 
 on0 :: HasCallStack => JSString -> EventHandlerType handler -> Props component handler
 on0 ev f = prop_ $ CallbackPropertyWithArgumentArray ev $ const $ pure f
 
 on1 :: (HasCallStack, FromJSVal arg) => JSString -> (arg -> EventHandlerType handler) -> Props component handler
 on1 ev f = prop_ $ CallbackPropertyWithSingleArgument ev $ \(HandlerArg jsval) -> f <$> from jsval
-
-on1t :: (HasCallStack, FromJSVal arg) => JSString -> (This component -> arg -> EventHandlerType handler) -> Props component handler
-on1t ev f = prop_ $ CallbackPropertyWithSingleArgumentThis ev $ \reactThisRef (HandlerArg jsval) -> f (This reactThisRef) <$> from jsval
 
 on2 :: (HasCallStack, FromJSVal arg1, FromJSVal arg2) => JSString -> (arg1 -> arg2 -> EventHandlerType handler) -> Props component handler
 on2 ev f = prop_ $ CallbackPropertyWithArgumentArray ev $ \jsarray -> f <$> from (index 0 jsarray) <*> from (index 1 jsarray)
@@ -91,17 +89,17 @@ nativeEvent jsval = do
   x <- js_nativeEvent_ jsval
   fromJSValUnchecked x
 
-invoke :: FromJSVal r => This c -> String -> IO r
-invoke this name = do
+invoke :: (HasCallStack, FromJSVal r) => This c -> String -> IO r
+invoke this@(This c) name = do
   n <- toJSVal name
-  r <- js_invoke this n
+  r <- js_invokeRef this n
   fromJSValUnchecked r
 
-invoke1 :: (FromJSVal r, ToJSVal a) => This c -> String -> a -> IO r
-invoke1 this name a = do
+invoke1 :: (HasCallStack, FromJSVal r, ToJSVal a) => This c -> String -> a -> IO r
+invoke1 this@(This c) name a = do
   aa <- toJSVal a
   n <- toJSVal name
-  r <- js_invoke1 this n aa
+  r <- js_invokeRef1 this n aa
   fromJSValUnchecked r
 
 #ifdef __GHCJS__
@@ -111,36 +109,22 @@ foreign import javascript unsafe
   js_nativeEvent_ :: JSVal -> IO JSVal
 
 foreign import javascript unsafe
-  "JSON.stringify($1)"
-  js_toString :: JSVal -> IO JSString
+  "window.rn_componentRefs[$1][$2]()"
+  js_invokeRef :: This c -> JSVal -> IO JSVal
 
 foreign import javascript unsafe
-  "if (window.renativehs_debug) { window.renativehs_debug(JSON.stringify($1)); }"
-  js_debug :: JSVal -> IO ()
-
-foreign import javascript unsafe
-  "$1[$2]()"
-  js_invoke :: This c -> JSVal -> IO JSVal
-
-foreign import javascript unsafe
-  "$1[$2]($3)"
-  js_invoke1 :: This c -> JSVal -> JSVal -> IO JSVal
+  "window.rn_componentRefs[$1][$2]($3)"
+  js_invokeRef1 :: This c -> JSVal -> JSVal -> IO JSVal
 
 #else
 
 js_nativeEvent_ :: JSVal -> IO JSVal
 js_nativeEvent_ _ = error "js_nativeEvent only works with GHCJS"
 
-js_toString :: JSVal -> IO JSString
-js_toString _ = error "js_toString only works with GHCJS"
+js_invokeRef :: This c -> JSVal -> IO JSVal
+js_invokeRef _ _ = error "js_invoke only works with GHCJS"
 
-js_debug :: JSVal -> IO ()
-js_debug _ = error "js_debug only works with GHCJS"
-
-js_invoke :: This c -> JSVal -> IO JSVal
-js_invoke _ _ = error "js_invoke only works with GHCJS"
-
-js_invoke1 :: This c -> JSVal -> JSVal -> IO JSVal
-js_invoke1 _ _ _ = error "js_invoke1 only works with GHCJS"
+js_invokeRef1 :: This c -> JSVal -> JSVal -> IO JSVal
+js_invokeRef1 _ _ _ = error "js_invoke1 only works with GHCJS"
 
 #endif

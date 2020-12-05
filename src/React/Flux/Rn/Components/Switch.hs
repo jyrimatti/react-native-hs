@@ -2,34 +2,22 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.Switch (
     module React.Flux.Rn.Components.Switch,
-    Color(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    CommonProps.tintColor
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.Props.CommonProps,
+    module React.Flux.Rn.Types.Color
 ) where
 
-import           Prelude                         (Bool)
-import           Prelude                         ((.))
-import           Prelude                         (fmap)
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Events            (EventHandlerType, on1)
-import           React.Flux.Rn.Properties        (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
-import           React.Flux.Rn.Types             (Color (..))
-
+import Prelude                         (fmap, (.), Bool)
+import React.Flux                      (ReactElementM, foreign_)
+import React.Flux.Rn.Events            (EventHandlerType, on1)
+import React.Flux.Rn.Properties        (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (tintColor)
+import React.Flux.Rn.Props.ViewProps
+import React.Flux.Rn.Types.Color
 
 
 data Switch

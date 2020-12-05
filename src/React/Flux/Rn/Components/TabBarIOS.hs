@@ -1,36 +1,25 @@
-{-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE FlexibleContexts      #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
+{-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE DeriveGeneric            #-}
+{-# LANGUAGE FlexibleContexts         #-}
+{-# LANGUAGE FlexibleInstances        #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
+{-# LANGUAGE OverloadedStrings        #-}
+{-# LANGUAGE RankNTypes               #-}
 module React.Flux.Rn.Components.TabBarIOS (
     module React.Flux.Rn.Components.TabBarIOS,
-    BarStyle(..), Color(..),
-    ItemPositioning(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    CommonProps.tintColor,
-    CommonProps.barStyle
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.Props.CommonProps,
+    module React.Flux.Rn.Types.Color
 ) where
 
-import           Prelude                         (Bool)
-import           Prelude                         ((.))
-import           Prelude                         (fmap)
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties        (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
-import           React.Flux.Rn.Types             (BarStyle (..), Color (..),
-                                                  ItemPositioning (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Prelude                    (Show, String, fmap, (.), Bool)
+import React.Flux                      (ReactElementM, foreign_)
+import React.Flux.Rn.Properties        (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (tintColor, barStyle, BarStyle(..))
+import React.Flux.Rn.Props.ViewProps  hiding (ImportantForAccessibility(..))
+import React.Flux.Rn.Types.Color
 
 
 
@@ -38,6 +27,13 @@ data TabBarIOS
 tabBarIOS :: [Props TabBarIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 tabBarIOS = foreign_ "TabBarIOS" . fmap props
 
+
+data ItemPositioning = Fill | Center | Auto
+  deriving (Show, Generic)
+instance ToJSVal ItemPositioning where
+  toJSVal Fill   = toJSVal ("fill" :: String)
+  toJSVal Center = toJSVal ("center" :: String)
+  toJSVal Auto   = toJSVal ("auto" :: String)
 
 
 --barStyle :: Has c "barStyle" => BarStyle -> Props c handler

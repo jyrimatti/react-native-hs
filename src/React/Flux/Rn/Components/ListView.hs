@@ -1,50 +1,44 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.Components.ListView {-# DEPRECATED "Use FlatList or SectionList" #-} (
     module React.Flux.Rn.Components.ListView,
-    module ViewStyleProps,
-    module LayoutStyleProps,
-    module ShadowStyleProps,
-    module TransformsStyleProps,
-    ListViewDataSourceRef, ReactViewRef,
-    ScrollViewProps.Color (..),
-    ScrollViewProps.ContentInsetAdjustmentBehavior (..),
-    ScrollViewProps.ContentOffset (ContentOffset),
-    ScrollViewProps.DecelerationRate (..),
-    ScrollViewProps.IndicatorStyle (..),
-    ScrollViewProps.Inset (Inset),
-    ScrollViewProps.KeyboardDismissMode (..),
-    ScrollViewProps.KeyboardShouldPersistTaps (..),
-    ScrollViewProps.OverScrollMode (..),
-    ScrollViewProps.SnapToAlignment (..)
+    module React.Flux.Rn.StyleProps.ViewStyleProps,
+    module React.Flux.Rn.StyleProps.LayoutStyleProps,
+    module React.Flux.Rn.StyleProps.ShadowStyleProps,
+    module React.Flux.Rn.StyleProps.TransformsStyleProps
 ) where
 
-import           Data.Typeable                       (Typeable)
-import           GHCJS.Marshal                       (FromJSVal)
-import           Numeric.Natural                     (Natural)
-import           Prelude                             (Bool, IO, (.), fmap)
-import           React.Flux                          (ReactElementM, foreign_)
-import           React.Flux.Rn.Events                (EventHandlerType, on1,
+import Data.Typeable                       (Typeable)
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (FromJSVal, ToJSVal (..))
+import GHCJS.Types                (JSVal)
+import Numeric.Natural                     (Natural)
+import Prelude                             (Bool, IO, (.), fmap)
+import React.Flux                          (ReactElementM, foreign_)
+import React.Flux.Internal        (ReactViewRef (..))
+import React.Flux.Rn.Events                (EventHandlerType, on1,
                                                       on2, view0, view1, view2,
                                                       view3, view4)
-import           React.Flux.Rn.Properties            (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.ScrollViewProps as ScrollViewProps
-import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
-import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
-import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
-import           React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
-import           React.Flux.Rn.Types                 (ListViewDataSourceRef,
-                                                      ReactViewRef)
+import React.Flux.Rn.Properties            (Has, Props, prop, props)
+import React.Flux.Rn.StyleProps.LayoutStyleProps
+import React.Flux.Rn.StyleProps.ShadowStyleProps hiding (ContentSize(..))
+import React.Flux.Rn.StyleProps.TransformsStyleProps
+import React.Flux.Rn.StyleProps.ViewStyleProps hiding (Visibility(..), borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
 
 
 data ListView
 listView :: [Props ListView handler] -> ReactElementM handler a -> ReactElementM handler a
 listView = foreign_ "ListView" . fmap props
 
+
+-- TODO:
+newtype ListViewDataSourceRef = ListViewDataSourceRef JSVal
+  deriving Generic
+instance ToJSVal ListViewDataSourceRef
 
 
 -- Required

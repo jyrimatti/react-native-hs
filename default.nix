@@ -14,7 +14,7 @@ let
   });
 
   react-native-hs = { mkDerivation, base, deepseq, ghcjs-base, react-hs, stdenv, nodejs,
-        text, time, transformers, containers, network-uri, semigroups
+        text, time, transformers, containers, network-uri, semigroups, aeson
       }:
       mkDerivation {
         pname = "react-native-hs";

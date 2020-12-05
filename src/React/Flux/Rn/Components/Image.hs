@@ -1,42 +1,75 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.Image (
     module React.Flux.Rn.Components.Image,
-    module LayoutStyleProps,
-    module ShadowStyleProps,
-    module TransformsStyleProps,
-    DefaultSource(..), ImageSource(..), Inset(Inset),
-    OnLayout(OnLayout), OnLayoutVals(OnLayoutVals),
-    OnProgress(OnProgress), ResizeMethod(..),
-    CommonProps.style
+    module React.Flux.Rn.StyleProps.ImageStyleProps,
+    module React.Flux.Rn.StyleProps.LayoutStyleProps,
+    module React.Flux.Rn.StyleProps.ShadowStyleProps,
+    module React.Flux.Rn.StyleProps.TransformsStyleProps,
+    module React.Flux.Rn.Types.ImageSource,
+    module React.Flux.Rn.Types.Inset,
+    module React.Flux.Rn.Types.OnLayout,
+    module React.Flux.Rn.Props.CommonProps
 ) where
 
-import           GHCJS.Marshal            (FromJSVal (..))
-import           Numeric.Natural          (Natural)
-import           Prelude ((.), Bool, String, ($), fmap)
-import           React.Flux               (ReactElementM, foreign_)
-import           React.Flux.Rn.Events     (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
-import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
-import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
-import           React.Flux.Rn.Types      (DefaultSource (..), ImageSource (..),
-                                           Inset (Inset), OnLayout (OnLayout),
-                                           OnLayoutVals (OnLayoutVals),
-                                           OnProgress (OnProgress),
-                                           ResizeMethod (..))
-
+import Data.Aeson                 (FromJSON (..), ToJSON (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal ( ToJSVal(..), FromJSVal(..) )
+import Network.URI                (URI)
+import Numeric.Natural          (Natural)
+import Prelude                    (Maybe, Double, Show, Int, String, Bool, (.), fmap, ($))
+import React.Flux               (ReactElementM, foreign_)
+import React.Flux.Rn.Events ( fromNativeJSON, EventHandlerType, on0, on1 )
+import React.Flux.Rn.Properties (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (style)
+import React.Flux.Rn.StyleProps.ImageStyleProps
+import React.Flux.Rn.StyleProps.LayoutStyleProps hiding (width, height, overflow, borderWidth, Overflow(..), AlignItems(..))
+import React.Flux.Rn.StyleProps.ShadowStyleProps hiding (ContentSize(..))
+import React.Flux.Rn.StyleProps.TransformsStyleProps hiding (Transform(..))
+import React.Flux.Rn.Types.ImageSource (ImageSource)
+import React.Flux.Rn.Types.Inset (Inset)
+import React.Flux.Rn.Types.OnLayout (OnLayout(OnLayout), OnLayoutVals)
 
 data Image
 image :: [Props Image handler] -> ReactElementM handler a -> ReactElementM handler a
 image = foreign_ "Image" . fmap props
 
+
+
+data DefaultURISource = DefaultURISource {
+  uri    :: URI,
+  width  :: Maybe Natural,
+  height :: Maybe Natural,
+  scale  :: Maybe Double
+} deriving (Show,Generic)
+instance ToJSON DefaultURISource
+instance ToJSVal DefaultURISource where
+  toJSVal = toJSVal . toJSON
+
+data DefaultSource = DefaultSourceURI DefaultURISource | DefaultSourceResource Int
+  deriving (Show,Generic)
+instance ToJSON DefaultSource
+instance ToJSVal DefaultSource where
+  toJSVal = toJSVal . toJSON
+
+data ResizeMethod = Auto | Resize | Scale
+  deriving (Show, Generic)
+instance ToJSVal ResizeMethod where
+  toJSVal Auto   = toJSVal ("auto" :: String)
+  toJSVal Resize = toJSVal ("resize" :: String)
+  toJSVal Scale  = toJSVal ("scale" :: String)
+
+data OnProgress = OnProgress {
+    loaded :: Double,
+    total  :: Double
+} deriving (Show, Generic)
+instance FromJSON OnProgress
+instance FromJSVal OnProgress where fromJSVal = fromNativeJSON
 
 
 blurRadius :: Has c "blurRadius" => Natural -> Props c handler
@@ -113,6 +146,7 @@ instance Has Image "onProgress"
 -- TODO: methods
 
 
+-- ImageStyleProps:
 
 instance Has Image "borderTopRightRadius"
 instance Has Image "backfaceVisibility"

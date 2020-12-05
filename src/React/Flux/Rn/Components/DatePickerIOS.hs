@@ -1,31 +1,35 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.DatePickerIOS (
     module React.Flux.Rn.Components.DatePickerIOS,
-    MinuteInterval(..), Mode(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           Data.Time.LocalTime           (LocalTime)
-import           Prelude                       ((.))
-import           Prelude                       (Int, fmap)
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on1)
-import           React.Flux.Rn.Properties      (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (MinuteInterval (..), Mode (..))
+import Data.Time.LocalTime            ( LocalTime )
+import GHC.Generics                   ( Generic )
+import GHCJS.Marshal                  ( ToJSVal(..) )
+
+import Prelude                        ( Int
+                                                , fmap
+                                                , Show
+                                                , String
+                                                , (.)
+                                                )
+import React.Flux                     ( ReactElementM
+                                                , foreign_
+                                                , EventHandlerType
+                                                )
+import React.Flux.Rn.Events           ( on1 )
+import React.Flux.Rn.Properties       ( Has
+                                                , Props
+                                                , prop
+                                                , props
+                                                )
+import React.Flux.Rn.Props.ViewProps
 
 
 
@@ -33,7 +37,28 @@ data DatePickerIOS
 datePickerIOS :: [Props DatePickerIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 datePickerIOS = foreign_ "DatePickerIOS" . fmap props
 
+data Mode = Date | Time | DateTime
+  deriving (Show, Generic)
+instance ToJSVal Mode where
+  toJSVal Date     = toJSVal ("date" :: String)
+  toJSVal Time     = toJSVal ("time" :: String)
+  toJSVal DateTime = toJSVal ("datetime" :: String)
 
+
+data MinuteInterval = M1 | M2 | M3 | M4 | M5 | M6 | M10 | M12 | M15 | M20 | M30
+  deriving (Show, Generic)
+instance ToJSVal MinuteInterval where
+  toJSVal M1  = toJSVal (1 :: Int)
+  toJSVal M2  = toJSVal (2 :: Int)
+  toJSVal M3  = toJSVal (3 :: Int)
+  toJSVal M4  = toJSVal (4 :: Int)
+  toJSVal M5  = toJSVal (5 :: Int)
+  toJSVal M6  = toJSVal (6 :: Int)
+  toJSVal M10 = toJSVal (10 :: Int)
+  toJSVal M12 = toJSVal (12 :: Int)
+  toJSVal M15 = toJSVal (15 :: Int)
+  toJSVal M20 = toJSVal (20 :: Int)
+  toJSVal M30 = toJSVal (30 :: Int)
 
 -- Required
 date :: Has c "date" => LocalTime -> Props c handler

@@ -1,26 +1,23 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.StatusBar (
     module React.Flux.Rn.Components.StatusBar,
-    Color(..), ShowHideTransition(..),
-    StatusBarStyle(..),
-    CommonProps.style
+    module React.Flux.Rn.Props.CommonProps,
+    module React.Flux.Rn.Types.Color
 ) where
 
-import           Prelude                         (Bool)
-import           Prelude                         (fmap)
-import           Prelude                         ((.))
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties        (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import           React.Flux.Rn.Types             (Color (..),
-                                                  ShowHideTransition (..),
-                                                  StatusBarStyle (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Prelude                    (Show, Bool, String, fmap, (.))
+import React.Flux                      (ReactElementM, foreign_)
+import React.Flux.Rn.Properties        (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (barStyle, BarStyle)
+import React.Flux.Rn.Types.Color
 
 
 
@@ -28,6 +25,19 @@ data StatusBar
 statusBar :: [Props StatusBar handler] -> ReactElementM handler a -> ReactElementM handler a
 statusBar = foreign_ "StatusBar" . fmap props
 
+
+data ShowHideTransition = Fade | Slide
+  deriving (Show, Generic)
+instance ToJSVal ShowHideTransition where
+  toJSVal Fade  = toJSVal ("fade" :: String)
+  toJSVal Slide = toJSVal ("slide" :: String)
+
+data StatusBarStyle = Default | LightContent | DarkContent
+  deriving (Show, Generic)
+instance ToJSVal StatusBarStyle where
+  toJSVal Default      = toJSVal ("default" :: String)
+  toJSVal LightContent = toJSVal ("light-content" :: String)
+  toJSVal DarkContent  = toJSVal ("dark-content" :: String)
 
 
 animated :: Has c "animated" => Bool -> Props c handler

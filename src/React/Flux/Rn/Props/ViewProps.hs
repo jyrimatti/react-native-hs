@@ -1,32 +1,88 @@
-{-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE FlexibleContexts      #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE DataKinds               #-}
+{-# LANGUAGE DeriveGeneric           #-}
+{-# LANGUAGE FlexibleContexts        #-}
+{-# LANGUAGE OverloadedStrings       #-}
+{-# LANGUAGE RankNTypes              #-}
 module React.Flux.Rn.Props.ViewProps (
     module React.Flux.Rn.Props.ViewProps,
-    AccessibilityComponentTypes(..),
-    AccessibilityLiveRegion(..),
-    AccessibilityTraits(..),
-    ImportantForAccessibility(..), Inset(Inset),
-    OnLayout(OnLayout), PointerEvents(..),
-    SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.CommonProps,
+    module React.Flux.Rn.Types.AccessibilityComponentTypes,
+    module React.Flux.Rn.Types.AccessibilityTraits,
+    module React.Flux.Rn.Types.Inset,
+    module React.Flux.Rn.Types.OnLayout,
+    module React.Flux.Rn.Types.PointerEvents
 ) where
 
-import Prelude                  (Bool, String)
-import React.Flux.Rn.Events     (EventHandlerType, on0, on1, ret1)
+import Data.Maybe                 (fromMaybe)
+import Data.Time.LocalTime        (LocalTime)
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (FromJSVal (..), ToJSVal (..))
+import GHCJS.Types                (JSString, JSVal)
+import Numeric.Natural            (Natural)
+import Prelude                    (String, Bool, Show, Int, error, ($), pure, Maybe(Just))
+import System.IO.Unsafe           (unsafePerformIO)
+import React.Flux                 (EventHandlerType, EventTarget (..), Touch (..))
+import React.Flux.Rn.Events     (on0, on1, ret1)
 import React.Flux.Rn.Properties (Has, Props, prop)
-import React.Flux.Rn.Types      (AccessibilityComponentTypes (..),
-                                           AccessibilityLiveRegion (..),
-                                           AccessibilityTraits (..),
-                                           ImportantForAccessibility (..),
-                                           Inset (Inset), OnLayout (OnLayout),
-                                           PointerEvents (..),
-                                           SyntheticTouchEvent (SyntheticTouchEvent))
+import React.Flux.Rn.Util (js_getProp)
+
+import React.Flux.Rn.Types ()
+import React.Flux.Rn.Types.AccessibilityComponentTypes (AccessibilityComponentTypes)
+import React.Flux.Rn.Types.AccessibilityTraits hiding (AccessibilityTrait(..))
+import React.Flux.Rn.Types.Inset
+import React.Flux.Rn.Types.OnLayout
+import React.Flux.Rn.Types.PointerEvents (PointerEvents)
+import React.Flux.Rn.Props.CommonProps (style)
+
 
 data View
+
+data ImportantForAccessibility = Auto | Yes | No | NoHideDescendants
+   deriving (Show, Generic)
+instance ToJSVal ImportantForAccessibility where
+  toJSVal Auto              = toJSVal ("auto" :: String)
+  toJSVal Yes               = toJSVal ("yes" :: String)
+  toJSVal No                = toJSVal ("no" :: String)
+  toJSVal NoHideDescendants = toJSVal ("no-hide-descendants" :: String)
+  
+data AccessibilityLiveRegion = None | Polite | Assertive
+  deriving (Show, Generic)
+instance ToJSVal AccessibilityLiveRegion where
+  toJSVal None      = toJSVal ("none" :: String)
+  toJSVal Polite    = toJSVal ("polite" :: String)
+  toJSVal Assertive = toJSVal ("assertive" :: String)
+
+-- copied from React.Flux.PropertiesAndEvents since parseTouch wasn't exported
+instance FromJSVal Touch where
+  fromJSVal o = pure $ Just Touch
+      { touchIdentifier = o .: "identifier"
+      , touchTarget = EventTarget $ js_getProp o "target"
+      , touchScreenX = o .: "screenX"
+      , touchScreenY = o .: "screenY"
+      , touchClientX = o .: "clientX"
+      , touchClientY = o .: "clientY"
+      , touchPageX = o .: "pageX"
+      , touchPageY = o .: "pageY"
+      }
+    where
+      (.:) :: FromJSVal b => JSVal -> JSString -> b
+      obj .: key = fromMaybe (error "Unable to decode event target") $ unsafePerformIO $  -- TODO: get rid of the unsafePerformIO here!
+                    fromJSVal $ js_getProp obj key
+
+type NodeID = String
+
+data SyntheticTouchEvent = SyntheticTouchEvent {
+  changedTouches :: [Touch],
+  identifier     :: String,
+  locationX      :: Int,
+  locationY      :: Int,
+  pageX          :: Natural,
+  pageY          :: Natural,
+  target         :: NodeID,
+  timestamp      :: LocalTime, -- ?
+  touches        :: [Touch]
+}  deriving (Show, Generic)
+instance FromJSVal SyntheticTouchEvent
 
 onStartShouldSetResponder :: Has component "onStartShouldSetResponder" => (SyntheticTouchEvent -> Bool) -> Props component handler
 onStartShouldSetResponder = ret1 "onStartShouldSetResponder"

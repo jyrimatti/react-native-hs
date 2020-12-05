@@ -1,16 +1,37 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE DataKinds               #-}
+{-# LANGUAGE DeriveGeneric           #-}
+{-# LANGUAGE FlexibleContexts        #-}
+{-# LANGUAGE OverloadedStrings       #-}
 module React.Flux.Rn.StyleProps.ImageStyleProps (
     module React.Flux.Rn.StyleProps.ImageStyleProps,
-    Color(..), ResizeMode(..), UnitInterval, Visibility(..)
+    module React.Flux.Rn.Types,
+    module React.Flux.Rn.Types.Color,
+    module React.Flux.Rn.Types.Visibility
 ) where
 
-import           Numeric.Natural          (Natural)
-import           React.Flux.Rn.Properties (Styles, style, Has)
-import           React.Flux.Rn.Types      (Color (..), ResizeMode (..),
-                                           UnitInterval, Visibility (..))
+import GHC.Generics                   (Generic)
+import GHCJS.Marshal                  (ToJSVal (..))
+import Numeric.Natural                (Natural)
+import Prelude                        (Show, String)
+import React.Flux.Rn.Properties       (Has, Styles, style)
+
+import React.Flux.Rn.Types            (UnitInterval)
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.Visibility
+
+
+data ResizeMode = Contain
+                | Cover
+                | Stretch
+                | Center
+                | Repeat
+  deriving (Show,Generic)
+instance ToJSVal ResizeMode where
+  toJSVal Contain = toJSVal ("contain" :: String)
+  toJSVal Cover   = toJSVal ("cover" :: String)
+  toJSVal Stretch = toJSVal ("stretch" :: String)
+  toJSVal Center  = toJSVal ("center" :: String)
+  toJSVal Repeat  = toJSVal ("repeat" :: String)
 
 borderTopRightRadius :: Has c "borderTopRightRadius" => Natural -> Styles c handler
 borderTopRightRadius = style "borderTopRightRadius"

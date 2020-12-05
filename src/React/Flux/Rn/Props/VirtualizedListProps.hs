@@ -1,21 +1,19 @@
-{-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE FlexibleContexts      #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE DataKinds               #-}
+{-# LANGUAGE FlexibleContexts        #-}
+{-# LANGUAGE OverloadedStrings       #-}
+{-# LANGUAGE RankNTypes              #-}
 module React.Flux.Rn.Props.VirtualizedListProps (
     module React.Flux.Rn.Props.VirtualizedListProps,
-    Index
+    module React.Flux.Rn.Types
 ) where
 
-import           GHCJS.Marshal            (FromJSVal)
-import           Numeric.Natural          (Natural)
-import           Prelude                  (Bool, String)
-import           React.Flux.Rn.Events     (EventHandlerType, on1, ret2)
-import           React.Flux.Rn.Properties (Has, Props, prop)
-import           React.Flux.Rn.Types      (Index)
+import GHCJS.Marshal            (FromJSVal)
+import Numeric.Natural          (Natural)
+import Prelude                  (Bool, String)
+import React.Flux.Rn.Events     (EventHandlerType, on1, ret2)
+import React.Flux.Rn.Properties (Has, Props, prop)
+
+import React.Flux.Rn.Types      (Index)
 
 -- Required
 last :: Has component "last" => Natural -> Props component handler

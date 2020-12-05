@@ -1,43 +1,46 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TypeApplications  #-}
-{-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.Components.DrawerLayoutAndroid (
     module React.Flux.Rn.Components.DrawerLayoutAndroid,
-    Color(..), DrawerLockMode(..), DrawerPosition(..), KeyboardDismissMode(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Types.KeyboardDismissMode,
+    module React.Flux.Rn.Types.Color,
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           Data.Typeable                 (Typeable)
-import           Numeric.Natural               (Natural)
-import           Prelude                       ((.))
-import           Prelude                       (fmap)
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on0)
-import           React.Flux.Rn.Properties      (Props, prop, props, Has)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (Color (..), DrawerLockMode (..),
-                                                DrawerPosition (..),
-                                                KeyboardDismissMode (..),
-                                                ReactViewRef)
-
+import Data.Typeable                 (Typeable)
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Numeric.Natural               (Natural)
+import Prelude                       (fmap, (.), Show, String)
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Internal        (ReactViewRef (..))
+import React.Flux.Rn.Events          (EventHandlerType, on0)
+import React.Flux.Rn.Properties      (Props, prop, props, Has)
+import React.Flux.Rn.Props.ViewProps
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.KeyboardDismissMode (KeyboardDismissMode)
 
 
 data DrawerLayoutAndroid
 drawerLayoutAndroid :: [Props DrawerLayoutAndroid handler] -> ReactElementM handler a -> ReactElementM handler a
 drawerLayoutAndroid = foreign_ "DrawerLayoutAndroid" . fmap props
 
+data DrawerPosition = Left | Right
+  deriving (Show, Generic)
+instance ToJSVal DrawerPosition where
+  toJSVal Left  = toJSVal ("left" :: String)
+  toJSVal Right = toJSVal ("right" :: String)
 
+data DrawerLockMode = Unlocked | LockedClosed | LockedOpen
+  deriving (Show, Generic)
+instance ToJSVal DrawerLockMode where
+  toJSVal Unlocked     = toJSVal ("unlocked" :: String)
+  toJSVal LockedClosed = toJSVal ("locked-closed" :: String)
+  toJSVal LockedOpen   = toJSVal ("locked-open" :: String)
 
 -- Required
 renderNavigationView :: Has c "renderNavigationView" => Typeable props => ReactViewRef props -> Props c handler

@@ -2,24 +2,17 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.TouchableWithoutFeedback (
     module React.Flux.Rn.Components.TouchableWithoutFeedback,
-    TouchableWithoutFeedbackProps.AccessibilityComponentTypes(..),
-    TouchableWithoutFeedbackProps.AccessibilityTraits(..),
-    TouchableWithoutFeedbackProps.Inset(Inset),
-    TouchableWithoutFeedbackProps.OnLayout(OnLayout)
+    module React.Flux.Rn.Props.TouchableWithoutFeedbackProps
 ) where
 
-import           Prelude                                           (fmap, (.))
-import           React.Flux                                        (ReactElementM,
-                                                                    foreign_)
-import           React.Flux.Rn.Properties                          (Has, Props,
-                                                                    props)
-import qualified React.Flux.Rn.Props.TouchableWithoutFeedbackProps as TouchableWithoutFeedbackProps
-
+import Prelude                                           (fmap, (.))
+import React.Flux                                        (ReactElementM, foreign_)
+import React.Flux.Rn.Properties                          (Has, Props, props)
+import React.Flux.Rn.Props.TouchableWithoutFeedbackProps
 
 
 data TouchableWithoutFeedback

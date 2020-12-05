@@ -2,29 +2,20 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.PickerIOS (
     module React.Flux.Rn.Components.PickerIOS,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           GHCJS.Marshal                 (ToJSVal)
-import           Prelude                       (fmap, (.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Components.Text (Text)
-import           React.Flux.Rn.Events          (EventHandlerType, on0)
-import           React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp,
-                                                prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
+import GHCJS.Marshal                 (ToJSVal)
+import Prelude                       (fmap, (.))
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Components.Text (Text)
+import React.Flux.Rn.Events          (EventHandlerType, on0)
+import React.Flux.Rn.Properties      (Has, Props, Styles, nestedProp, prop, props)
+import React.Flux.Rn.Props.ViewProps
 
 
 

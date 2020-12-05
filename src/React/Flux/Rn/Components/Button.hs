@@ -2,21 +2,18 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.Components.Button (
     module React.Flux.Rn.Components.Button,
-    Color(..),
-    CommonProps.color
+    module React.Flux.Rn.Props.CommonProps
 ) where
 
-import Prelude (Bool, String, fmap, (.))
-import           Prelude                  ((.),($),mempty)
-import           React.Flux               (ReactElementM, foreign_)
-import           React.Flux.Rn.Events     (EventHandlerType, on0)
-import           React.Flux.Rn.Properties (Has, Props, prop, props)
-import           React.Flux.Rn.Types      (Color (..))
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
+import Prelude                  (($), mempty, String, Bool, (.), fmap)
+import React.Flux               (ReactElementM, foreign_)
+import React.Flux.Rn.Events     (EventHandlerType, on0)
+import React.Flux.Rn.Properties (Has, Props, prop, props)
+
+import React.Flux.Rn.Props.CommonProps (color, Color(..))
 
 
 

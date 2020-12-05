@@ -2,46 +2,23 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.SectionList (
     module React.Flux.Rn.Components.SectionList,
-    Index,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    ScrollViewProps.Color (..),
-    ScrollViewProps.ContentInsetAdjustmentBehavior (..),
-    ScrollViewProps.ContentOffset (ContentOffset),
-    ScrollViewProps.DecelerationRate (..),
-    ScrollViewProps.IndicatorStyle (..),
-    ScrollViewProps.KeyboardDismissMode (..),
-    ScrollViewProps.KeyboardShouldPersistTaps (..),
-    ScrollViewProps.OverScrollMode (..),
-    ScrollViewProps.ReactViewRef,
-    ScrollViewProps.SnapToAlignment (..)
+    module React.Flux.Rn.Props.VirtualizedListProps,
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.Props.ScrollViewProps
 ) where
 
-import           GHCJS.Marshal                            (FromJSVal)
-import           Prelude                                  (Bool, String)
-import           Prelude                                  ((.))
-import           Prelude                                  (fmap)
-import           React.Flux                               (ReactElementM,
+import Prelude                                  (Bool, fmap, (.))
+import React.Flux                               (ReactElementM,
                                                            foreign_)
-import           React.Flux.Rn.Properties                 (Has, Props, prop,
+import React.Flux.Rn.Properties                 (Has, Props, prop,
                                                            props)
-import qualified React.Flux.Rn.Props.ScrollViewProps      as ScrollViewProps
-import qualified React.Flux.Rn.Props.ViewProps            as ViewProps
-import qualified React.Flux.Rn.Props.VirtualizedListProps as VirtualizedListProps
-import           React.Flux.Rn.Types                      (Index)
-
+import React.Flux.Rn.Props.ScrollViewProps hiding (ContentOffset(..), horizontal, scrollEventThrottle, KeyboardDismissMode(..))
+import React.Flux.Rn.Props.ViewProps
+import React.Flux.Rn.Props.VirtualizedListProps
 
 
 data SectionList

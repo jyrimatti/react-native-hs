@@ -1,33 +1,24 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ProgressBarAndroid (
     module React.Flux.Rn.Components.ProgressBarAndroid,
-    Color(..), StyleAttr(..), UnitInterval,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    CommonProps.color
+    module React.Flux.Rn.Types,
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.Props.CommonProps
 ) where
 
-import           Prelude                         (Bool)
-import           Prelude                         (fmap)
-import           Prelude                         ((.))
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties        (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
-import           React.Flux.Rn.Types             (Color (..), StyleAttr (..),
-                                                  UnitInterval)
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Prelude                    (Show, String, Bool, fmap, (.))
+import React.Flux                      (ReactElementM, foreign_)
+import React.Flux.Rn.Properties        (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (color, Color(..))
+import React.Flux.Rn.Props.ViewProps
+import React.Flux.Rn.Types             (UnitInterval)
 
 
 
@@ -35,6 +26,18 @@ data ProgressBarAndroid
 progressBarAndroid :: [Props ProgressBarAndroid handler] -> ReactElementM handler a -> ReactElementM handler a
 progressBarAndroid = foreign_ "ProgressBarAndroid" . fmap props
 
+
+
+data StyleAttr = Horizontal | Normal | Small | Large | Inverse | SmallInverse | LargeInverse
+  deriving (Show, Generic)
+instance ToJSVal StyleAttr where
+  toJSVal Horizontal   = toJSVal ("Horizontal" :: String)
+  toJSVal Normal       = toJSVal ("Normal" :: String)
+  toJSVal Small        = toJSVal ("Small" :: String)
+  toJSVal Large        = toJSVal ("Large" :: String)
+  toJSVal Inverse      = toJSVal ("Inverse" :: String)
+  toJSVal SmallInverse = toJSVal ("SmallInverse" :: String)
+  toJSVal LargeInverse = toJSVal ("LargeInverse" :: String)
 
 
 animating :: Has c "animating" => Bool -> Props c handler

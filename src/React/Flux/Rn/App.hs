@@ -1,5 +1,5 @@
 {-# LANGUAGE CPP               #-}
-{-# LANGUAGE NoImplicitPrelude #-}
+
 module React.Flux.Rn.App where
 
 import           Data.JSString (pack)

@@ -1,16 +1,31 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.StyleProps.ViewStyleProps (
     module React.Flux.Rn.StyleProps.ViewStyleProps,
-    BorderStyle(..), Color(..), UnitInterval, Visibility(..)
+    module React.Flux.Rn.Types,
+    module React.Flux.Rn.Types.Color,
+    module React.Flux.Rn.Types.Visibility
 ) where
 
-import           Numeric.Natural          (Natural)
-import           React.Flux.Rn.Properties (Styles, style, Has)
-import           React.Flux.Rn.Types      (BorderStyle (..), Color (..),
-                                           UnitInterval, Visibility (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Numeric.Natural            (Natural)
+import Prelude                    (Show, String)
+import React.Flux.Rn.Properties (Styles, style, Has)
+
+import React.Flux.Rn.Types      (UnitInterval)
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.Visibility
+
+data BorderStyle = Solid | Dotted | Dashed
+  deriving (Show, Generic)
+instance ToJSVal BorderStyle where
+  toJSVal Solid  = toJSVal ("solid" :: String)
+  toJSVal Dotted = toJSVal ("dotted" :: String)
+  toJSVal Dashed = toJSVal ("dashed" :: String)
+
 
 borderRightColor :: Has c "borderRightColor" => Color -> Styles c handler
 borderRightColor = style "borderRightColor"

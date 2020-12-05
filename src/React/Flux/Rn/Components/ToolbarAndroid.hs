@@ -1,44 +1,31 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ToolbarAndroid (
     module React.Flux.Rn.Components.ToolbarAndroid,
-    Action(Action_), Color(..), ImageSource(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    CommonProps.titleColor
+    module React.Flux.Rn.Types.ImageSource,
+    module React.Flux.Rn.Types.Action,
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           Numeric.Natural                 (Natural)
-import           Prelude                         (fmap)
-import           Prelude                         ((.))
-import           Prelude                         (Bool, Int, String)
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Events            (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties        (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import qualified React.Flux.Rn.Props.ViewProps   as ViewProps
-import           React.Flux.Rn.Types             (Action (Action_), Color (..),
-                                                  ImageSource (..))
-
+import Numeric.Natural                 (Natural)
+import Prelude                    (Int, fmap, (.), Bool, String)
+import React.Flux                      (ReactElementM, foreign_)
+import React.Flux.Rn.Events            (EventHandlerType, on0, on1)
+import React.Flux.Rn.Properties        (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps
+import React.Flux.Rn.Props.ViewProps hiding (OnLayoutVals(..))
+import React.Flux.Rn.Types.Action hiding (title)
+import React.Flux.Rn.Types.ImageSource
 
 
 data ToolbarAndroid
 toolbarAndroid :: [Props ToolbarAndroid handler] -> ReactElementM handler a -> ReactElementM handler a
 toolbarAndroid = foreign_ "ToolbarAndroid" . fmap props
-
-
 
 overflowIcon :: Has c "overflowIcon" => ImageSource -> Props c handler
 overflowIcon = prop "overflowIcon"
@@ -76,8 +63,8 @@ subtitleColor = prop "subtitleColor"
 title :: Has c "title" => String -> Props c handler
 title = prop "title"
 
---titleColor :: Has c "titleColor" => Color -> Props c handler
---titleColor = prop "titleColor"
+titleColor :: Has c "titleColor" => Color -> Props c handler
+titleColor = prop "titleColor"
 
 
 

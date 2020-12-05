@@ -1,33 +1,28 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.ViewPagerAndroid (
     module React.Flux.Rn.Components.ViewPagerAndroid,
-    KeyboardDismissMode(..), OnPageScroll(OnPageScroll), OnPageSelected(OnPageSelected), PageScrollingState(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.Types.KeyboardDismissMode
 ) where
 
-import           Numeric.Natural               (Natural)
-import           Prelude                       (Bool, Int, fmap, (.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on1)
-import           React.Flux.Rn.Properties      (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (KeyboardDismissMode (..),
-                                                OnPageScroll (OnPageScroll),
-                                                OnPageSelected (OnPageSelected),
-                                                PageScrollingState (..))
+import Data.Aeson                 (FromJSON (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (FromJSVal (..))
+import GHCJS.Types                (JSString)
+import Numeric.Natural               (Natural)
+import Prelude                    (Show, fmap, (.), Int, Bool, Double, (<$>))
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Events       (fromNativeJSON, nativeEvent, EventHandlerType, on1)
+import React.Flux.Rn.Properties      (Has, Props, prop, props)
+import React.Flux.Rn.Props.ViewProps
+import React.Flux.Rn.Types.KeyboardDismissMode (KeyboardDismissMode)
 
 
 
@@ -35,6 +30,28 @@ data ViewPagerAndroid
 viewPagerAndroid :: [Props ViewPagerAndroid handler] -> ReactElementM handler a -> ReactElementM handler a
 viewPagerAndroid = foreign_ "ViewPagerAndroid" . fmap props
 
+
+newtype OnPageSelected = OnPageSelected {
+    position :: Natural
+} deriving (Show, Generic)
+instance FromJSON OnPageSelected
+instance FromJSVal OnPageSelected where fromJSVal = fromNativeJSON
+
+data PageScrollingState = Idle | Dragging | Settling
+  deriving (Show, Generic)
+instance FromJSVal PageScrollingState where
+  fromJSVal jsval = fmap parse <$> nativeEvent jsval
+   where parse :: JSString -> PageScrollingState
+         parse "idle"     = Idle
+         parse "dragging" = Dragging
+         parse "settling" = Settling
+
+data OnPageScroll = OnPageScroll {
+    position :: Natural,
+    offset   :: Double
+} deriving (Show, Generic)
+instance FromJSON OnPageScroll
+instance FromJSVal OnPageScroll where fromJSVal = fromNativeJSON
 
 
 initialPage :: Has c "initialPage" => Natural -> Props c handler

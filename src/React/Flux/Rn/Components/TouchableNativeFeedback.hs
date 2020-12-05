@@ -1,33 +1,30 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.TouchableNativeFeedback (
     module React.Flux.Rn.Components.TouchableNativeFeedback,
-    BackgroundPropType,
-    TouchableWithoutFeedbackProps.AccessibilityComponentTypes(..),
-    TouchableWithoutFeedbackProps.AccessibilityTraits(..),
-    TouchableWithoutFeedbackProps.Inset(Inset),
-    TouchableWithoutFeedbackProps.OnLayout(OnLayout)
+    module React.Flux.Rn.Props.TouchableWithoutFeedbackProps
 ) where
 
-import           Prelude                                           (Bool, fmap, (.))
-import           React.Flux                                        (ReactElementM,
-                                                                    foreign_)
-import           React.Flux.Rn.Properties                          (Has, Props,
-                                                                    prop, props)
-import qualified React.Flux.Rn.Props.TouchableWithoutFeedbackProps as TouchableWithoutFeedbackProps
-import           React.Flux.Rn.Types                               (BackgroundPropType)
-
-
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Prelude                    (Bool, fmap, (.))
+import React.Flux                                        (ReactElementM, foreign_)
+import React.Flux.Rn.Properties                          (Has, Props, prop, props)
+import React.Flux.Rn.Props.TouchableWithoutFeedbackProps
 
 data TouchableNativeFeedback
 touchableNativeFeedback :: [Props TouchableNativeFeedback handler] -> ReactElementM handler a -> ReactElementM handler a
 touchableNativeFeedback = foreign_ "TouchableNativeFeedback" . fmap props
 
+-- TODO:
+data BackgroundPropType
+  deriving Generic
+instance ToJSVal BackgroundPropType
 
 
 background :: Has c "background" => BackgroundPropType -> Props c handler

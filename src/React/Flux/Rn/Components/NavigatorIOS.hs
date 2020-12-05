@@ -2,34 +2,25 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.NavigatorIOS (
     module React.Flux.Rn.Components.NavigatorIOS,
-    BarStyle(..), Color(..), Route(Route),
-    CommonProps.tintColor,
-    CommonProps.barStyle
+    module React.Flux.Rn.Types.Route,
+    module React.Flux.Rn.Props.CommonProps
 ) where
 
-import           Prelude                         (Bool)
-import           Prelude                         (fmap)
-import           Prelude                         ((.))
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Components.View   (View)
-import           React.Flux.Rn.Properties        (Has, Props, Styles,
-                                                  nestedProp, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import           React.Flux.Rn.Types             (BarStyle (..), Color (..),
-                                                  Route (Route))
-
+import Prelude                         (Bool, (.), fmap)
+import React.Flux                      (ReactElementM, foreign_)
+import React.Flux.Rn.Components.View   (View)
+import React.Flux.Rn.Properties        (Has, Props, Styles, nestedProp, prop, props)
+import React.Flux.Rn.Props.CommonProps (tintColor, barStyle, Color(..), BarStyle(..))
+import React.Flux.Rn.Types.Route (Route, SystemIcon)
 
 
 data NavigatorIOS
 navigatorIOS :: [Props NavigatorIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 navigatorIOS = foreign_ "NavigatorIOS" . fmap props
-
-
 
 -- Required
 initialRoute :: Has c "initialRoute" => Route -> Props c handler

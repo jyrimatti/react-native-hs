@@ -1,23 +1,19 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.Components.Modal (
-    module React.Flux.Rn.Components.Modal,
-    AnimationType(..), SupportedOrientations(..), PresentationStyle(..)
+    module React.Flux.Rn.Components.Modal
 ) where
 
-import           Prelude                  (Bool)
-import           Prelude                  (fmap)
-import           Prelude                  ((.))
-import           React.Flux               (ReactElementM, foreign_)
-import           React.Flux.Rn.Events     (EventHandlerType, on0)
-import           React.Flux.Rn.Properties (Has, Props, prop, props)
-import           React.Flux.Rn.Types      (AnimationType (..),
-                                           PresentationStyle (..),
-                                           SupportedOrientations (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Prelude                    (Show, String, Bool, (.), fmap)
+import React.Flux               (ReactElementM, foreign_)
+import React.Flux.Rn.Events     (EventHandlerType, on0)
+import React.Flux.Rn.Properties (Has, Props, prop, props)
 
 
 
@@ -25,6 +21,34 @@ data Modal
 modal :: [Props Modal handler] -> ReactElementM handler a -> ReactElementM handler a
 modal = foreign_ "Modal" . fmap props
 
+
+data PresentationStyle = FullScreen | PageSheet | FormSheet | OverFullScreen
+  deriving (Show, Generic)
+instance ToJSVal PresentationStyle where
+  toJSVal FullScreen     = toJSVal ("fullScreen" :: String)
+  toJSVal PageSheet      = toJSVal ("pageSheet" :: String)
+  toJSVal FormSheet      = toJSVal ("formSheet" :: String)
+  toJSVal OverFullScreen = toJSVal ("overFullScreen" :: String)
+
+data AnimationType = None | Slide | Fade
+  deriving (Show, Generic)
+instance ToJSVal AnimationType where
+  toJSVal None = toJSVal ("none" :: String)
+  toJSVal Slide = toJSVal ("slide" :: String)
+  toJSVal Fade  = toJSVal ("fade" :: String)
+
+data SupportedOrientations = Portrait
+                           | PortraitUpsideDown
+                           | Landscape
+                           | LandscapeLeft
+                           | LandscapeRight
+  deriving (Show, Generic)
+instance ToJSVal SupportedOrientations where
+  toJSVal Portrait           = toJSVal ("portrait" :: String)
+  toJSVal PortraitUpsideDown = toJSVal ("portrait-upside-down" :: String)
+  toJSVal Landscape          = toJSVal ("landscape" :: String)
+  toJSVal LandscapeLeft      = toJSVal ("landscape-left" :: String)
+  toJSVal LandscapeRight     = toJSVal ("landscape-right" :: String)
 
 
 visible :: Has c "visible" => Bool -> Props c handler

@@ -2,51 +2,24 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.FlatList (
     module React.Flux.Rn.Components.FlatList,
-    module VirtualizedListProps,
-    module ScrollViewProps,
-    module ViewProps,
-    Index,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent),
-    ScrollViewProps.Color (..),
-    ScrollViewProps.ContentInsetAdjustmentBehavior (..),
-    ScrollViewProps.ContentOffset (ContentOffset),
-    ScrollViewProps.DecelerationRate (..),
-    ScrollViewProps.IndicatorStyle (..),
-    ScrollViewProps.KeyboardDismissMode (..),
-    ScrollViewProps.KeyboardShouldPersistTaps (..),
-    ScrollViewProps.OverScrollMode (..),
-    ScrollViewProps.ReactViewRef,
-    ScrollViewProps.SnapToAlignment (..)
+    module React.Flux.Rn.Props.VirtualizedListProps,
+    module React.Flux.Rn.Props.ScrollViewProps,
+    module React.Flux.Rn.Props.ViewProps
 ) where
 
-import           GHCJS.Marshal                            (FromJSVal)
-import           Numeric.Natural                          (Natural)
-import           Prelude                                  ((.))
-import           Prelude                                  (fmap)
-import           Prelude                                  (String)
-import           React.Flux                               (ReactElementM,
+import Numeric.Natural                          (Natural)
+import Prelude                                  (fmap, (.))
+import React.Flux                               (ReactElementM,
                                                            foreign_)
-import           React.Flux.Rn.Properties                 (Has, Props, prop,
+import React.Flux.Rn.Properties                 (Has, Props, prop,
                                                            props)
-import qualified React.Flux.Rn.Props.ScrollViewProps      as ScrollViewProps
-import qualified React.Flux.Rn.Props.ViewProps            as ViewProps
-import qualified React.Flux.Rn.Props.VirtualizedListProps as VirtualizedListProps
-import           React.Flux.Rn.Types                      (Index)
-
-
+import React.Flux.Rn.Props.ScrollViewProps hiding (ContentOffset(..),scrollEventThrottle, horizontal, KeyboardDismissMode(..))
+import React.Flux.Rn.Props.ViewProps
+import React.Flux.Rn.Props.VirtualizedListProps
 
 data FlatList
 flatList :: [Props FlatList handler] -> ReactElementM handler a -> ReactElementM handler a

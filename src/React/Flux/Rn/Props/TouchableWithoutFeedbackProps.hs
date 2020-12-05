@@ -1,23 +1,25 @@
-{-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE FlexibleContexts      #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
-{-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE DataKinds               #-}
+{-# LANGUAGE FlexibleContexts        #-}
+{-# LANGUAGE OverloadedStrings       #-}
+{-# LANGUAGE RankNTypes              #-}
 module React.Flux.Rn.Props.TouchableWithoutFeedbackProps (
     module React.Flux.Rn.Props.TouchableWithoutFeedbackProps,
-    AccessibilityComponentTypes(..),
-    AccessibilityTraits(..), Inset(Inset), OnLayout(OnLayout)
+    module React.Flux.Rn.Types.AccessibilityComponentTypes,
+    module React.Flux.Rn.Types.AccessibilityTraits,
+    module React.Flux.Rn.Types.Inset,
+    module React.Flux.Rn.Types.OnLayout
 ) where
 
-import           Numeric.Natural          (Natural)
-import           Prelude                  (Bool)
-import           React.Flux.Rn.Events     (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties (Has, Props, prop)
-import           React.Flux.Rn.Types      (AccessibilityComponentTypes (..),
-                                           AccessibilityTraits (..),
-                                           Inset (Inset), OnLayout (OnLayout))
+import Numeric.Natural          (Natural)
+import Prelude                  (Bool)
+import React.Flux.Rn.Events     (EventHandlerType, on0, on1)
+import React.Flux.Rn.Properties (Has, Props, prop)
+
+import React.Flux.Rn.Types ()
+import React.Flux.Rn.Types.AccessibilityComponentTypes (AccessibilityComponentTypes)
+import React.Flux.Rn.Types.AccessibilityTraits
+import React.Flux.Rn.Types.Inset
+import React.Flux.Rn.Types.OnLayout
 
 hitSlop :: Has component "hitSlop" => Inset -> Props component handler
 hitSlop = prop "hitSlop"

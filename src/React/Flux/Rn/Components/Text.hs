@@ -1,48 +1,53 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.Text (
     module React.Flux.Rn.Components.Text,
-    module TextStyleProps,
-    module ViewStyleProps,
-    module LayoutStyleProps,
-    module ShadowStyleProps,
-    module TransformsStyleProps,
-    Color(..), EllipsizeMode(..), Inset(Inset),
-    OnLayout (OnLayout), OnLayoutVals(OnLayoutVals),
-    TextBreakStrategy(..),
-    CommonProps.selectionColor,
-    CommonProps.style
+    module React.Flux.Rn.Props.CommonProps,
+    module React.Flux.Rn.StyleProps.TextStyleProps,
+    module React.Flux.Rn.StyleProps.ViewStyleProps,
+    module React.Flux.Rn.StyleProps.LayoutStyleProps,
+    module React.Flux.Rn.StyleProps.ShadowStyleProps,
+    module React.Flux.Rn.StyleProps.TransformsStyleProps,
+    module React.Flux.Rn.Types.OnLayout,
+    module React.Flux.Rn.Types.Inset,
+    module React.Flux.Rn.Types.TextBreakStrategy
 ) where
 
-import           Numeric.Natural                 (Natural)
-import           Prelude                         (Bool, Double, String, ($), (.), fmap)
-import           React.Flux                      (ReactElementM, foreign_)
-import           React.Flux.Rn.Events            (EventHandlerType, on0, on1)
-import           React.Flux.Rn.Properties        (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.CommonProps as CommonProps
-import           React.Flux.Rn.StyleProps.LayoutStyleProps as LayoutStyleProps
-import           React.Flux.Rn.StyleProps.ShadowStyleProps as ShadowStyleProps
-import           React.Flux.Rn.StyleProps.TextStyleProps as TextStyleProps
-import           React.Flux.Rn.StyleProps.TransformsStyleProps as TransformsStyleProps
-import           React.Flux.Rn.StyleProps.ViewStyleProps as ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth)
-import           React.Flux.Rn.Types             (Color (..),
-                                                  EllipsizeMode (..),
-                                                  Inset (Inset),
-                                                  OnLayout (OnLayout),
-                                                  OnLayoutVals (OnLayoutVals),
-                                                  TextBreakStrategy (..))
-
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Numeric.Natural                 (Natural)
+import Prelude                    (Show, String, Bool, Double, fmap, (.), ($))
+import React.Flux                 (EventHandlerType, ReactElementM, foreign_)
+import React.Flux.Rn.Events            (on0, on1)
+import React.Flux.Rn.Properties        (Has, Props, prop, props)
+import React.Flux.Rn.Props.CommonProps (style)
+import React.Flux.Rn.StyleProps.LayoutStyleProps hiding (AlignItems(..), Display(..), Direction(..))
+import React.Flux.Rn.StyleProps.ShadowStyleProps hiding (width, height)
+import React.Flux.Rn.StyleProps.TextStyleProps hiding (width, height)
+import React.Flux.Rn.StyleProps.TransformsStyleProps
+import React.Flux.Rn.StyleProps.ViewStyleProps hiding (borderBottomWidth, borderLeftWidth, borderRightWidth, borderTopWidth, borderWidth, BorderStyle(..),Visibility(..))
+import React.Flux.Rn.Types.Inset (Inset)
+import React.Flux.Rn.Types.OnLayout (OnLayout(..), OnLayoutVals)
+import React.Flux.Rn.Types.TextBreakStrategy
 
 data Text
 text :: [Props Text handler] -> ReactElementM handler a -> ReactElementM handler a
 text = foreign_ "Text" . fmap props
 
 
+data EllipsizeMode = Head | Middle | Tail | Clip
+  deriving (Show, Generic)
+instance ToJSVal EllipsizeMode where
+  toJSVal Head   = toJSVal ("head" :: String)
+  toJSVal Middle = toJSVal ("middle" :: String)
+  toJSVal Tail   = toJSVal ("tail" :: String)
+  toJSVal Clip   = toJSVal ("clip" :: String)
+  
 
 selectable :: Has c "selectable" => Bool -> Props c handler
 selectable = prop "selectable"
@@ -85,8 +90,8 @@ disabled :: Has c "disabled" => Bool -> Props c handler
 disabled = prop "disabled"
 
 -- Platform: Android
---selectionColor :: Has c "selectionColor" => Color -> Props c handler
---selectionColor = prop "selectionColor"
+selectionColor :: Has c "selectionColor" => Color -> Props c handler
+selectionColor = prop "selectionColor"
 
 -- Platform: Android
 textBreakStrategy :: Has c "textBreakStrategy" => TextBreakStrategy -> Props c handler

@@ -1,21 +1,74 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE OverloadedStrings     #-}
 module React.Flux.Rn.StyleProps.LayoutStyleProps (
     module React.Flux.Rn.StyleProps.LayoutStyleProps,
-    AlignContent(..), AlignItems(..), AlignSelf(..), Direction(..), Display(..), FlexDirection(..), FlexWrap(..), JustifyContent(..), Length(..), Overflow(..), Position(..)
+    module React.Flux.Rn.Types.Length,
+    module React.Flux.Rn.Types.JustifyContent,
+    module React.Flux.Rn.Types.AlignSelf,
+    module React.Flux.Rn.Types.AlignContent
 ) where
 
-import           Numeric.Natural          (Natural)
-import           Prelude                  (Int)
-import           React.Flux.Rn.Properties (Styles, style, Has)
-import           React.Flux.Rn.Types      (AlignContent (..), AlignItems (..),
-                                           AlignSelf (..), Direction (..),
-                                           Display (..), FlexDirection (..),
-                                           FlexWrap (..), JustifyContent (..),
-                                           Length (..), Overflow (..),
-                                           Position (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Numeric.Natural            (Natural)
+import Prelude                    (Show, String, Int)
+import React.Flux.Rn.Properties (Styles, style, Has)
+
+import React.Flux.Rn.Types.AlignContent (AlignContent)
+import React.Flux.Rn.Types.AlignSelf (AlignSelf)
+import React.Flux.Rn.Types.JustifyContent (JustifyContent)
+import React.Flux.Rn.Types.Length
+
+data Direction = Inherit | LtR | RtL
+  deriving (Show, Generic)
+instance ToJSVal Direction where
+  toJSVal Inherit = toJSVal ("inherit" :: String)
+  toJSVal LtR     = toJSVal ("ltr" :: String)
+  toJSVal RtL     = toJSVal ("rtl" :: String)
+  
+data Position = Absolute | Relative
+  deriving (Show, Generic)
+instance ToJSVal Position where
+  toJSVal Absolute = toJSVal ("absolute" :: String)
+  toJSVal Relative = toJSVal ("relative" :: String)
+
+data Overflow = Visible | Hidden | Scroll
+  deriving (Show, Generic)
+instance ToJSVal Overflow where
+  toJSVal Visible = toJSVal ("visible" :: String)
+  toJSVal Hidden  = toJSVal ("hidden" :: String)
+  toJSVal Scroll   = toJSVal ("scroll" :: String)
+
+data AlignItems = FlexStart | FlexEnd | Center | Stretch | Baseline
+  deriving (Show, Generic)
+instance ToJSVal AlignItems where
+  toJSVal FlexStart = toJSVal ("flex-start" :: String)
+  toJSVal FlexEnd   = toJSVal ("flex-end" :: String)
+  toJSVal Center    = toJSVal ("center" :: String)
+  toJSVal Stretch   = toJSVal ("stretch" :: String)
+  toJSVal Baseline  = toJSVal ("baseline" :: String)
+
+data FlexWrap = Wrap | NoWrap
+  deriving (Show, Generic)
+instance ToJSVal FlexWrap where
+  toJSVal Wrap   = toJSVal ("wrap" :: String)
+  toJSVal NoWrap = toJSVal ("nowrap" :: String)
+
+data FlexDirection = Row | RowReverse | Column | ColumnReverse
+  deriving (Show, Generic)
+instance ToJSVal FlexDirection where
+  toJSVal Row           = toJSVal ("row" :: String)
+  toJSVal RowReverse    = toJSVal ("row-reverse" :: String)
+  toJSVal Column        = toJSVal ("column" :: String)
+  toJSVal ColumnReverse = toJSVal ("column-reverse" :: String)
+
+data Display = None | Flex
+  deriving (Show, Generic)
+instance ToJSVal Display where
+  toJSVal None = toJSVal ("none" :: String)
+  toJSVal Flex = toJSVal ("flex" :: String)
 
 marginHorizontal :: Has c "marginHorizontal" => Length -> Styles c handler
 marginHorizontal = style "marginHorizontal"

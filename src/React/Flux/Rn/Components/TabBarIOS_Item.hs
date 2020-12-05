@@ -1,43 +1,59 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.TabBarIOS_Item (
     module React.Flux.Rn.Components.TabBarIOS_Item,
-    Color(..), ImageSource(..),
-    TabBarSystemIcon(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.Types.ImageSource,
+    module React.Flux.Rn.Types.Color
 ) where
 
-import           Prelude                       (Bool, Either (..), Int, String)
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on0)
-import           React.Flux.Rn.Properties      (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (Color (..), ImageSource (..),
-                                                TabBarSystemIcon (..))
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Prelude                    (String, Show, fmap, (.), Bool, Either(..), Int)
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Events          (EventHandlerType, on0)
+import React.Flux.Rn.Properties      (Has, Props, prop, props)
+import React.Flux.Rn.Props.ViewProps hiding (AccessibilityTrait(..), OnLayoutVals(..))
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.ImageSource
 
 {-# ANN module ("HLint: ignore Use camelCase" :: String) #-}
-
-
 
 data TabBarIOS_Item
 tabBarIOS_Item :: [Props TabBarIOS_Item handler] -> ReactElementM handler a -> ReactElementM handler a
 tabBarIOS_Item = foreign_ "TabBarIOS_Item" . fmap props
 
+data TabBarSystemIcon = Bookmarks
+                      | Contacts
+                      | Downloads
+                      | Favorites
+                      | Featured
+                      | History
+                      | More
+                      | MostRecent
+                      | MostViewed
+                      | Recents
+                      | Search
+                      | TopRated
+  deriving (Show, Generic)
+instance ToJSVal TabBarSystemIcon where
+  toJSVal Bookmarks  = toJSVal ("bookmarks" :: String)
+  toJSVal Contacts   = toJSVal ("contacts" :: String)
+  toJSVal Downloads  = toJSVal ("downloads" :: String)
+  toJSVal Favorites  = toJSVal ("favorites" :: String)
+  toJSVal Featured   = toJSVal ("featured" :: String)
+  toJSVal History    = toJSVal ("history" :: String)
+  toJSVal More       = toJSVal ("more" :: String)
+  toJSVal MostRecent = toJSVal ("most-recent" :: String)
+  toJSVal MostViewed = toJSVal ("most-viewed" :: String)
+  toJSVal Recents    = toJSVal ("recents" :: String)
+  toJSVal Search     = toJSVal ("search" :: String)
+  toJSVal TopRated   = toJSVal ("top-rated" :: String)
 
 
 selected :: Has c "selected" => Bool -> Props c handler

@@ -1,39 +1,38 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.ProgressViewIOS (
     module React.Flux.Rn.Components.ProgressViewIOS,
-    Color(..), ImageSource(..),
-    ProgressViewStyle(..), UnitInterval,
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.Inset(Inset),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Types.Color,
+    module React.Flux.Rn.Types,
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.Types.ImageSource
 ) where
 
-import           Prelude                       (fmap)
-import           Prelude                       ((.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Properties      (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (Color (..), ImageSource (..),
-                                                ProgressViewStyle (..),
-                                                UnitInterval)
-
-
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (ToJSVal (..))
+import Prelude                    (Show, String, fmap, (.))
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Rn.Properties      (Has, Props, prop, props)
+import React.Flux.Rn.Props.ViewProps hiding (OnLayoutVals(..))
+import React.Flux.Rn.Types       (UnitInterval)
+import React.Flux.Rn.Types.Color
+import React.Flux.Rn.Types.ImageSource
 
 data ProgressViewIOS
 progressViewIOS :: [Props ProgressViewIOS handler] -> ReactElementM handler a -> ReactElementM handler a
 progressViewIOS = foreign_ "ProgressViewIOS" . fmap props
 
+
+
+data ProgressViewStyle = Default | Bar
+  deriving (Show, Generic)
+instance ToJSVal ProgressViewStyle where
+  toJSVal Default = toJSVal ("default" :: String)
+  toJSVal Bar     = toJSVal ("bar" :: String)
 
 
 progress :: Has c "progress" => UnitInterval -> Props c handler

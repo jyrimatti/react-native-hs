@@ -1,39 +1,36 @@
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
 module React.Flux.Rn.Components.WebView (
     module React.Flux.Rn.Components.WebView,
-    DataDetectorTypes(..),
-    DecelerationRate(..), Inset(Inset),
-    JavaScript, MixedContentMode(..),
-    OnMessage(OnMessage), Source(..),
-    ViewProps.AccessibilityComponentTypes(..),
-    ViewProps.AccessibilityLiveRegion(..),
-    ViewProps.AccessibilityTraits(..),
-    ViewProps.ImportantForAccessibility(..),
-    ViewProps.OnLayout(OnLayout),
-    ViewProps.PointerEvents(..),
-    ViewProps.SyntheticTouchEvent(SyntheticTouchEvent)
+    module React.Flux.Rn.Props.ViewProps,
+    module React.Flux.Rn.Types.DataDetectorTypes,
+    module React.Flux.Rn.Types.DecelerationRate,
+    module React.Flux.Rn.Types.Inset,
+    module React.Flux.Rn.Types.Method
 ) where
 
-import           Data.Typeable                 (Typeable)
-import           Prelude                       (Bool, String, fmap, (.))
-import           React.Flux                    (ReactElementM, foreign_)
-import           React.Flux.Rn.Events          (EventHandlerType, on0, on1,
-                                                ret1, view0)
-import           React.Flux.Rn.Properties      (Has, Props, prop, props)
-import qualified React.Flux.Rn.Props.ViewProps as ViewProps
-import           React.Flux.Rn.Types           (DataDetectorTypes (..),
-                                                DecelerationRate (..),
-                                                Inset (Inset), JavaScript,
-                                                MixedContentMode (..),
-                                                OnMessage (OnMessage),
-                                                ReactViewRef, Source (..))
-
+import Data.Aeson                 ((.:), FromJSON (..), ToJSON (..), withObject)
+import Data.Map (Map)
+import Data.Typeable                 (Typeable)
+import GHC.Generics               (Generic)
+import GHCJS.Marshal              (FromJSVal (..), ToJSVal (..))
+import GHCJS.Types                (JSVal)
+import Network.URI                (URI)
+import Prelude                    (Show, String, fmap, (.), Maybe, Bool, (<$>), ($), pure)
+import React.Flux                    (ReactElementM, foreign_)
+import React.Flux.Internal        (ReactViewRef (..))
+import React.Flux.Rn.Events          (EventHandlerType, on0, on1, ret1, view0, fromNativeJSON)
+import React.Flux.Rn.Properties      (Has, Props, prop, props)
+import React.Flux.Rn.Props.ViewProps hiding (AccessibilityTrait)
+import React.Flux.Rn.Types.DataDetectorTypes (DataDetectorTypes)
+import React.Flux.Rn.Types.DecelerationRate
+import React.Flux.Rn.Types.Inset
+import React.Flux.Rn.Types.Method
 
 
 data WebView
@@ -41,12 +38,55 @@ webView :: [Props WebView handler] -> ReactElementM handler a -> ReactElementM h
 webView = foreign_ "WebView" . fmap props
 
 
+data MixedContentMode = Never | Always | Compatibility
+  deriving (Show, Generic)
+instance ToJSVal MixedContentMode where
+  toJSVal Never         = toJSVal ("never" :: String)
+  toJSVal Always        = toJSVal ("always" :: String)
+  toJSVal Compatibility = toJSVal ("compatibility" :: String)
+
+newtype OnMessage = OnMessage {
+    data_ :: String
+} deriving (Show, Generic)
+instance FromJSON OnMessage where
+  parseJSON = withObject "OnMessage" $ \v -> OnMessage <$> v .: "data"
+instance FromJSVal OnMessage where fromJSVal = fromNativeJSON
+
+data URISource = URISource {
+  uri     :: URI,
+  method  :: Maybe Method,
+  headers :: Map String String,
+  body    :: Maybe String
+} deriving (Show,Generic)
+instance ToJSON URISource
+instance ToJSVal URISource where
+  toJSVal = toJSVal . toJSON
+
+data StaticSource = StaticSource {
+    html    :: String,
+    baseUrl :: URI
+  } deriving (Show,Generic)
+instance ToJSON StaticSource
+instance ToJSVal StaticSource where
+  toJSVal = toJSVal . toJSON
+
+type JSRequireRef = JSVal
+
+data Source = SourceURI URISource | SourceStatic StaticSource | SourceResource JSRequireRef
+  deriving (Generic)
+instance ToJSVal Source where
+  toJSVal (SourceURI x)      = toJSVal $ toJSON x
+  toJSVal (SourceStatic x)   = toJSVal $ toJSON x
+  toJSVal (SourceResource x) = pure x
+
 
 source :: Has c "source" => Source -> Props c handler
 source = prop "source"
 
 automaticallyAdjustContentInsets :: Has c "automaticallyAdjustContentInsets" => Bool -> Props c handler
 automaticallyAdjustContentInsets = prop "automaticallyAdjustContentInsets"
+
+type JavaScript = String
 
 injectJavaScript :: Has c "injectJavaScript" => (JavaScript -> EventHandlerType handler) -> Props c handler
 injectJavaScript = on1 "injectJavaScript"

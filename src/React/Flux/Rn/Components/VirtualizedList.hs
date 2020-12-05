@@ -2,23 +2,17 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RankNTypes            #-}
-{-# LANGUAGE TypeApplications      #-}
 module React.Flux.Rn.Components.VirtualizedList (
     module React.Flux.Rn.Components.VirtualizedList,
-    Index
+    module React.Flux.Rn.Props.VirtualizedListProps
 ) where
 
-import           GHCJS.Marshal                            (FromJSVal)
-import           Prelude                                  (String, fmap, (.))
-import           React.Flux                               (ReactElementM,
-                                                           foreign_)
-import           React.Flux.Rn.Properties                 (Has, Props, props)
-import qualified React.Flux.Rn.Props.VirtualizedListProps as VirtualizedListProps
-import           React.Flux.Rn.Types                      (Index)
-
+import Prelude                                  (fmap, (.))
+import React.Flux                               (ReactElementM, foreign_)
+import React.Flux.Rn.Properties                 (Has, Props, props)
+import React.Flux.Rn.Props.VirtualizedListProps
 
 
 data VirtualizedList
